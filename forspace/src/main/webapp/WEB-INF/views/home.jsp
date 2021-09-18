@@ -7,7 +7,7 @@
 </style>
 <%@ include file="include/header.jsp"%>
         <!-- Page content-->
-        <div class="container mt-5">
+        <div class="container mt-5 main-content">
         	<div class="row">
                 <div class="col-lg-4"> 
                 	<h1>Welcom FORSPACE ONE</h1>
@@ -21,5 +21,4 @@
 			</div>
         </div>
 	<%@ include file="include/footer.jsp"%>
-</body>
-</html>
+
