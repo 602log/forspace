@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="kr.co.forspace.mapper.RoomMapper">
+
+	<resultMap type="kr.co.forspace.room.RoomDTO" id="roomMap">
+		<result column="RO_NO" property="roNo"/>
+		<result column="SC_NO" property="scNo"/>
+		<result column="RO_NAME" property="roName"/>
+		<result column="RO_FLOOR" property="roFloor"/>
+		<result column="RO_MAX" property="roMax"/>
+		<result column="RO_START" property="roStart"/>
+		<result column="RO_CLOSE" property="roClose"/>
+		<result column="RO_LIMIT" property="roLimit"/>
+		<result column="RO_REGDATE" property="roRegdate"/>
+	</resultMap>
+	
+	<select id="roomNoList" parameterType="int" resultType="String">
+		SELECT RO_NAME
+		FROM room
+		WHERE SC_NO = #{scNo}
+	</select>
+	
+	<select id="floorList" parameterType="int" resultType="String">
+		SELECT RO_FLOOR
+		FROM room
+		WHERE SC_NO = #{scNo}
+		GROUP BY RO_FLOOR
+	</select>
+	
+
+</mapper>

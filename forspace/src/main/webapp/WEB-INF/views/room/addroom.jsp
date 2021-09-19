@@ -18,7 +18,7 @@
                 <div class="col-lg-4"> 
 					<label>건물층</label>
 					<div class="form-group form-default">
-						<input type="number" name="roFloor" id="roFloor1" class="form-control">
+						<input type="number" name="roFloor" id="roFloor" class="form-control">
 					</div>
 					<label>연습실 개수</label>
 					<div class="form-group form-default">
@@ -82,6 +82,9 @@ $(document).ready(function(){
 	
 	$(".modalBtn").on('click', function(){
 		$("#itemModal").modal('show');
+		$("#getResultItem").empty();
+		$("#itemAddBtn").hide();
+		$(".searchInput").val("");
 	});
 
 });
