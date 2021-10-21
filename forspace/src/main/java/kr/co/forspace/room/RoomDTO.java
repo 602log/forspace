@@ -16,7 +16,7 @@ public class RoomDTO {
     private Long roNo;
     private Long scNo;
     private String roName;
-    private String roFloor;
+    private Integer roFloor;
     private Long roMax;
     private String roStart;
     private String roClose;

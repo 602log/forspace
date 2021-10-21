@@ -1,5 +1,8 @@
 package kr.co.forspace.room;
 
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -25,9 +28,20 @@ public class RoomController {
 		
 	}
 
+	@GetMapping("/roomDetail")
+	public String roomDetail(String roName, Model model) {//연습실별 상세정보
+		
+		log.info("roName:"+roName);
+		
+				
+		model.addAttribute("dto", roomService.roomDetail(roName));
+		log.info(model);
+		
+		return "room/roomDetailPage";
+	}
 	
 	@GetMapping("/roomList")
-	public String roomList(Model model) {
+	public String roomList(Model model) {//연습실 리스트
 		int scNo = 1;
 		List<RoomDTO> list = roomService.roomNoList(scNo);
 

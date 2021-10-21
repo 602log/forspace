@@ -6,4 +6,5 @@ public interface RoomService {
 
 	List<RoomDTO> roomNoList(int scNo);
 	List<RoomDTO> floorList(int scNo);
+	RoomDTO roomDetail(String roName);
 }

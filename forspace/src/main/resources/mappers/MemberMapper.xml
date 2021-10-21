@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="kr.co.forspace.mapper.MemberMapper">
+
+	<resultMap type="kr.co.forspace.member.SchoolDTO" id="schoolMap">
+		<result column="SC_NO" property="scNo"/>
+		<result column="SC_NAME" property="scName"/>
+		<result column="SC_CAMPUS" property="scCampus"/>
+		<result column="SC_MAJOR" property="scMajor"/>
+		<result column="SC_CHECKNUM" property="scChecknum"/>
+	</resultMap>
+	
+	<resultMap type="kr.co.forspace.member.StudentDTO" id="studentMap">
+		<result column="ST_EMAIL" property="stEmail"/>
+		<result column="SC_NO" property="scNo"/>
+		<result column="ST_NO" property="stNo"/>
+		<result column="ST_NAME" property="stName"/>
+		<result column="ST_PWD" property="stPwd"/>
+		<result column="ST_AUTH" property="stAuth"/>
+	</resultMap>
+	
+	<insert id="memberjoin">
+		INSERT INTO STUDENT (ST_EMAIL, SC_NO, ST_NO, ST_NAME, ST_PWD)
+		VALUES (#{stEmail}, #{scNo},#{stNo},#{stName},#{stPwd})
+	</insert>
+			
+	<select id="getSchool" parameterType="String" resultMap="schoolMap">
+		<![CDATA[
+		SELECT ROWNUM, SC_NO, SC_NAME, SC_CAMPUS, SC_MAJOR, SC_CHECKNUM
+		FROM SCHOOL
+		WHERE SC_NAME LIKE '%'||#{scName}||'%'
+		]]>
+	</select>
+
+	<select id="duplecateEmail" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM student
+		WHERE ST_EMAIL = #{stEmail}
+	</select>
+	
+	<select id="numCheck" resultType="int">
+		SELECT COUNT(*)
+		FROM school
+		WHERE SC_NO = #{scNo} AND SC_CHECKNUM = #{scCheckNum}
+	</select>
+	
+</mapper>

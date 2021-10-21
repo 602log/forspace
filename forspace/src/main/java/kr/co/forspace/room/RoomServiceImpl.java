@@ -24,4 +24,10 @@ public class RoomServiceImpl implements RoomService{
 	public List<RoomDTO> floorList(int scNo) {
 		return roomMapper.floorList(scNo);
 	}
+	@Override
+	public RoomDTO roomDetail(String roName) {
+		return roomMapper.roomDetail(roName);
+	}
+	
+	
 }

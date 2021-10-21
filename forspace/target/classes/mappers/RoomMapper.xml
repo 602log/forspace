@@ -24,12 +24,18 @@
 		WHERE SC_NO = #{scNo}
 	</select>
 	
-	<select id="floorList" parameterType="int" resultType="String">
+	<select id="floorList" parameterType="int" resultType="int">
 		SELECT RO_FLOOR
 		FROM room
 		WHERE SC_NO = #{scNo}
 		GROUP BY RO_FLOOR
+		ORDER BY RO_FLOOR ASC
 	</select>
 	
+	<select id="roomDetail" parameterType="String" resultMap="roomMap">
+		SELECT RO_NO, SC_NO, RO_NAME, RO_FLOOR, RO_MAX, RO_START, RO_CLOSE, RO_LIMIT, RO_REGDATE
+		FROM room
+		WHERE RO_NAME = #{roName}
+	</select>
 
 </mapper>

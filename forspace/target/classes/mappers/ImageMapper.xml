@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="kr.co.forspace.mapper.ImageMapper">
+
+	<resultMap type="kr.co.forspace.image.ImageDTO" id="imageMap">
+		<result column="IM_NO" property="imNo"/>
+		<result column="IM_EMAIL" property="imEmail"/>
+		<result column="IM_NAME" property="imName"/>
+		<result column="IM_PATH" property="imPath"/>
+		<result column="IM_SIZE" property="imSize"/>
+		<result column="IM_DIV" property="imDiv"/>
+	</resultMap>
+	
+	<insert id="memberjoinWithprofileImg">
+		INSERT INTO IMAGE (IM_NO, IM_EMAIL, IM_NAME, IM_PATH, IM_SIZE, IM_DIV)
+		VALUES (SEQ_IM.NEXTVAL, #{imEmail}, #{imName}, #{imPath}, #{imSize}, #{imDiv})
+	</insert>
+
+</mapper>
