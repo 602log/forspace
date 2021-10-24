@@ -38,7 +38,7 @@
 						<label>이메일</label>
 						<div class="form-group form-default" id="emailBlock">
 							<div id="firstDIV">
-								<input type="text" name="stEmail" id="stEmail" class="form-control" placeholder="이메일 형태로 입력해주세요(abc@***.com)">
+								<input type="text" name="meEmail" id="meEmail" class="form-control" placeholder="이메일 형태로 입력해주세요(abc@***.com)">
 							</div>
 							<div id="secondDIV">
 								<button type="button" value="N" id="emailCheckBtn" name="emailCheckBtn" class="btn btn-primary" style="border-radius: 30px;" onclick="emailCheck()">이메일중복확인</button>
@@ -47,24 +47,24 @@
 						
 						<label>비밀번호</label>
 						<div class="form-group form-default">
-							<input type="password" name="stPwd" id="stPwd" class="form-control">
+							<input type="password" name="mePwd" id="mePwd" class="form-control">
 						</div>
 						
 						<label>비밀번호 확인</label>
 						<div class="form-group form-default">
-							<input type="password" name="stPwdCheck" id="stPwdCheck" class="form-control">
+							<input type="password" name="mePwdCheck" id="mePwdCheck" class="form-control">
 						</div>
 						
 						<label>이름</label>
 						<div class="form-group form-default">
-							<input type="text" name="stName" id="stName" class="form-control">
+							<input type="text" name="meName" id="meName" class="form-control">
 						</div>
 						
 						<label>학번</label>
 						<div class="form-group form-default">
-							<input type="text" name="stNo" id="stNo" class="form-control">
+							<input type="text" name="meNo" id="meNo" class="form-control">
 						</div>
-						
+						<input type="hidden" name="meRole" id="meRole" value="USER">
                 	</div>
                 
 			</div>
@@ -113,8 +113,8 @@
 		
 		$("#submit").on("click", function(){
 			
-			var stPwd = $("#stPwd").val();
-			var stPwdCheck = $("#stPwdCheck").val();
+			var mePwd = $("#mePwd").val();
+			var mePwdCheck = $("#mePwdCheck").val();
 			var cnt = $("#schCheckCnt").val();//소속기관 선택	
 	
 				if(cnt < 1){
@@ -126,51 +126,51 @@
 					return false;
 				}
 			
-				if($("#stEmail").val() == ""){
+				if($("#meEmail").val() == ""){
 					alert("이메일을 입력해주세요.");
-					$("#stEmail").focus();
+					$("#meEmail").focus();
 					return false;
 				}
 				
 				
-				if($("#stPwd").val() == "" || stPwd.length<8 || stPwd.length>15){
+				if($("#mePwd").val() == "" || mePwd.length<8 || mePwd.length>15){
 					
 					alert("비밀번호는 8~15자 사이로 입력해주시기 바랍니다.");
-					$("#stPwd").focus();
+					$("#mePwd").focus();
 					return false;
 				}
 				
-				if($("#stPwdCheck").val() == "" || stPwd != stPwdCheck){
+				if($("#mePwdCheck").val() == "" || mePwd != mePwdCheck){
 					alert("비밀번호가 일치하지 않습니다.");
-					$("#stPwdCheck").focus();
+					$("#mePwdCheck").focus();
 					return false;
 				}
 				
-				if($("#stName").val() == ""){
+				if($("#meName").val() == ""){
 					alert("이름을 입력해주시기 바랍니다.");
-					$("#stName").focus();
+					$("#meName").focus();
 					return false;
 				}
 				
-				if($("#stNo").val() == ""){
+				if($("#meNo").val() == ""){
 					alert("학번을 입력해주시기 바랍니다.");
-					$("#stNo").focus();
+					$("#meNo").focus();
 					return false;
 				}
-
 				
 				var emailCheckVal = $("#emailCheckBtn").val();
+				
 				if(emailCheckVal == "N" ){
+					
 					alert("중복확인버튼을 눌러주세요.");
 					return false;
+					
 				}else if(emailCheckVal == "Y"){
-					$("joinFrm").submit();
+					$("#joinFrm").submit();
 				}
 
 		});
 	});
-	
-
 
 	function ECheck(email){
 		var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -180,7 +180,7 @@
 	function emailCheck(){
 		
 		
-		if(! (ECheck($("#stEmail").val()))){
+		if(! (ECheck($("#meEmail").val()))){
 			alert("올바른 이메일을 입력해주세요.");
 			return false;
 		}
@@ -188,7 +188,7 @@
 		$.ajax({
 			url : "/member/emailCheck",
 			type : "post",
-			data : {"stEmail" : $("#stEmail").val()},
+			data : {"meEmail" : $("#meEmail").val()},
 			success : function(data){
 				console.log(data)
 				

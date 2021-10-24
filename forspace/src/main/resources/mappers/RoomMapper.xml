@@ -17,12 +17,24 @@
 		<result column="RO_LIMIT" property="roLimit"/>
 		<result column="RO_REGDATE" property="roRegdate"/>
 	</resultMap>
+
+	<select id="selectFloor" parameterType="int" resultType="String">
+		SELECT RO_NAME
+		FROM ROOM
+		WHERE RO_FLOOR = #{roFloor} AND SC_NO = #{scNo}
+	</select>
 	
 	<select id="roomNoList" parameterType="int" resultType="String">
+		SELECT RO_NAME 
+		FROM ROOM
+		WHERE RO_FLOOR = (SELECT MIN(RO_FLOOR) FROM ROOM WHERE SC_NO = #{scNo})
+	</select>
+		
+<!-- 	<select id="roomNoList" parameterType="int" resultType="String">
 		SELECT RO_NAME
 		FROM room
 		WHERE SC_NO = #{scNo}
-	</select>
+	</select> -->
 	
 	<select id="floorList" parameterType="int" resultType="int">
 		SELECT RO_FLOOR
@@ -32,10 +44,10 @@
 		ORDER BY RO_FLOOR ASC
 	</select>
 	
-	<select id="roomDetail" parameterType="String" resultMap="roomMap">
+	<select id="roomDetail" parameterType="kr.co.forspace.room.RoomDTO" resultMap="roomMap">
 		SELECT RO_NO, SC_NO, RO_NAME, RO_FLOOR, RO_MAX, RO_START, RO_CLOSE, RO_LIMIT, RO_REGDATE
 		FROM room
-		WHERE RO_NAME = #{roName}
+		WHERE RO_NAME = #{roName} AND SC_NO = #{scNo}
 	</select>
 
 </mapper>

@@ -17,5 +17,5 @@ public class ImageDTO {
 	private String imPath;
 	private Long imSize;
 	private String imDiv;
-	
+
 }

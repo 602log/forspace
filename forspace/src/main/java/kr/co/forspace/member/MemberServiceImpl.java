@@ -2,6 +2,7 @@ package kr.co.forspace.member;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.co.forspace.image.ImageDTO;
@@ -13,19 +14,20 @@ import lombok.extern.log4j.Log4j;
 @Service
 @RequiredArgsConstructor
 @Log4j
-public class MemberServiceImpl implements MemberService{
-	
+public class MemberServiceImpl implements MemberService {
+
 	private final MemberMapper memberMapper;
 	private final ImageMapper imageMapper;
-	
+	private final PasswordEncoder passwordEncoder;
+
 	@Override
 	public List<SchoolDTO> getSchool(String scName) {
 		return memberMapper.getSchool(scName);
 	}
 
 	@Override
-	public int duplecateEmail(String stEmail) {
-		return memberMapper.duplecateEmail(stEmail);
+	public int duplecateEmail(String meEmail) {
+		return memberMapper.duplecateEmail(meEmail);
 	}
 
 	@Override
@@ -34,19 +36,30 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public void memberjoin(StudentDTO studentDTO) {
-		memberMapper.memberjoin(studentDTO);
+	public void memberjoin(MemberDTO memberDTO) {
+		memberDTO.setMePwd(passwordEncoder.encode(memberDTO.getMePwd()));
+		memberMapper.memberjoin(memberDTO);
 	}
 
 	@Override
-	public void memberjoinWithprofileImg(StudentDTO studentDTO) throws Exception {
-		memberMapper.memberjoin(studentDTO);
-		
-		if(studentDTO.getImageDTO() != null && studentDTO.getImageDTO().getImName() != "") {
-			ImageDTO imageDTO = studentDTO.getImageDTO();
+	public void memberjoinWithprofileImg(MemberDTO memberDTO) throws Exception {
+		memberDTO.setMePwd(passwordEncoder.encode(memberDTO.getMePwd()));
+		memberMapper.memberjoin(memberDTO);
+
+		if (memberDTO.getImageDTO() != null && memberDTO.getImageDTO().getImName() != "") {
+			ImageDTO imageDTO = memberDTO.getImageDTO();
 			imageMapper.memberjoinWithprofileImg(imageDTO);
 		}
 	}
-
 	
+	@Override
+	public MemberDTO myProfile(String meEmail) {
+		return memberMapper.myProfile(meEmail);
+	}
+	
+	@Override
+	public int mySchoolNo(String meEmail) {
+		return memberMapper.mySchoolNo(meEmail);
+	}
+
 }

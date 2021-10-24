@@ -15,16 +15,9 @@
         	<div class="row">
 
         		<div class="col-lg-8">
-        			<c:choose>
-        				<c:when test="${empty floorList}">
-        					<p class="card-text">등록된 연습실이 없습니다.</p>
-        				</c:when>
-        				<c:otherwise>
-	        				<c:forEach var="floorList" items="${floorList }">
-								<button class="btn col-lg-3 ms-3" type="button" onClick="location.href='/room/roomFloor?roFloor=${floorList}'"><H1>${floorList }</H1></button>	
-							</c:forEach>
-        				</c:otherwise>
-        			</c:choose>
+	        			<c:forEach var="floorList" items="${floorList }">
+							<button class="btn col-lg-3 ms-3" type="button" onClick="location.href='room/roomFloor?roFloor=${floorList}'"><H1>${floorList }</H1></button>	
+						</c:forEach>
   	                <div class="card-columns">
 		                <c:forEach var="dto" items="${list}">
 							<div class="card" style="border-radius:50px;" onClick="location.href='/room/roomDetail?roName=${dto}'">

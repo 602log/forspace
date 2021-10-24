@@ -12,7 +12,7 @@
                 <div class="col-lg-4"> 
                 	<h1>Welcom FORSPACE ONE</h1>
                 </div>
-                
+
                 <div class="col-lg-4">
 					<h1>Welcom FORSPACE TWO</h1>
                 </div>
@@ -20,5 +20,14 @@
 				<%@ include file="include/side.jsp"%>
 			</div>
         </div>
+<script>
+	$(document).ready(function(){
+		var msg = '${msg}';
+		if (!(msg===''||history.state)){
+			var modal= $(".modal");
+			modal.modal();
+		}
+	});
+</script>
 	<%@ include file="include/footer.jsp"%>
 

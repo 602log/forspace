@@ -1,5 +1,7 @@
 package kr.co.forspace.member;
 
+import java.io.Serializable;
+
 import kr.co.forspace.image.ImageDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,15 +12,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentDTO {
-	
-	private String stEmail;
+public class MemberDTO implements Serializable{
+
+	private String meEmail;
 	private Long scNo;
-	private String stNo;
-	private String stName;
-	private String stPwd;
-	private String stAuth;
-	
+	private String meNo;
+	private String meName;
+	private String mePwd;
+	private String meRole;
+
 	private ImageDTO imageDTO;
-	
+
 }

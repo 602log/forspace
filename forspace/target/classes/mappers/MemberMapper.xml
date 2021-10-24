@@ -14,18 +14,30 @@
 		<result column="SC_CHECKNUM" property="scChecknum"/>
 	</resultMap>
 	
-	<resultMap type="kr.co.forspace.member.StudentDTO" id="studentMap">
-		<result column="ST_EMAIL" property="stEmail"/>
+	<resultMap type="kr.co.forspace.member.MemberDTO" id="memberMap">
+		<result column="ME_EMAIL" property="meEmail"/>
 		<result column="SC_NO" property="scNo"/>
-		<result column="ST_NO" property="stNo"/>
-		<result column="ST_NAME" property="stName"/>
-		<result column="ST_PWD" property="stPwd"/>
-		<result column="ST_AUTH" property="stAuth"/>
+		<result column="ME_NO" property="meNo"/>
+		<result column="ME_NAME" property="meName"/>
+		<result column="ME_PWD" property="mePwd"/>
+		<result column="ME_ROLE" property="meRole"/>
 	</resultMap>
 	
+	<select id="mySchoolNo" parameterType="String" resultType="int">
+		SELECT SC_NO
+		FROM MEMBER
+		WHERE ME_EMAIL = #{meEmail}		
+	</select>
+	
+	<select id="myProfile" parameterType="String" resultMap="memberMap">
+		SELECT ME_EMAIL, SC_NO, ME_NO, ME_NAME, ME_PWD, ME_ROLE
+		FROM MEMBER
+		WHERE ME_EMAIL = #{meEmail}
+	</select>
+	
 	<insert id="memberjoin">
-		INSERT INTO STUDENT (ST_EMAIL, SC_NO, ST_NO, ST_NAME, ST_PWD)
-		VALUES (#{stEmail}, #{scNo},#{stNo},#{stName},#{stPwd})
+		INSERT INTO MEMBER (ME_EMAIL, SC_NO, ME_NO, ME_NAME, ME_PWD, ME_ROLE)
+		VALUES (#{meEmail}, #{scNo}, #{meNo}, #{meName}, #{mePwd}, #{meRole})
 	</insert>
 			
 	<select id="getSchool" parameterType="String" resultMap="schoolMap">
@@ -38,8 +50,8 @@
 
 	<select id="duplecateEmail" parameterType="String" resultType="int">
 		SELECT COUNT(*)
-		FROM student
-		WHERE ST_EMAIL = #{stEmail}
+		FROM member
+		WHERE ME_EMAIL = #{meEmail}
 	</select>
 	
 	<select id="numCheck" resultType="int">

@@ -12,15 +12,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoomDTO {
-	
-    private Long roNo;
-    private Long scNo;
-    private String roName;
-    private Integer roFloor;
-    private Long roMax;
-    private String roStart;
-    private String roClose;
-    private Long roLimit;
-    private Date roRegdate;
-	
+
+	private Long roNo;
+	private Long scNo;
+	private String roName;
+	private Integer roFloor;
+	private Long roMax;
+	private String roStart;
+	private String roClose;
+	private Long roLimit;
+	private Date roRegdate;
+
 }
