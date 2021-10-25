@@ -14,11 +14,6 @@
 	}
 </style>
 <%@ include file="../include/header.jsp"%>
-<!-- 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script> -->
-        <!-- Page content-->
         
         <div class="container mt-5 main-content">
         <form class="form-material" method="post" id="joinFrm" action="/member/memberjoin" enctype="multipart/form-data">

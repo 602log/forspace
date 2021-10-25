@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberDTO implements Serializable{
+public class MemberDTO{
 
 	private String meEmail;
-	private Long scNo;
+	private Integer scNo;
 	private String meNo;
 	private String meName;
 	private String mePwd;

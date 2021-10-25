@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ItemDTO {
-	private Long itNo;
+	private Integer itNo;
 	private String itName;
 }

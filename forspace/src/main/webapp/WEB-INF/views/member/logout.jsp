@@ -7,14 +7,7 @@
         <!-- Page content-->
         <div class="container mt-5 main-content">
         	<div class="row">
-                <div class="col-lg-4"> 
-					
-                </div>
-                
-                <div class="col-lg-4">
-					
-                </div>
-				<%@ include file="../include/side.jsp"%>
+
 			</div>	
         </div>
 <script>

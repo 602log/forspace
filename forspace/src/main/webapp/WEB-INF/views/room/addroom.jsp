@@ -15,7 +15,7 @@
         <!-- Page content-->
         <div class="container mt-5 main-content">
         	<div class="row">
-                <div class="col-lg-4"> 
+                <div class="col-lg-6"> 
 					<label>건물층</label>
 					<div class="form-group form-default">
 						<input type="number" name="roFloor" id="roFloor" class="form-control">
@@ -41,12 +41,9 @@
 					</div>
                 </div>
                 
-                <div class="col-lg-4">
+                <div class="col-lg-6">
 					<label>옵션 <i role="button" class="fas fa-plus-circle modalBtn"></i></label>
                 </div>
-				
-				
-				<%@ include file="../include/side.jsp"%>
 			</div>
 			
 			<!-- modal -->

@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class RoomItemDTO {
-	private Long riNo;
-	private Long roNo;
-	private Long itNo;
-	private Long riCnt;
+	private Integer riNo;
+	private Integer roNo;
+	private Integer itNo;
+	private Integer riCnt;
 }

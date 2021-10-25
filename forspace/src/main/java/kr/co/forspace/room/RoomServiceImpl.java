@@ -27,13 +27,23 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public RoomDTO roomDetail(String roName, int scNO) {
-		return roomMapper.roomDetail(roName, scNO);
+	public RoomDTO roomDetail(@Param("roNo") int roNo) {
+		return roomMapper.roomDetail(roNo);
 	}
 
 	@Override
 	public List<RoomDTO> selectFloor(@Param("roFloor") int roFloor, @Param("scNo") int scNo) {
-		log.info(roFloor + scNo);
+		log.info("선택한 층"+roFloor + "학교번호"+scNo);
 		return roomMapper.selectFloor(roFloor, scNo);
+	}
+	
+	@Override
+	public int getLike(int roNo) {
+		return roomMapper.getLike(roNo);
+	}
+	
+	@Override
+	public List<LikeItDTO> getLikeInfo(int roNo) {
+		return roomMapper.getLikeInfo(roNo);
 	}
 }

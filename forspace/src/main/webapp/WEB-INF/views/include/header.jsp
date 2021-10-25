@@ -7,119 +7,150 @@
 
 
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>FORSPACE</title>
+  <head>
+  	<title>Sidebar 01</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">    
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet"> 
+        
 		
-
-  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="../resources/css/styles.css" rel="stylesheet" />
-
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../resources/css/style.css">
+				
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/> <!-- 아이콘&ajax 사용 -->		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        
-		<!-- Core theme JS-->
-        <script src="../resources/js/scripts.js"></script>
-        <style>
-	        html,body{ 
-	        	margin:0; 
-	        	padding:0; 
-	        	width:100%; 
-	        	height:100%; 
-	        	}
-        	.wrapper{
-        		display:flex;
-        		min-height:100vh;
-        		flex-direction:column;
-        	}
-        	.main-container{
-        		flex:1;
-        	}
-			.navbar-custom{
-				background-color:rgb(102, 58, 130);
-			}
-			.navbar-brand{
-				color:white;
-			}
-			.nav-link{
-				color:white;
-			}
-			
-			footer{
-				height:60px;
-				background-color:rgb(102, 58, 130);
-				width:100%;
-				/*padding:30px 0;*/
-			}
-			.main-content{
-				flex:1;
-			}
-		</style>
-    </head>
 
-<body>
-<div class="wrapper">
-       <!-- Responsive navbar-->
-        <nav class="navbar navbar-expand-lg navbar-custom">
-            <div class="container">
-                <a class="navbar-brand" href="/">FORSPACE</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-						<sec:authorize access="isAnonymous()">
-							<li class="nav-item dropdown no-arrow">
-								<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-									data-toggle="dropdown" aria-haspopup="ture" aria-expanded="false" style="color:#d0342c;">
-									<span class="mr-2 d-none d-lg-inline">게스트</span>
-									<i class="fas fa-user-time fa-lg"></i>
+  </head>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="p-4 pt-5">
+		  		<a href="#" class="img logo rounded-circle mb-5"></a>
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+	            <ul class="collapse list-unstyled" id="homeSubmenu">
+                <li>
+                    <a href="#">Home 1</a>
+                </li>
+                <li>
+                    <a href="#">Home 2</a>
+                </li>
+                <li>
+                    <a href="#">Home 3</a>
+                </li>
+	            </ul>
+	          </li>
+	          <li>
+	              <a href="#">About</a>
+	          </li>
+	          <li>
+              <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+              <ul class="collapse list-unstyled" id="pageSubmenu">
+                <li>
+                    <a href="#">Page 1</a>
+                </li>
+                <li>
+                    <a href="#">Page 2</a>
+                </li>
+                <li>
+                    <a href="#">Page 3</a>
+                </li>
+              </ul>
+	          </li>
+	          <li>
+              <a href="#">Portfolio</a>
+	          </li>
+	          <li>
+              <a href="#">Contact</a>
+	          </li>
+	        </ul>
+
+	        <div class="footer">
+	        	<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
+						  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+	        </div>
+
+	      </div>
+    	</nav>
+
+        <!-- Page Content  -->
+      <div id="content" class="p-4 p-md-5">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+              <i class="fa fa-bars"></i>
+              <span class="sr-only">Toggle Menu</span>
+            </button>
+            <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button>
+
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto">
+              	<sec:authorize access="isAnonymous()">
+	              	<li class="nav-item dropdown no-arrow">
+						<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+										data-toggle="dropdown" aria-haspopup="ture" aria-expanded="false" style="color:#d0342c;">
+							<span class="mr-2 d-none d-lg-inline">게스트</span>
+							<i class="fas fa-user-time fa-lg"></i>
+						</a>
+					<!-- Dropdown user information -->
+						<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+							<a class="dropdown-item" href="../member/login">
+								<i class="fas fa-user-check fa-sm fa-fw mr-2">로그인</i>
+							</a>
+							<a class="dropdown-item" href="../member/memberjoin">
+								<i class="fas fa-user-plus fa-sm fa-fw mr-2">회원가입</i>
+							</a>
+						</div>
+					</li>
+				</sec:authorize>
+				<sec:authorize access="isAuthenticated()">
+	                <li class="nav-item active">
+	                    <a class="nav-link" href="/">Home</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="../room/roomList?roFloor=0">연습실</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="#">공지사항</a>
+	                </li>
+	                <li class="nav-item dropdown no-arrow">
+	                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+										data-toggle="dropdown" aria-haspopup="ture" aria-expanded="false" style="color:#d0342c;">
+							<span class="mr-2 d-none d-lg-inline">
+								<sec:authentication property="principal.memberDTO.meName"/>
+							</span>
+							<i class="fas fa-user-time fa-lg"></i>
+						</a>
+						<!-- Dropdown user information -->
+							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+								<a class="dropdown-item" href="#">
+									<i class="fas fa-user-check fa-sm fa-fw mr-2">정보수정</i>
 								</a>
-							<!-- Dropdown user information -->
-								<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-									<a class="dropdown-item" href="/member/login">
-										<i class="fas fa-user-check fa-sm fa-fw mr-2">로그인</i>
-									</a>
-									<a class="dropdown-item" href="/member/memberjoin">
-										<i class="fas fa-user-plus fa-sm fa-fw mr-2">회원가입</i>
-									</a>
-								</div>
-							</li>
-						</sec:authorize>  
-						<sec:authorize access="isAuthenticated()">
-							<li class="nav-item"><a class="nav-link" href="../room/roomList">연습실</a></li>
-	                        <li class="nav-item"><a class="nav-link" href="#!">공지사항</a></li>
-	                        <li class="nav-item"><a class="nav-link" href="#!">문의사항</a></li>
-							<li class="nav-item dropdown no-arrow">
-							
-								<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-									data-toggle="dropdown" aria-haspopup="ture" aria-expanded="false" style="color:#d0342c;">
-									<span class="mr-2 d-none d-lg-inline">
-										<sec:authentication property="principal.memberDTO.meName"/>
-									</span>
-									<i class="fas fa-user-time fa-lg"></i>
+								<a class="dropdown-item" href="/member/logout">
+									<i class="fas fa-user-plus fa-sm fa-fw mr-2">로그아웃</i>
 								</a>
-								<!-- Dropdown user information -->
-								<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-									<a class="dropdown-item" href="/member/login">
-										<i class="fas fa-user-check fa-sm fa-fw mr-2">정보수정</i>
-									</a>
-									<a class="dropdown-item" href="/member/logout">
-										<i class="fas fa-user-plus fa-sm fa-fw mr-2">로그아웃</i>
-									</a>
-								</div>
-							</li>
-						</sec:authorize>						                      
-                    </ul>
-                </div>
+							</div>
+	                </li>
+	               </sec:authorize>
+              </ul>
             </div>
+          </div>
         </nav>
 
 	<sec:authorize access="isAuthenticated()">
-    <sec:authentication property="principal.memberDTO.meRole" var="loginUserRole"/> 
-   	<sec:authentication property="principal.memberDTO.meEmail" var="loginUser"/> 
+	    <sec:authentication property="principal.memberDTO.meRole" var="loginUserRole"/> 
+	   	<sec:authentication property="principal.memberDTO.meEmail" var="loginUser"/> 
    	</sec:authorize>

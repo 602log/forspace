@@ -1,33 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <style>
-	.limitTime{
-		float:left;
-	}
+
 </style>
 <%@ include file="include/header.jsp"%>
         <!-- Page content-->
-        <div class="container mt-5 main-content">
-        	<div class="row">
-                <div class="col-lg-4"> 
-                	<h1>Welcom FORSPACE ONE</h1>
-                </div>
+        <h2 class="mb-4">forspace home</h2>
+        <p>Welcome forspace</p>
 
-                <div class="col-lg-4">
-					<h1>Welcom FORSPACE TWO</h1>
-                </div>
-
-				<%@ include file="include/side.jsp"%>
-			</div>
-        </div>
 <script>
-	$(document).ready(function(){
-		var msg = '${msg}';
-		if (!(msg===''||history.state)){
-			var modal= $(".modal");
-			modal.modal();
-		}
-	});
+
 </script>
 	<%@ include file="include/footer.jsp"%>
 

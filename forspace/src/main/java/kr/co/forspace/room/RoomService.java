@@ -10,9 +10,11 @@ public interface RoomService {
 
 	List<RoomDTO> floorList(int scNo);
 
-	RoomDTO roomDetail(String roName, int scNo);
+	RoomDTO roomDetail(@Param("roNo") int roNo);
 
 	List<RoomDTO> selectFloor(@Param("roFloor") int roFloor, @Param("scNo") int scNo);
 	
+	int getLike(int roNo);
 	
+	List<LikeItDTO> getLikeInfo(int roNo);
 }

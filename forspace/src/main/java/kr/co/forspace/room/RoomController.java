@@ -34,50 +34,50 @@ public class RoomController {
 
 //	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/roomDetail")
-	public String roomDetail(String roName, Model model, Authentication auth) {// 연습실별 상세정보
-		String meEmail = auth.getName();//이용자의 이메일
-		int scNo = memberService.mySchoolNo(meEmail);
+	public String roomDetail(int roNo, Model model, Authentication auth) {// 연습실별 상세정보
 		
-		log.info("roName:" + roName);
-
-		model.addAttribute("dto", roomService.roomDetail(roName, scNo));
-
-		return "room/roomDetailPage";
+		log.info("roNo:" + roNo);
+		
+		model.addAttribute("dto", roomService.roomDetail(roNo));		
+		return "/room/roomDetail";
+		
 	}
-
+	
 //	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/roomList")
-	public String roomList(Model model, Authentication auth) {// 연습실 리스트
+	@RequestMapping("/roomList")
+	public void roomList(Model model, int roFloor, Authentication auth) {// 연습실 리스트
 		
 		//이용자의 학교 번호 찾기
 		String meEmail = auth.getName();//이용자의 이메일
 		int scNo = memberService.mySchoolNo(meEmail);
 		//int scNo = 1;
 		log.info("이용자의 학교"+scNo);
-		List<RoomDTO> list = roomService.roomNoList(scNo);// 가장 낮은 층의 연습실 리스트
-
-		List<RoomDTO> floorList = roomService.floorList(scNo);// 층 리스트
-
+		
+		List<RoomDTO> list;
+		
+		if(roFloor == 0) {
+			log.info("기본층");
+			list = roomService.roomNoList(scNo);// 가장 낮은 층의 연습실 리스트
+		}else {
+			log.info("선택층");
+			list = roomService.selectFloor(roFloor, scNo); //클릭한 해당층의 연습실 리스트
+		}
+		
+		for(int i=0; i<list.size(); i++) {// 위에서 찾은 연습실 리스트를 하나씩
+			
+			int roNo = list.get(i).getRoNo();
+			
+			int likeCnt =  roomService.getLike(roNo); //해당 연습실의 like 수
+			//List<LikeItDTO> likeDTO = roomService.getLikeInfo(roNo);//해당 연습실의 like 정보
+			
+			list.get(i).setLikeCnt(likeCnt);//i번째의 like 수 setting
+			
+		}
+		
 		model.addAttribute("list", list);
+		log.info(list);
+		List<RoomDTO> floorList = roomService.floorList(scNo);// 층 리스트
 		model.addAttribute("floorList", floorList);
-
-		return "room/roomList";
 	}
 
-//	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/roomFloor")
-	public void roomFloor(Model model, @Param("roFloor") int roFloor, Authentication auth) {// 층별 연습실 리스트
-		String meEmail = auth.getName();//이용자의 이메일
-		int scNo = memberService.mySchoolNo(meEmail);
-		//int scNo = 1;
-		log.info("이용자의 학교"+scNo);
-
-		List<RoomDTO> list = roomService.selectFloor(roFloor, scNo);
-
-		List<RoomDTO> floorList = roomService.floorList(scNo);// 층 리스트
-
-		model.addAttribute("list", list);
-		model.addAttribute("floorList", floorList);
-
-	}
 }

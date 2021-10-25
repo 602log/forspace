@@ -16,7 +16,6 @@
 						</div>
 					</div>
 				</div>
-				<%@ include file="include/side.jsp"%>
 			</div>	
         </div>
 <script>

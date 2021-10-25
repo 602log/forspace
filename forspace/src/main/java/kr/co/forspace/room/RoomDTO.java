@@ -13,14 +13,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RoomDTO {
 
-	private Long roNo;
-	private Long scNo;
+	private Integer roNo;
+	private Integer scNo;
 	private String roName;
 	private Integer roFloor;
-	private Long roMax;
+	private Integer roMax;
 	private String roStart;
 	private String roClose;
-	private Long roLimit;
+	private Integer roLimit;
 	private Date roRegdate;
+	
+	private int likeCnt;
+	private LikeItDTO likeDTO;
 
 }

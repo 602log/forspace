@@ -28,7 +28,6 @@
 						</c:forEach>
 					</div>
 	             </div>
-				<%@ include file="../include/side.jsp"%>
 			</div>
 
         </div>

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ImageDTO {
 
-	private Long imNo;
+	private Integer imNo;
 	private String imEmail;
 	private String imName;
 	private String imPath;
