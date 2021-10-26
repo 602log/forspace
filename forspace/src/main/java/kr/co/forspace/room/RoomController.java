@@ -55,24 +55,25 @@ public class RoomController {
 		
 		List<RoomDTO> list;
 		
-		if(roFloor == 0) {
-			log.info("기본층");
-			list = roomService.roomNoList(scNo);// 가장 낮은 층의 연습실 리스트
-		}else {
-			log.info("선택층");
-			list = roomService.selectFloor(roFloor, scNo); //클릭한 해당층의 연습실 리스트
-		}
+		list = roomService.selectFloor(roFloor, scNo);
 		
-		for(int i=0; i<list.size(); i++) {// 위에서 찾은 연습실 리스트를 하나씩
-			
-			int roNo = list.get(i).getRoNo();
-			
-			int likeCnt =  roomService.getLike(roNo); //해당 연습실의 like 수
-			//List<LikeItDTO> likeDTO = roomService.getLikeInfo(roNo);//해당 연습실의 like 정보
-			
-			list.get(i).setLikeCnt(likeCnt);//i번째의 like 수 setting
-			
-		}
+		log.info(list);
+		
+		/*
+		 * for(int i=0; i<list.size(); i++) {// 위에서 찾은 연습실 리스트를 하나씩
+		 * 
+		 * int roNo = list.get(i).getRoNo();
+		 * 
+		 * int likeCnt = roomService.getLike(roNo); //해당 연습실의 like 수
+		 * list.get(i).setLikeCnt(likeCnt);//i번째의 like 수 setting
+		 * 
+		 * int checkLike = roomService.getLikeInfo(roNo, meEmail);//해당 연습실의 이용자가 like
+		 * 했는지 model.addAttribute("checkLike", checkLike);
+		 * 
+		 * //model.addAttribute("likeList", likeDTO); //i번째를 좋아요 한 모든 정보
+		 * 
+		 * }
+		 */
 		
 		model.addAttribute("list", list);
 		log.info(list);

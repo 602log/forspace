@@ -21,5 +21,5 @@ public interface RoomMapper {
 	
 	int getLike(int roNo);
 	
-	List<LikeItDTO> getLikeInfo(int roNo);
+	int getLikeInfo(@Param("roNo") int roNo, @Param("meEmail") String meEmail);
 }

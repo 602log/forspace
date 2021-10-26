@@ -22,6 +22,7 @@ public class RoomDTO {
 	private String roClose;
 	private Integer roLimit;
 	private Date roRegdate;
+	private Integer roLikecnt;
 	
 	private int likeCnt;
 	private LikeItDTO likeDTO;

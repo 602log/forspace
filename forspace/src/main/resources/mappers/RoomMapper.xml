@@ -16,6 +16,7 @@
 		<result column="RO_CLOSE" property="roClose"/>
 		<result column="RO_LIMIT" property="roLimit"/>
 		<result column="RO_REGDATE" property="roRegdate"/>
+		<result column="RO_LIKECNT" property="roLikecnt"/>
 	</resultMap>
 	
 	<resultMap type="kr.co.forspace.room.LikeItDTO" id="likeMap">
@@ -24,9 +25,9 @@
 		<result column="RO_NO" property="roNo"/>
 	</resultMap>
 	
-	<select id="getLikeInfo" parameterType="int" resultMap="likeMap">
-		SELECT LI_NO, ME_EMAIL, RO_NO
-		FROM LIKEIT WHERE RO_NO = #{roNo}
+	<select id="getLikeInfo" parameterType="kr.co.forspace.room.LikeItDTO" resultType="int">
+		SELECT COUNT(ME_EMAIL)
+		FROM LIKEIT WHERE RO_NO = #{roNo} AND ME_EMAIL = #{meEmail}
 	</select>
 	
 	<select id="getLike" parameterType="int" resultType="int">
@@ -35,16 +36,25 @@
 	</select>
 
 	<select id="selectFloor" parameterType="int" resultMap="roomMap">
-		SELECT RO_NO, RO_NAME
-		FROM ROOM
-		WHERE RO_FLOOR = #{roFloor} AND SC_NO = #{scNo}
+		select ro_no, ro_name
+		from room
+		where ro_floor = 
+			<choose>
+				<when test="roFloor == 0">
+				(SELECT MIN(RO_FLOOR) FROM ROOM WHERE SC_NO = #{scNo})
+				</when>
+				<otherwise>
+				#{roFloor}
+				</otherwise>
+			</choose>
+		and sc_no = #{scNo}
 	</select>
 	
-	<select id="roomNoList" parameterType="int" resultMap="roomMap">
+<!-- 	<select id="roomNoList" parameterType="int" resultMap="roomMap">
 		SELECT RO_NO, RO_NAME 
 		FROM ROOM
 		WHERE RO_FLOOR = (SELECT MIN(RO_FLOOR) FROM ROOM WHERE SC_NO = #{scNo})
-	</select>
+	</select> -->
 		
 <!-- 	<select id="roomNoList" parameterType="int" resultType="String">
 		SELECT RO_NAME

@@ -43,7 +43,7 @@ public class RoomServiceImpl implements RoomService {
 	}
 	
 	@Override
-	public List<LikeItDTO> getLikeInfo(int roNo) {
-		return roomMapper.getLikeInfo(roNo);
+	public int getLikeInfo(@Param("roNo") int roNo, @Param("meEmail") String meEmail) {
+		return roomMapper.getLikeInfo(roNo, meEmail);
 	}
 }
