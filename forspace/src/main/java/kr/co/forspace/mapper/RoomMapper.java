@@ -22,4 +22,9 @@ public interface RoomMapper {
 	int getLike(int roNo);
 	
 	int getLikeInfo(@Param("roNo") int roNo, @Param("meEmail") String meEmail);
+	
+	void insertLike(@Param("roNo") int roNo, @Param("meEmail") String meEmail);
+	void deleteLike(@Param("roNo") int roNo, @Param("meEmail") String meEmail);
+	
+	void updateLikeCnt(@Param("roNo") int roNo, @Param("myLike") int myLike);
 }

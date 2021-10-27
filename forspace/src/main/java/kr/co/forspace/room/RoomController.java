@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.forspace.member.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -57,18 +58,16 @@ public class RoomController {
 		
 		list = roomService.selectFloor(roFloor, scNo);
 		
-		log.info(list);
+		for(int i=0; i<list.size(); i++) {
 		
+			int roNo = list.get(i).getRoNo(); // i번째 roNo
+			int myLike = roomService.getLikeInfo(roNo, meEmail);//user가 i번째를 좋아요 했으면 1, 아니면 0
+			list.get(i).setMyLike(myLike);
+		}
 		/*
-		 * for(int i=0; i<list.size(); i++) {// 위에서 찾은 연습실 리스트를 하나씩
-		 * 
-		 * int roNo = list.get(i).getRoNo();
 		 * 
 		 * int likeCnt = roomService.getLike(roNo); //해당 연습실의 like 수
 		 * list.get(i).setLikeCnt(likeCnt);//i번째의 like 수 setting
-		 * 
-		 * int checkLike = roomService.getLikeInfo(roNo, meEmail);//해당 연습실의 이용자가 like
-		 * 했는지 model.addAttribute("checkLike", checkLike);
 		 * 
 		 * //model.addAttribute("likeList", likeDTO); //i번째를 좋아요 한 모든 정보
 		 * 
@@ -80,5 +79,26 @@ public class RoomController {
 		List<RoomDTO> floorList = roomService.floorList(scNo);// 층 리스트
 		model.addAttribute("floorList", floorList);
 	}
-
+	
+	@ResponseBody
+	@PostMapping("/insertLike")
+	public String insertLike(int roNo, String meEmail) throws Exception {
+		log.info("roNo : "+ roNo + "meEmail : "+meEmail);
+		
+		int myLike = roomService.getLikeInfo(roNo, meEmail); //user가 like 했는지
+		
+		String result = "";
+		
+		if(myLike == 0) {
+			roomService.insertLike(roNo, meEmail);//insert like
+			result =  "like";
+			
+		}else {
+			roomService.deleteLike(roNo, meEmail);
+			result =  "unlike";
+		}
+		roomService.updateLikeCnt(roNo, myLike);
+		return result;
+	}
+	
 }

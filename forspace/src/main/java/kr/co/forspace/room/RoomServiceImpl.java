@@ -46,4 +46,19 @@ public class RoomServiceImpl implements RoomService {
 	public int getLikeInfo(@Param("roNo") int roNo, @Param("meEmail") String meEmail) {
 		return roomMapper.getLikeInfo(roNo, meEmail);
 	}
+	
+	@Override
+	public void insertLike(int roNo, String meEmail) {
+		roomMapper.insertLike(roNo, meEmail);
+		
+	}
+	@Override
+	public void deleteLike(int roNo, String meEmail) {
+		roomMapper.deleteLike(roNo, meEmail);
+	}
+	
+	@Override
+	public void updateLikeCnt(@Param("roNo") int roNo, @Param("myLike") int myLike) {
+		roomMapper.updateLikeCnt(roNo, myLike);
+	}
 }

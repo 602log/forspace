@@ -25,6 +25,30 @@
 		<result column="RO_NO" property="roNo"/>
 	</resultMap>
 	
+	<update id="updateLikeCnt">
+		UPDATE ROOM 
+		SET RO_LIKECNT = 
+		<choose>
+			<when test="myLike == 0">
+			RO_LIKECNT + 1
+			</when>
+			<otherwise>
+			RO_LIKECNT -1
+			</otherwise>
+		</choose>
+		WHERE RO_NO = #{roNo}
+	</update>
+	
+	<delete id="deleteLike">
+		DELETE FROM LIKEIT
+		WHERE RO_NO = #{roNo} AND ME_EMAIL = #{meEmail}
+	</delete>
+	
+	<insert id="insertLike">
+		INSERT INTO LIKEIT (LI_NO, ME_EMAIL, RO_NO)
+		VALUES (SEQ_LI.NEXTVAL, #{meEmail}, #{roNo})
+	</insert>
+	
 	<select id="getLikeInfo" parameterType="kr.co.forspace.room.LikeItDTO" resultType="int">
 		SELECT COUNT(ME_EMAIL)
 		FROM LIKEIT WHERE RO_NO = #{roNo} AND ME_EMAIL = #{meEmail}
@@ -36,7 +60,7 @@
 	</select>
 
 	<select id="selectFloor" parameterType="int" resultMap="roomMap">
-		select ro_no, ro_name
+		select ro_no, ro_name, ro_likecnt
 		from room
 		where ro_floor = 
 			<choose>

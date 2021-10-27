@@ -7,7 +7,12 @@
 		justify-content: center;
   		align-items: center;
 	}
-	
+
+	.likeBtn .heart-shape{
+		display : inline;
+		color : red;
+	}
+
 </style>
 <%@ include file="../include/header.jsp"%>
 
@@ -40,7 +45,19 @@
 									<div class="card" style="border-radius:50px;">
 										<div class="card-body text-center">
 											<i onClick="location.href='/room/roomDetail?roNo=${list.roNo}'"><h5><c:out value="${list.roName }"/></h5></i>
-
+											<c:choose>
+												<c:when test="${list.myLike == 0}">
+													<a class="btn likeBtn" data-rono="${list.roNo }">
+														<span class="heart-shape">♡</span>
+													</a>
+												</c:when>
+												<c:otherwise>
+													<a class="btn likeBtn" data-rono="${list.roNo }">
+														<span class="heart-shape">♥</span>
+													</a>
+												</c:otherwise>
+											</c:choose>
+											<span class="like-count">${list.roLikecnt }</span>
 										</div>
 									</div>
 								</c:forEach>
@@ -54,6 +71,32 @@
         </div>
 
 <script>
+
+$(document).on("click", ".likeBtn", function(e){
+	var roNo = $(this).data("rono");
+	var meEmail = '${loginUser}';
+	
+	//alert(roNo + meEmail);
+
+	$.ajax({
+		type : "POST",
+		url : "/room/insertLike",
+		data : {roNo : roNo,
+				meEmail : meEmail},
+		dataType : "text",
+		success : function(data){
+			if(data == "like"){
+				$(".heart-shape").text("♥");
+				
+			}else{
+				$(".heart-shape").text("♡");
+				
+			}
+			location.reload();
+		}
+	});
+
+});
 
 </script>
 	<%@ include file="../include/footer.jsp"%>

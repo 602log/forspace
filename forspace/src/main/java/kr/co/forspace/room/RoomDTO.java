@@ -24,7 +24,7 @@ public class RoomDTO {
 	private Date roRegdate;
 	private Integer roLikecnt;
 	
-	private int likeCnt;
+	private int myLike;
 	private LikeItDTO likeDTO;
 
 }
