@@ -224,7 +224,7 @@
 				if(data.length>0){
 					$.each(data, function(index, sch){
 						str += "<div class='input-group mb-3'>"
-							+"<input type='text' class='form-control' aria-describedby='selectBtn" + cnt + "' value='" + sch.scName + " " + sch.scCampus + "캠퍼스 " + sch.scMajor + "' readonly>"
+							+"<input type='text' class='form-control' aria-describedby='selectBtn" + cnt + "' value='" + sch.scName + " " + sch.scCampus + " " + sch.scMajor + "' readonly>"
 							+"<input type='hidden' class='form-control' id='selScNo' value='" + sch.scNo + "' readonly>"
 							+"<input type='hidden' class='form-control' id='selScName' value='" + sch.scName + "' readonly>"
 							+"<input type='hidden' class='form-control' id='selScCampus' value='" + sch.scCampus + "' readonly>"

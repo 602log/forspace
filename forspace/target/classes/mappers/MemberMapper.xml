@@ -23,6 +23,15 @@
 		<result column="ME_ROLE" property="meRole"/>
 	</resultMap>
 	
+	<insert id="insertSchool">
+	
+		<selectKey resultType="int" keyProperty="scNo" order="AFTER">
+			SELECT MAX(SC_NO) FROM SCHOOL
+	    </selectKey>
+		INSERT INTO SCHOOL (SC_NO, SC_NAME, SC_CAMPUS, SC_MAJOR, SC_CHECKNUM)
+		VALUES (SEQ_SC.NEXTVAL, #{scName}, #{scCampus}, #{scMajor}, #{scChecknum})
+	</insert>
+	
 	<select id="mySchoolNo" parameterType="String" resultType="int">
 		SELECT SC_NO
 		FROM MEMBER
@@ -47,7 +56,13 @@
 		WHERE SC_NAME LIKE '%'||#{scName}||'%'
 		]]>
 	</select>
-
+	
+	<select id="duplecateSchool" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM SCHOOL
+		WHERE SC_NAME = #{scName} AND SC_CAMPUS = #{scCampus} AND SC_MAJOR = #{scMajor}
+	</select>
+	
 	<select id="duplecateEmail" parameterType="String" resultType="int">
 		SELECT COUNT(*)
 		FROM member

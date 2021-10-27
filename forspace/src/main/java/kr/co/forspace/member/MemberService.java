@@ -2,6 +2,8 @@ package kr.co.forspace.member;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface MemberService {
 
 	List<SchoolDTO> getSchool(String scName);
@@ -17,4 +19,8 @@ public interface MemberService {
 	MemberDTO myProfile(String meEmail);
 	
 	int mySchoolNo(String meEmail);
+	
+	void insertSchool(SchoolDTO schoolDTO);
+	
+	int duplecateSchool(@Param("scName") String scName, @Param("scCampus") String scCampus, @Param("scMajor") String scMajor);
 }

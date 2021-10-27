@@ -2,6 +2,7 @@ package kr.co.forspace.member;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +61,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int mySchoolNo(String meEmail) {
 		return memberMapper.mySchoolNo(meEmail);
+	}
+	
+	@Override
+	public void insertSchool(SchoolDTO schoolDTO) {
+		memberMapper.insertSchool(schoolDTO);
+	}
+	
+	@Override
+	public int duplecateSchool(@Param("scName") String scName, @Param("scCampus") String scCampus, @Param("scMajor") String scMajor) {
+		return memberMapper.duplecateSchool(scName, scCampus, scMajor);
 	}
 
 }

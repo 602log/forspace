@@ -27,4 +27,5 @@ public interface RoomMapper {
 	void deleteLike(@Param("roNo") int roNo, @Param("meEmail") String meEmail);
 	
 	void updateLikeCnt(@Param("roNo") int roNo, @Param("myLike") int myLike);
+	
 }

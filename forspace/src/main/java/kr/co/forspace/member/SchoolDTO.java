@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SchoolDTO {
-	private Long scNo;
+	private int scNo;
 	private String scName;
 	private String scCampus;
 	private String scMajor;
