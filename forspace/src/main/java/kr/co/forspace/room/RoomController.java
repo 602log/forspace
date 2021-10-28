@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,12 +29,14 @@ public class RoomController {
 	private final RoomService roomService;
 	private final MemberService memberService;
 
+	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/addroom")
 	public void addroom() {
 
 	}
 
-//	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/roomDetail")
 	public String roomDetail(int roNo, Model model, Authentication auth) {// 연습실별 상세정보
 		
@@ -44,7 +47,7 @@ public class RoomController {
 		
 	}
 	
-//	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/roomList")
 	public void roomList(Model model, int roFloor, Authentication auth) {// 연습실 리스트
 		

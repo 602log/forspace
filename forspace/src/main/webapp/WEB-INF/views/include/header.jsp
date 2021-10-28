@@ -10,9 +10,9 @@
   <head>
   	<title>Forspace</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
     
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet"> 
+    	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet"> 
         
 		
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -26,6 +26,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   </head>
+  
   <body>
 		
 		<div class="wrapper d-flex align-items-stretch">
@@ -139,6 +140,11 @@
 								<a class="dropdown-item" href="#">
 									<i class="fas fa-user-check fa-sm fa-fw mr-2">정보수정</i>
 								</a>
+							<sec:authorize access="hasRole('ROLE_ADMIN')">
+								<a class="dropdown-item" href="room/addroom">
+									<i class="fas fa-user-plus fa-sm fa-fw mr-2">연습실 등록</i>
+								</a>
+							</sec:authorize>
 								<a class="dropdown-item" href="/member/logout">
 									<i class="fas fa-user-plus fa-sm fa-fw mr-2">로그아웃</i>
 								</a>

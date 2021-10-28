@@ -6,6 +6,7 @@ import java.util.Random;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -201,6 +202,7 @@ public class MemberController {
 		return new ResponseEntity<String>(msg, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/myProfile")
 	public void myProfile(String meEmail, Model model, Authentication auth) {
 		meEmail = auth.getName();

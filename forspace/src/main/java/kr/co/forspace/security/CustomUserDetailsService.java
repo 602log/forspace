@@ -4,16 +4,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import kr.co.forspace.mapper.MemberMapper;
 import kr.co.forspace.member.MemberDTO;
-import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @NoArgsConstructor
@@ -27,7 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		//DB에서 유저정보를 불러오는 메소드
 		MemberDTO memberDTO = memberMapper.myProfile(username);//로그인 USER정보 가져오기
-		Collection<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+		Collection<GrantedAuthority> authList = new ArrayList<>();
 		authList.add(new SimpleGrantedAuthority("ROLE_"+memberDTO.getMeRole()));
 		
 		return new CustomUser(memberDTO, authList);

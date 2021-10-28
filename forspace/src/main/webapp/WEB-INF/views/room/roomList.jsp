@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+
+
+
 <style>
 	.floorCnt{
 		display:flex;
@@ -12,6 +14,48 @@
 		display : inline;
 		color : red;
 	}
+	
+	.post-slider{
+		width : 100%;
+		margin : 0px auto;
+		position : relative;
+	}
+	
+	.post-slider .next{
+		position : absolute;
+		top : 0%;
+		right : 30px;
+		font-size : 2em;
+		color : gray;
+		curxor : pointer;
+	}
+	
+	.post-slider .prev{
+		position : absolute;
+		top : 0%;
+		left : 30px;
+		font-size : 2em;
+		color : gray;
+		cursor : pointer;
+	}
+	
+	.post-slider .post-wrapper{
+		width : 84%;
+		height : 80px;
+		margin : 0px auto;
+		overflow : hidden;
+		padding : 10px 0px 10px 0px;
+	}
+	
+	.post-slider .post-wrapper .post{
+		width : 100px;
+		height : 100px;
+		margin : 0px 10px;
+		display : inline-block;
+		background : white;
+		border-radius : 5px;
+	}
+
 
 </style>
 <%@ include file="../include/header.jsp"%>
@@ -23,14 +67,17 @@
 
         		<div class="col-lg-12">
         		<!--층 수 시작-------------------------------------------------------------------------------------------------------------->
-      				<div class="autoplay">
-						<c:forEach var="roFloor" items="${floorList}">
-							<div class="card" style="border-radius:80px;" onClick="location.href='/room/roomList?roFloor=${roFloor}'">
-								<div class="card-body">
-									<c:out value="${roFloor }"/>
+      				<div class="post-slider">
+						<i class="fas fa-chevron-left prev"></i>
+						<i class="fas fa-chevron-right next"></i>
+							<div class="post-wrapper">
+								<c:forEach var="roFloor" items="${floorList}">
+								<div class="post" onClick="location.href='/room/roomList?roFloor=${roFloor}'">
+									<h2><c:out value="${roFloor }"/>F</h2>
 								</div>
+								</c:forEach>
 							</div>
-						</c:forEach>
+						
         			</div>
         		<!--층 수 끝--------------------------------------------------------------------------------------------------------------->
   	           
@@ -71,7 +118,6 @@
         </div>
 
 <script>
-
 $(document).on("click", ".likeBtn", function(e){
 	var roNo = $(this).data("rono");
 	var meEmail = '${loginUser}';
