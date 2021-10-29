@@ -22,4 +22,12 @@ public interface RoomService {
 	void deleteLike(@Param("roNo") int roNo, @Param("meEmail") String meEmail);
 	
 	void updateLikeCnt(@Param("roNo") int roNo, @Param("myLike") int myLike);
+	
+	List<ItemDTO> searchItem(String itName);
+	
+	String maxRoomName(@Param("roFloor") int roFloor, @Param("scNo") int scNo);
+	
+	void insertRoom(RoomDTO roomDTO);
+	
+	void insertRoomItem(RoomItemDTO roomItemDTO);
 }

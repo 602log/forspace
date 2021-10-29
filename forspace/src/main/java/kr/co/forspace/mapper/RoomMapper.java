@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.co.forspace.room.ItemDTO;
 import kr.co.forspace.room.LikeItDTO;
 import kr.co.forspace.room.RoomDTO;
+import kr.co.forspace.room.RoomItemDTO;
 
 public interface RoomMapper {
 
@@ -27,5 +29,13 @@ public interface RoomMapper {
 	void deleteLike(@Param("roNo") int roNo, @Param("meEmail") String meEmail);
 	
 	void updateLikeCnt(@Param("roNo") int roNo, @Param("myLike") int myLike);
+	
+	List<ItemDTO> searchItem(String itName);
+	
+	String maxRoomName(@Param("roFloor") int roFloor, @Param("scNo") int scNo);
+	
+	void insertRoom(RoomDTO roomDTO);
+	
+	void insertRoomItem(RoomItemDTO roomItemDTO);
 	
 }

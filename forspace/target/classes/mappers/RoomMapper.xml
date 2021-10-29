@@ -25,6 +25,38 @@
 		<result column="RO_NO" property="roNo"/>
 	</resultMap>
 	
+	<resultMap type="kr.co.forspace.room.ItemDTO" id="itemMap">
+		<id column="IT_NO" property="itNo"/>
+		<result column="IT_NAME" property="itName"/>
+	</resultMap>
+	
+	<resultMap type="kr.co.forspace.room.RoomItemDTO" id="roomItemMap">
+		<id column="RI_NO" property="riNo"/>
+		<result column="RO_NO" property="roNo"/>
+		<result column="IT_NO" property="itNo"/>
+		<result column="RI_CNT" property="riCnt"/>
+	</resultMap>	
+	
+	<insert id="insertRoomItem">
+		INSERT INTO ROOM_ITEM (RI_NO, RO_NO, IT_NO, RI_CNT)
+		VALUES (seq_ri.nextval, #{roNo}, #{itNo}, #{riCnt})
+	</insert>
+	
+	<insert id="insertRoom">
+		<selectKey resultType="int" keyProperty="roNo" order="AFTER">
+			SELECT MAX(RO_NO) FROM ROOM
+		</selectKey>
+		INSERT INTO ROOM(RO_NO, SC_NO, RO_NAME, RO_FLOOR, RO_MAX, RO_START, RO_CLOSE, RO_LIMIT)
+		VALUES(SEQ_RO.NEXTVAL, #{scNo}, #{roName}, #{roFloor}, #{roMax}, #{roStart}, #{roClose}, #{roLimit})
+	</insert>
+	
+	<select id="maxRoomName" parameterType="int" resultType="String">
+		SELECT RO_NAME
+		FROM ROOM
+		WHERE RO_NO = 
+			(SELECT MAX(RO_NO) FROM ROOM WHERE SC_NO = #{scNo} AND RO_FLOOR = #{roFloor})
+	</select>
+	
 	<update id="updateLikeCnt">
 		UPDATE ROOM 
 		SET RO_LIKECNT = 
@@ -38,6 +70,14 @@
 		</choose>
 		WHERE RO_NO = #{roNo}
 	</update>
+	
+	<select id="searchItem" parameterType="String" resultMap="itemMap">
+		<![CDATA[
+		SELECT IT_NO, IT_NAME 
+		FROM ITEM
+		WHERE IT_NAME LIKE '%'||#{itName}||'%'
+		]]>
+	</select>
 	
 	<delete id="deleteLike">
 		DELETE FROM LIKEIT

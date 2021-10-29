@@ -28,9 +28,143 @@ public class RoomController {
 
 	private final RoomService roomService;
 	private final MemberService memberService;
+ 
+	@PostMapping("/addroom")
+	public void addroom(RoomDTO roomDTO, int[] itNo, int[] riCnt, int roomCnt, Authentication auth) {
+		log.info(roomDTO);
+		log.info(roomDTO.getRoClose().getClass().getSimpleName());
+		log.info(itNo.length);
+		log.info("만들 연습실 개수"+roomCnt);
+		
+		String meEmail = auth.getName();
+		int scNo = memberService.mySchoolNo(meEmail);
+		
+		//해당 학교, 해당 층의 가장 나중에 입력한 연습실 이름
+		String maxRoName = roomService.maxRoomName(roomDTO.getRoFloor(), scNo);
+		
+		//등록 층수(int)를 string으로 형변환
+		String roFloorStr = Integer.toString(roomDTO.getRoFloor());
+		
+		if(maxRoName == "" || maxRoName == null) {//해당 층에 등록된 연습실이 없으면
+			
+			log.info("등록된 연습실이 없음");
+			String RoNamestr;
+			
+			for(int i=1; i<=roomCnt; i++) {
+				//층수 + 개수로 roName 등록
+				if(roomCnt>9) {
+					RoNamestr = roFloorStr+i;
+				}else {
+					RoNamestr = roFloorStr+0+i;
+				}
+				
+				roomDTO.setScNo(scNo);
+				roomDTO.setRoName(RoNamestr);
+				
+				roomService.insertRoom(roomDTO);
+				int roNo = roomDTO.getRoNo();
+				//room item insert
+				for(int a=0; a<=itNo.length-1; a++) {
+					
+					RoomItemDTO roomItemDTO = RoomItemDTO.builder()
+											.roNo(roNo)
+											.itNo(itNo[a])
+											.riCnt(riCnt[a])
+											.build();
 
+					log.info(roomItemDTO);
+					roomService.insertRoomItem(roomItemDTO);
+				}
+
+			}
+			
+		}else {//해당 층에 등록된 연습실이 있음
+			log.info("등록된 연습실이 있음"+maxRoName);
+
+			int roNameInt; //형변환 후 연습실 이름을 담을 변수
+			
+			//string to int (문자열인 경우 예외처리)
+			try {
+				roNameInt = Integer.valueOf(maxRoName);//연습실 이름을 숫자로 변경
+			}catch(NumberFormatException e){
+				roNameInt = 0; //문자열을 숫자로 변경할 수 없을 경우 예외처리
+			}
+			
+				if(roNameInt == 0){//층수 + 번호로 roName 등록
+					String RoNamestr;
+					
+					for(int i=1; i<=roomCnt; i++) {
+						//층수 + 개수로 roName 등록
+						if(roomCnt>9) {
+							RoNamestr = roFloorStr+i;
+						}else {
+							RoNamestr = roFloorStr+"0"+i;
+						}
+						
+						roomDTO.setScNo(scNo);
+						roomDTO.setRoName(RoNamestr);
+						
+						//연습실 등록(insert)
+						roomService.insertRoom(roomDTO);
+						int roNo = roomDTO.getRoNo();
+						//room item insert
+						for(int a=0; a<=itNo.length-1; a++) {
+							
+							RoomItemDTO roomItemDTO = RoomItemDTO.builder()
+													.roNo(roNo)
+													.itNo(itNo[a])
+													.riCnt(riCnt[a])
+													.build();
+
+							log.info(roomItemDTO);
+							roomService.insertRoomItem(roomItemDTO);
+						}
+					}
+					
+				}else {//층수 + 1로 roName 등록
+					
+					for(int i=1; i<=roomCnt; i++) {
 	
-	@PreAuthorize("isAuthenticated()")
+						int newRoName = roNameInt + i;
+						String newRoNameStr = Integer.toString(newRoName);
+						
+						roomDTO.setScNo(scNo);
+						roomDTO.setRoName(newRoNameStr);
+						
+						roomService.insertRoom(roomDTO);
+						int roNo = roomDTO.getRoNo();
+						//room item insert
+						for(int a=0; a<=itNo.length-1; a++) {
+							
+							RoomItemDTO roomItemDTO = RoomItemDTO.builder()
+													.roNo(roNo)
+													.itNo(itNo[a])
+													.riCnt(riCnt[a])
+													.build();
+
+							log.info(roomItemDTO);
+							roomService.insertRoomItem(roomItemDTO);
+						}
+				
+					}//end of for
+				}//end of if
+			
+		}//end of if
+		
+			
+		
+	}//end of addroom()
+	
+	@ResponseBody
+	@PostMapping("/searchItem")
+	public List<ItemDTO> searchItem(String itName){
+		log.info(itName);
+		List<ItemDTO> list = roomService.searchItem(itName);
+		log.info(list);
+		return list;
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/addroom")
 	public void addroom() {
 

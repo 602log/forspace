@@ -61,4 +61,25 @@ public class RoomServiceImpl implements RoomService {
 	public void updateLikeCnt(@Param("roNo") int roNo, @Param("myLike") int myLike) {
 		roomMapper.updateLikeCnt(roNo, myLike);
 	}
+	
+	@Override
+	public List<ItemDTO> searchItem(String itName) {
+		log.info("조회한 item이름:"+itName);
+		return roomMapper.searchItem(itName);
+	}
+	
+	@Override
+	public String maxRoomName(int roFloor, int scNo) {
+		return roomMapper.maxRoomName(roFloor, scNo);
+	}
+	
+	@Override
+	public void insertRoom(RoomDTO roomDTO) {
+		roomMapper.insertRoom(roomDTO);
+	}
+	
+	@Override
+	public void insertRoomItem(RoomItemDTO roomItemDTO) {
+		roomMapper.insertRoomItem(roomItemDTO);
+	}
 }
