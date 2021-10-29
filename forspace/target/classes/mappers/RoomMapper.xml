@@ -35,7 +35,18 @@
 		<result column="RO_NO" property="roNo"/>
 		<result column="IT_NO" property="itNo"/>
 		<result column="RI_CNT" property="riCnt"/>
-	</resultMap>	
+		<association property="itemDTO" resultMap="itemMap"/>
+	</resultMap>
+	
+	
+	<select id="selectRoomItem" parameterType="int" resultMap="roomItemMap">
+		<![CDATA[
+		SELECT i.IT_NO, i.IT_NAME, ri.RI_NO, ri.RI_CNT, ri.RO_NO
+		FROM ITEM i, ROOM_ITEM ri
+		WHERE i.IT_NO = ri.IT_NO AND ri.RO_NO = #{roNo}
+		ORDER BY ri.RI_NO ASC
+		]]>
+	</select>
 	
 	<insert id="insertRoomItem">
 		INSERT INTO ROOM_ITEM (RI_NO, RO_NO, IT_NO, RI_CNT)

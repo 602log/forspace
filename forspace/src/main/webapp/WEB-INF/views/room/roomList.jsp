@@ -73,7 +73,7 @@
 							<div class="post-wrapper">
 								<c:forEach var="roFloor" items="${floorList}">
 								<div class="post" onClick="location.href='/room/roomList?roFloor=${roFloor}'">
-									<h2><c:out value="${roFloor }"/>F</h2>
+									<a><h2><c:out value="${roFloor }"/>F</h2></a>
 								</div>
 								</c:forEach>
 							</div>

@@ -172,11 +172,13 @@ public class RoomController {
 
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/roomDetail")
-	public String roomDetail(int roNo, Model model, Authentication auth) {// 연습실별 상세정보
+	public String roomDetail(int roNo, Model model) {// 연습실별 상세정보
 		
 		log.info("roNo:" + roNo);
 		
-		model.addAttribute("dto", roomService.roomDetail(roNo));		
+		model.addAttribute("items", roomService.selectRoomItem(roNo));
+		log.info(roomService.selectRoomItem(roNo));
+		model.addAttribute("dto", roomService.roomDetail(roNo));
 		return "/room/roomDetail";
 		
 	}

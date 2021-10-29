@@ -30,4 +30,6 @@ public interface RoomService {
 	void insertRoom(RoomDTO roomDTO);
 	
 	void insertRoomItem(RoomItemDTO roomItemDTO);
+	
+	List<RoomItemDTO> selectRoomItem(int roNo);
 }

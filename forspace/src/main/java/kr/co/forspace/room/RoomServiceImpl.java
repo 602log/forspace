@@ -82,4 +82,9 @@ public class RoomServiceImpl implements RoomService {
 	public void insertRoomItem(RoomItemDTO roomItemDTO) {
 		roomMapper.insertRoomItem(roomItemDTO);
 	}
+	
+	@Override
+	public List<RoomItemDTO> selectRoomItem(int roNo) {
+		return roomMapper.selectRoomItem(roNo);
+	}
 }

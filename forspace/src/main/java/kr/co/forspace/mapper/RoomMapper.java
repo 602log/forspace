@@ -38,4 +38,5 @@ public interface RoomMapper {
 	
 	void insertRoomItem(RoomItemDTO roomItemDTO);
 	
+	List<RoomItemDTO> selectRoomItem(int roNo);
 }

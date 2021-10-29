@@ -56,7 +56,28 @@
 		                </div>
                 	</div> 
                             	
-				</div>	
+				</div>
+				
+				<div class="col-lg-4">
+					<c:choose>
+						<c:when test="${empty items }">
+							<p class="text-center" style="font-size:20px;">옵션이 없습니다.</p>
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${items }" var="items">
+								<div class="card shadow h-20 py-2 mb-4">
+									<div class="card-body py-2">
+				                		<div class="row no-gutters align-items-center">
+				                			<div class="col">
+				                				<div class="h5 mb-0">${items.itemDTO.itName } ${items.riCnt}개</div>
+				                			</div>
+				                		</div>
+				                	</div>
+								</div>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</div>
 			</div>	
         </div>
 <script>

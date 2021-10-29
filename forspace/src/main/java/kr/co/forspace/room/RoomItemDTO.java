@@ -14,4 +14,6 @@ public class RoomItemDTO {
 	private Integer roNo;
 	private Integer itNo;
 	private Integer riCnt;
+	
+	private ItemDTO itemDTO;
 }
