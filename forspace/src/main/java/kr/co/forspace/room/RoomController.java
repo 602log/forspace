@@ -13,9 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.forspace.complaint.ComplaintDTO;
+import kr.co.forspace.complaint.ComplaintService;
 import kr.co.forspace.member.MemberService;
+import kr.co.forspace.paging.PagingDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j;
@@ -28,6 +32,7 @@ public class RoomController {
 
 	private final RoomService roomService;
 	private final MemberService memberService;
+	private final ComplaintService complaintService;
  
 	@PostMapping("/addroom")
 	public void addroom(RoomDTO roomDTO, int[] itNo, int[] riCnt, int roomCnt, Authentication auth) {
@@ -172,13 +177,34 @@ public class RoomController {
 
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/roomDetail")
-	public String roomDetail(int roNo, Model model) {// 연습실별 상세정보
+	public String roomDetail(@Param("roNo") int roNo, Model model, @Param("pagingDTO") PagingDTO pagingDTO,
+					@RequestParam(value="nowPage", required=false) String nowPage,
+					@RequestParam(value="cntPerPage", required=false) String cntPerPage) {// 연습실별 상세정보
 		
 		log.info("roNo:" + roNo);
+		
+		int total = complaintService.countComplaint(roNo);
+		if(nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+		}else if(nowPage == null) {
+			nowPage = "1";
+		}else if(cntPerPage == null) {
+			cntPerPage = "5";
+		}
+
+		log.info("nowPage:"+nowPage+"cntPerPage:"+cntPerPage);
+		pagingDTO = new PagingDTO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		
 		model.addAttribute("items", roomService.selectRoomItem(roNo));
 		log.info(roomService.selectRoomItem(roNo));
 		model.addAttribute("dto", roomService.roomDetail(roNo));
+		
+		model.addAttribute("roNo", roNo);
+		model.addAttribute("paging", pagingDTO);
+		model.addAttribute("com", complaintService.selectComplaint(roNo, pagingDTO));
+		log.info(complaintService.selectComplaint(roNo, pagingDTO));
+		
 		return "/room/roomDetail";
 		
 	}

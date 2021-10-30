@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="kr.co.forspace.mapper.ComplaintMapper">
+
+	<resultMap type="kr.co.forspace.complaint.ComplaintDTO" id="complaintMap">
+		<id column="CO_NO" property="coNo"/>
+		<result column="RO_NO" property="roNo"/>
+		<result column="CO_CONTENT" property="coContent"/>
+		<result column="ME_EMAIL" property="meEmail"/>
+		<result column="CO_DATE" property="coDate"/>
+		<result column="CO_FINISH" property="coFinish"/>
+	</resultMap>
+	
+	<select id="countComplaint" resultType="int" parameterType="int">
+		SELECT COUNT(CO_NO) FROM COMPLAINT WHERE RO_NO = #{roNo}
+	</select>
+	
+	<select id="selectComplaint" resultMap="complaintMap">
+		SELECT B.CO_NO, B.RO_NO, B.CO_CONTENT, B.ME_EMAIL, B.CO_DATE, B.CO_FINISH FROM(  
+        	SELECT ROWNUM RN, A.* FROM(
+                (SELECT * FROM COMPLAINT WHERE RO_NO = #{roNo} ORDER BY CO_NO DESC)A
+            )
+        )B WHERE RN BETWEEN #{pagingDTO.start} AND #{pagingDTO.end}
+	</select>
+
+</mapper>

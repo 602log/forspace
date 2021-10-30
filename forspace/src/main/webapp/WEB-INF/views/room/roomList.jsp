@@ -55,6 +55,14 @@
 		background : white;
 		border-radius : 5px;
 	}
+	
+	.card-body, .post{
+		cursor: pointer;
+	}
+	
+	i{
+		cursor: pointer;
+	}
 
 
 </style>
@@ -90,7 +98,7 @@
   	                	  	<div class="card-columns">
 								<c:forEach var="list" items="${list }">
 									<div class="card" style="border-radius:50px;">
-										<div class="card-body text-center">
+										<div class="card-body text-center" onClick="location.href='/room/roomDetail?roNo=${list.roNo}'">
 											<i onClick="location.href='/room/roomDetail?roNo=${list.roNo}'"><h5><c:out value="${list.roName }"/></h5></i>
 											<c:choose>
 												<c:when test="${list.myLike == 0}">
