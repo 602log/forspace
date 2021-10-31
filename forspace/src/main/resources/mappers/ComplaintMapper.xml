@@ -15,16 +15,35 @@
 		<result column="CO_FINISH" property="coFinish"/>
 	</resultMap>
 	
+	<update id="FinishComplaint" parameterType="int">
+	<![CDATA[
+		UPDATE COMPLAINT SET CO_FINISH = SYSDATE
+		WHERE CO_NO = #{coNo} AND RO_NO = #{roNo}
+	]]>
+	</update>
+	
+	<delete id="deleteComplaint" parameterType="int">
+		DELETE FROM COMPLAINT 
+		WHERE CO_NO = #{coNo} AND RO_NO = #{roNo} 
+	</delete>
+	
+	<insert id="insertComplaint" parameterType="kr.co.forspace.complaint.ComplaintDTO">
+		INSERT INTO COMPLAINT (CO_NO, RO_NO, CO_CONTENT, ME_EMAIL)
+		VALUES (SEQ_CO.NEXTVAL, #{roNo}, #{coContent}, #{meEmail})
+	</insert>
+	
 	<select id="countComplaint" resultType="int" parameterType="int">
 		SELECT COUNT(CO_NO) FROM COMPLAINT WHERE RO_NO = #{roNo}
 	</select>
 	
 	<select id="selectComplaint" resultMap="complaintMap">
+	<![CDATA[
 		SELECT B.CO_NO, B.RO_NO, B.CO_CONTENT, B.ME_EMAIL, B.CO_DATE, B.CO_FINISH FROM(  
         	SELECT ROWNUM RN, A.* FROM(
                 (SELECT * FROM COMPLAINT WHERE RO_NO = #{roNo} ORDER BY CO_NO DESC)A
             )
         )B WHERE RN BETWEEN #{pagingDTO.start} AND #{pagingDTO.end}
+    ]]>
 	</select>
 
 </mapper>

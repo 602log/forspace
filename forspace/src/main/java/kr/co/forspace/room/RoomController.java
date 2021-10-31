@@ -176,7 +176,7 @@ public class RoomController {
 	}
 
 	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/roomDetail")
+	@RequestMapping("/roomDetail")
 	public String roomDetail(@Param("roNo") int roNo, Model model, @Param("pagingDTO") PagingDTO pagingDTO,
 					@RequestParam(value="nowPage", required=false) String nowPage,
 					@RequestParam(value="cntPerPage", required=false) String cntPerPage) {// 연습실별 상세정보
@@ -193,17 +193,35 @@ public class RoomController {
 			cntPerPage = "5";
 		}
 
-		log.info("nowPage:"+nowPage+"cntPerPage:"+cntPerPage);
-		pagingDTO = new PagingDTO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		pagingDTO = new PagingDTO(total, Integer.valueOf(nowPage), Integer.valueOf(cntPerPage));
+		
 		
 		model.addAttribute("items", roomService.selectRoomItem(roNo));
-		log.info(roomService.selectRoomItem(roNo));
 		model.addAttribute("dto", roomService.roomDetail(roNo));
+		
+		//split ro_start, ro_close
+		String start = roomService.roomDetail(roNo).getRoStart();
+		String close = roomService.roomDetail(roNo).getRoClose();
+		
+		String[] startTime = start.split(":");
+		String[] closeTime = close.split(":");
+		
+		int firstStartTime = Integer.parseInt(startTime[0]);
+		int firstCloseTime = Integer.parseInt(closeTime[0]);
+		
+		int diff = firstCloseTime - firstStartTime;
+		
+		model.addAttribute("diff", diff);
 		
 		model.addAttribute("roNo", roNo);
 		model.addAttribute("paging", pagingDTO);
-		model.addAttribute("com", complaintService.selectComplaint(roNo, pagingDTO));
-		log.info(complaintService.selectComplaint(roNo, pagingDTO));
+		
+		List<ComplaintDTO> com = complaintService.selectComplaint(roNo, pagingDTO);
+		log.info(com);
+
+		model.addAttribute("com", com);
+		
+		
 		
 		return "/room/roomDetail";
 		

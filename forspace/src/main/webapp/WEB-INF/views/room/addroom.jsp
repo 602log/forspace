@@ -186,7 +186,7 @@ $(document).ready(function(){
 			$("#roClose").focus();
 			return false;
 		}
-
+		
 		$("#roomFrm").submit();
 	});
 	

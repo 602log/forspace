@@ -28,4 +28,29 @@ public class ComplaintServiceImpl implements ComplaintService {
 		return complaintMapper.countComplaint(roNo);
 	}
 
+	@Override
+	public void insertComplaint(@Param("roNo") int roNo, @Param("coContent") String coContent, @Param("meEmail")String meEmail) throws Exception{
+		log.info("ServiceImple.....................");
+		log.info(roNo+coContent+meEmail);
+		
+		try {
+			complaintMapper.insertComplaint(roNo, coContent, meEmail);
+		}catch(Exception e) {
+			log.info(e);
+		}
+		
+	}
+	
+	@Override
+	public boolean deleteComplaint(@Param("coNo") int coNo, @Param("roNo") int roNo){
+		log.info("delete ServiceImple..................");
+		return complaintMapper.deleteComplaint(coNo, roNo);
+
+	}
+	
+	@Override
+	public boolean FinishComplaint(@Param("coNo") int coNo, @Param("roNo") int roNo) {
+		log.info("finishComplaint ServiceImple....................");
+		return complaintMapper.FinishComplaint(coNo, roNo);
+	}
 }

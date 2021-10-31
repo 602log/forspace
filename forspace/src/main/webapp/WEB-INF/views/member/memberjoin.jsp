@@ -103,7 +103,7 @@
 
 	$(document).ready(function(){
 		$("#cancel").on("click", function(){
-			location.href="/";
+			location.href="/member/login";
 		});
 		
 		$("#submit").on("click", function(){
