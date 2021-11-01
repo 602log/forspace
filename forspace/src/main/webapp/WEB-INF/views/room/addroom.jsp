@@ -91,7 +91,7 @@ $(document).ready(function(){
 
 	$("input#roStart").timepicker({
 		timeFormat : "HH:mm",
-		intever : 30,
+		interval : 30,
 		startTime : "00:00",
 		dynamic : false,
 		dropdown : true,
@@ -100,7 +100,7 @@ $(document).ready(function(){
 	
 	$("input#roClose").timepicker({
 		timeFormat : "HH:mm",
-		intever : 30,
+		interval : 30,
 		startTime : "00:00",
 		dynamic : false,
 		dropdown : true,
@@ -158,13 +158,14 @@ $(document).ready(function(){
 			 
 			 var roStartScdInt = parseInt(roStartSplit[1]);
 			 var roCloseScdInt = parseInt(roCloseSplit[1]);
+
 			 
 			 if(roStartFirstInt > roCloseFirstInt){//오픈의 시가 클 경우
 				alert("마감시간보다 오픈시간이 빠릅니다. 다시 설정해주세요.");
 			 	console.info("오픈의 시가 클 경우"+roStartFirstInt+" "+roCloseFirstInt);
 				return false;
 				
-			 }else if(roStartFirstInt = roCloseFirstInt){//오픈과 마감의 시가 같을 경우
+			 }else if(roStartFirstInt == roCloseFirstInt){//오픈과 마감의 시가 같을 경우
 				 
 				 //분을 비교
 				 if(roStartScdInt > roCloseScdInt){//시는 같고 분은 오픈이 클 경우
@@ -177,8 +178,7 @@ $(document).ready(function(){
 				 }
 			 
 			 }else if(roStartFirstInt < roCloseFirstInt){//마감 시가 클 경우
-				 alert("정상작동");
-				 return false;
+
 			 }
 
 		}else if(roStartStr == roCloseStr){

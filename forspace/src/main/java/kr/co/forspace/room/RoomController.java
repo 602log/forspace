@@ -57,7 +57,7 @@ public class RoomController {
 			
 			for(int i=1; i<=roomCnt; i++) {
 				//층수 + 개수로 roName 등록
-				if(roomCnt>9) {
+				if(i>9) {
 					RoNamestr = roFloorStr+i;
 				}else {
 					RoNamestr = roFloorStr+0+i;
@@ -100,7 +100,7 @@ public class RoomController {
 					
 					for(int i=1; i<=roomCnt; i++) {
 						//층수 + 개수로 roName 등록
-						if(roomCnt>9) {
+						if(i>9) {
 							RoNamestr = roFloorStr+i;
 						}else {
 							RoNamestr = roFloorStr+"0"+i;
@@ -206,12 +206,28 @@ public class RoomController {
 		String[] startTime = start.split(":");
 		String[] closeTime = close.split(":");
 		
+		//ro_start, ro_close 형변환
 		int firstStartTime = Integer.parseInt(startTime[0]);
 		int firstCloseTime = Integer.parseInt(closeTime[0]);
 		
-		int diff = firstCloseTime - firstStartTime;
+		int scndStartTime = Integer.parseInt(startTime[1]);
+		int scndCloseTime = Integer.parseInt(closeTime[1]);
 		
-		model.addAttribute("diff", diff);
+		//형변환 하지 않은 start 시간
+		
+		
+		log.info(firstStartTime);
+		//두 시간 차
+		int diff = firstCloseTime - firstStartTime;
+		model.addAttribute("diff", diff);//시간표 칸수
+		model.addAttribute("firstStartTime", firstStartTime);//start의 시간 부분
+		model.addAttribute("firstCloseTime", firstCloseTime);//close의 시간 부분
+		
+		//두 분의 차
+		int scdDiff = scndCloseTime - scndStartTime;
+		log.info("scdDiff"+scdDiff);
+		model.addAttribute("scdDiff", scdDiff);
+		model.addAttribute("scdStartTimeStr", startTime[1]);//start의 분 부분
 		
 		model.addAttribute("roNo", roNo);
 		model.addAttribute("paging", pagingDTO);

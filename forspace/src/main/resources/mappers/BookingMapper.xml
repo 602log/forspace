@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="kr.co.forspace.mapper.BookingMapper">
+
+	<resultMap type="kr.co.forspace.booking.BookingDTO" id="bookingMap">
+		<id column="BO_NO" property="boNo"/>
+		<result column="SC_NO" property="scNo"/>
+		<result column="ME_EMAIL" property="meEmail"/>
+		<result column="RO_NO" property="roNo"/>
+		<result column="BO_DATE" property="boDate"/>
+		<result column="BO_START" property="boStart"/>
+		<result column="BO_END" property="boEnd"/>
+	</resultMap>
+	
+	<insert id="insertBook">
+		INSERT INTO BOOKING (BO_NO, SC_NO, ME_EMAIL, RO_NO, BO_START, BO_END)
+		VALUES(SEQ_BO.nextval, #{scNo}, #{meEmail}, #{roNo}, #{boStart}, #{boEnd})
+	</insert>
+
+
+</mapper>

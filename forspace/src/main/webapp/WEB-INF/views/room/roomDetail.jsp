@@ -41,6 +41,19 @@ a {
 	text-decoration: none;
 	color: #4c4c4c;
 }
+#timeTable{
+	text-align:center;
+}
+#timeTableTR{
+	height:40px;
+}
+.timeTableTD{
+	width:20%;
+}
+.timeTableTD2{
+	cursor: pointer;
+}
+
 </style>
 <%@ include file="../include/header.jsp"%>
 <!-- Page content-->
@@ -244,23 +257,35 @@ a {
 
 
 <!-- 예약시간표 -->
-		<div class="col-lg-4" style="background-color: yellow;">
+		<div class="col-lg-4">
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<button type="button" class="btn btn-secondary btn-md btn-block"
 					style="border: none; border-radius: 50px; background-color: purple;">수정하기</button>
 			</sec:authorize>
 			<sec:authorize access="hasRole('ROLE_USER')">
-				<button type="button" class="btn btn-primary btn-md btn-block"
-					style="border: none; border-radius: 50px; background-color: purple;">예약하기</button>
+				<button type="button" class="btn btn-primary btn-md btn-block" id="bookingBtn"
+					style="border: none; border-radius: 50px; background-color: purple;" value="" onclick="return booking();">예약하기</button>
 			</sec:authorize>
-			
-			<table>
-				<c:forEach begin="1" end="${diff }">
-					<tr style="background-color:red;">
-						<td>입력</td>
-						<td>입력</td>
+			<br>
+			<table class="table table-bordered" id="timeTable">
+				<c:forEach begin="1" end="${diff }" var="i">
+					<tr id="timeTableTR">
+						<td class="timeTableTD" id="timeTableTD_${i }">${firstStartTime + (i-1)}:${scdStartTimeStr }</td>
+						<td class="timeTableTD2" id="timeTableTD2_${i }" onclick="return selTime('${firstStartTime + (i-1)}:${scdStartTimeStr }', ${i });">
+							<input type="hidden" value="N" id="tdInput_${i }">
+						</td>
 					</tr>
 				</c:forEach>
+				<c:choose>
+					<c:when test="${scdDiff == 30}">
+						<tr id="timeTableTR">
+							<td class="timeTableTD" id="timeTableTD_${i }">${firstCloseTime}:${scdStartTimeStr }</td>
+							<td class="timeTableTD2" id="timeTableTD2_${i }" onclick="return selTime('${firstCloseTime}:${scdStartTimeStr }', ${i });">
+								<input type="hidden" value="N" id="tdInput_${i }">
+							</td>
+						</tr>
+					</c:when>
+				</c:choose>
 			</table>
 		</div>
 	</div>
@@ -343,7 +368,71 @@ function comFinish(coNo){
 		}
 	});
 }
-</script>
 
+function selTime(time, idx){
+	//alert(time);
+	//alert(idx);
+
+	var roLimit = ${dto.roLimit}
+	var plusMax = ${dto.roLimit}-1;
+	//alert(${dto.roMax});
+	//alert(plusMax);
+	
+	//이용제한시간에 따른 클릭
+ 	if(plusMax == 0){
+		//alert("0으로 옴");
+		
+		//선택한 칸 색상 바꾸기
+		$("#timeTableTD2_"+idx).css({
+			"background-color":"purple"
+		});
+		//선택한 칸 value Y로 변경
+		$("#tdInput_"+idx).attr("value", "Y");
+		//선택한 시간(예약시작시간)을 button value로 설정
+		$("#bookingBtn").attr("value", time);
+
+	}else{
+		//alert("else로 옴");
+
+		for(i=0; i<roLimit; i++){
+			//선택한 칸 + 이용제한시간까지 색상 바꾸기
+			$("#timeTableTD2_"+(idx+i)).css({
+				"background-color":"purple"
+			});
+			//선택한 칸 value Y로 변경
+			$("#tdInput_"+(idx+i)).attr("value", "Y");
+			//선택한 시간(예약시작시간)을 button value로 설정
+			$("#bookingBtn").attr("value", time);
+		}
+	} 
+}
+
+function booking(){
+	var seltime = $("#bookingBtn").val();
+	var roNo = ${dto.roNo};
+	var roLimit = ${dto.roLimit};
+	var scNo = ${dto.scNo}
+	//alert("예약하기"+seltime);
+	
+ 	$.ajax({
+		type : "post",
+		url : "/booking/insertbook",
+		data : {roNo : roNo,
+				boStart : seltime,
+				roLimit : roLimit,
+				scNo : scNo},
+		success : function(data){
+			if(data == "success"){
+				alert("예약되었습니다.");
+				$("#timeTable").load(window.location.href + " #timeTable");
+			}else{
+				alert("예약에 실패했습니다.");
+				$("#timeTable").load(window.location.href + " #timeTable");
+			}
+		}
+	});
+
+}
+</script>
 <%@ include file="../include/footer.jsp"%>
 
