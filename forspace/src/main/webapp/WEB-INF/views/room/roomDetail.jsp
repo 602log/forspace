@@ -272,7 +272,7 @@ a {
 					<tr id="timeTableTR">
 						<td class="timeTableTD" id="timeTableTD_${i }">${firstStartTime + (i-1)}:${scdStartTimeStr }</td>
 						<td class="timeTableTD2" id="timeTableTD2_${i }" onclick="return selTime('${firstStartTime + (i-1)}:${scdStartTimeStr }', ${i });">
-							<input type="hidden" value="N" id="tdInput_${i }">
+							<input type="hidden" value="N" id="tdInput_${i }" class="timeInput">
 						</td>
 					</tr>
 				</c:forEach>
@@ -281,7 +281,7 @@ a {
 						<tr id="timeTableTR">
 							<td class="timeTableTD" id="timeTableTD_${i }">${firstCloseTime}:${scdStartTimeStr }</td>
 							<td class="timeTableTD2" id="timeTableTD2_${i }" onclick="return selTime('${firstCloseTime}:${scdStartTimeStr }', ${i });">
-								<input type="hidden" value="N" id="tdInput_${i }">
+								<input type="hidden" value="N" id="tdInput_${i }" class="timeInput">
 							</td>
 						</tr>
 					</c:when>
@@ -378,34 +378,73 @@ function selTime(time, idx){
 	//alert(${dto.roMax});
 	//alert(plusMax);
 	
-	//이용제한시간에 따른 클릭
- 	if(plusMax == 0){
-		//alert("0으로 옴");
-		
-		//선택한 칸 색상 바꾸기
-		$("#timeTableTD2_"+idx).css({
-			"background-color":"purple"
-		});
-		//선택한 칸 value Y로 변경
-		$("#tdInput_"+idx).attr("value", "Y");
-		//선택한 시간(예약시작시간)을 button value로 설정
-		$("#bookingBtn").attr("value", time);
-
-	}else{
-		//alert("else로 옴");
-
-		for(i=0; i<roLimit; i++){
-			//선택한 칸 + 이용제한시간까지 색상 바꾸기
-			$("#timeTableTD2_"+(idx+i)).css({
+	var btnVal = $("#bookingBtn").val();
+	//alert(btnVal);
+	
+	if(btnVal == "" || btnVal == null){//클릭한 적 없을 때
+		//이용제한시간에 따른 클릭
+	 	if(plusMax == 0){
+			//alert("0으로 옴");
+			
+			//선택한 칸 색상 바꾸기
+			$("#timeTableTD2_"+idx).css({
 				"background-color":"purple"
 			});
 			//선택한 칸 value Y로 변경
-			$("#tdInput_"+(idx+i)).attr("value", "Y");
+			$("#tdInput_"+idx).attr("value", "Y");
 			//선택한 시간(예약시작시간)을 button value로 설정
 			$("#bookingBtn").attr("value", time);
+
+		}else{
+			//alert("else로 옴");
+
+			for(i=0; i<roLimit; i++){
+				//선택한 칸 + 이용제한시간까지 색상 바꾸기
+				$("#timeTableTD2_"+(idx+i)).css({
+					"background-color":"purple"
+				});
+				//선택한 칸 value Y로 변경
+				$("#tdInput_"+(idx+i)).attr("value", "Y");
+				//선택한 시간(예약시작시간)을 button value로 설정
+				$("#bookingBtn").attr("value", time);
+			}//end of for
 		}
-	} 
-}
+		
+	}else{//클릭한 적 있을 때
+		$(".timeInput").attr("value", "");
+		$(".timeTableTD2").css({
+			"background-color":""
+		});
+		//이용제한시간에 따른 클릭
+	 	if(plusMax == 0){
+			//alert("0으로 옴");
+			
+			//선택한 칸 색상 바꾸기
+			$("#timeTableTD2_"+idx).css({
+				"background-color":"purple"
+			});
+			//선택한 칸 value Y로 변경
+			$("#tdInput_"+idx).attr("value", "Y");
+			//선택한 시간(예약시작시간)을 button value로 설정
+			$("#bookingBtn").attr("value", time);
+
+		}else{
+			//alert("else로 옴");
+
+			for(i=0; i<roLimit; i++){
+				//선택한 칸 + 이용제한시간까지 색상 바꾸기
+				$("#timeTableTD2_"+(idx+i)).css({
+					"background-color":"purple"
+				});
+				//선택한 칸 value Y로 변경
+				$("#tdInput_"+(idx+i)).attr("value", "Y");
+				//선택한 시간(예약시작시간)을 button value로 설정
+				$("#bookingBtn").attr("value", time);
+			}//end of for
+		}	
+	
+	}//end of if
+}//end of selTime()
 
 function booking(){
 	var seltime = $("#bookingBtn").val();
