@@ -17,7 +17,8 @@ public class BookingDTO {
 	private int scNo;
 	private String meEmail;
 	private int roNo;
+	private String boTime;
 	private Date boDate;
-	private String boStart;
-	private String boEnd;
+	
+	private String boDateStr;
 }

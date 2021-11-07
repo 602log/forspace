@@ -128,7 +128,7 @@
 	                    <a class="nav-link" href="../room/roomList?roFloor=0">연습실</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link" href="#">공지사항</a>
+	                    <a class="nav-link" href="../notice/noticeList">공지사항</a>
 	                </li>
 	                <li class="nav-item dropdown no-arrow">
 	                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"

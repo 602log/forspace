@@ -11,14 +11,23 @@
 		<result column="SC_NO" property="scNo"/>
 		<result column="ME_EMAIL" property="meEmail"/>
 		<result column="RO_NO" property="roNo"/>
+		<result column="BO_TIME" property="boTime"/>
 		<result column="BO_DATE" property="boDate"/>
-		<result column="BO_START" property="boStart"/>
-		<result column="BO_END" property="boEnd"/>
 	</resultMap>
 	
+	<select id="checkBook" resultType="kr.co.forspace.booking.BookingDTO">
+	<![CDATA[
+		SELECT BO_NO, SC_NO, ME_EMAIL, RO_NO, BO_TIME, BO_DATE
+		FROM BOOKING
+		WHERE RO_NO = #{roNo} AND TO_CHAR(BO_DATE, 'yyyy/mm/dd') = #{boDateStr}
+	]]>
+	</select>
+	
 	<insert id="insertBook">
-		INSERT INTO BOOKING (BO_NO, SC_NO, ME_EMAIL, RO_NO, BO_START, BO_END)
-		VALUES(SEQ_BO.nextval, #{scNo}, #{meEmail}, #{roNo}, #{boStart}, #{boEnd})
+		<![CDATA[
+		INSERT INTO BOOKING (BO_NO, SC_NO, ME_EMAIL, RO_NO, BO_TIME)
+		VALUES(SEQ_BO.nextval, #{scNo}, #{meEmail}, #{roNo}, #{boTime})
+		]]>
 	</insert>
 
 

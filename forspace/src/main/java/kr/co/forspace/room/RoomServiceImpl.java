@@ -87,4 +87,5 @@ public class RoomServiceImpl implements RoomService {
 	public List<RoomItemDTO> selectRoomItem(int roNo) {
 		return roomMapper.selectRoomItem(roNo);
 	}
+
 }

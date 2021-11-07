@@ -1,5 +1,9 @@
 package kr.co.forspace.booking;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,32 +23,43 @@ public class BookingController {
 	private final BookingService bookingService;
 	
 	@ResponseBody
+	@PostMapping("/checkBook")
+	public List<BookingDTO> checkBook(int roNo, String boTime) {
+		//현재 날짜 string
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		Calendar c1 = Calendar.getInstance();
+		String boDateStr = sdf.format(c1.getTime());
+		log.info(roNo+boDateStr);
+		//오늘 날짜의 해당 연습실 예약된 시간 찾기
+		List<BookingDTO> dto = bookingService.checkBook(roNo, boDateStr);
+	
+		log.info(dto.get(1).getBoTime());
+		return dto;
+		
+	}
+	
+	@ResponseBody
 	@PostMapping("/insertbook")
-	public String insertbook(int roNo, String boStart, int roLimit, int scNo, Authentication auth, RedirectAttributes rttr) {
-		log.info(roNo+" "+boStart+" "+roLimit);
+	public void insertbook(int roNo, String boTime, int roLimit, int scNo, Authentication auth, RedirectAttributes rttr) {
+		log.info(roNo+" "+boTime+" "+roLimit);
 		String meEmail = auth.getName();
 		
-		String[] boStartTime = boStart.split(":");
+		String[] boTimeSplit = boTime.split(":");
 		
-		int firstBoStart = Integer.parseInt(boStartTime[0]);
-		String sndBoStart = boStartTime[1];
+		int firstBoTime = Integer.parseInt(boTimeSplit[0]);//시
+		String sndBoTime = boTimeSplit[1];//분
 		
-		int boEndTime = firstBoStart+roLimit;
-		String boEnd = boEndTime+":"+sndBoStart;
-		//insert
-		BookingDTO bookingDTO = BookingDTO.builder()
-								.scNo(scNo)
-								.meEmail(meEmail)
-								.roNo(roNo)
-								.boStart(boStart)
-								.boEnd(boEnd)
-								.build();
-		
-		boolean boResult = bookingService.insertBook(bookingDTO);
-		if(boResult == true) {
-			return "success";
-		}else {
-			return "false";
+		//Limit에 맞춰서 insert
+		for(int i=0; i<roLimit; i++) {
+			int bookingTime = firstBoTime+i;
+			String boTimeStr = bookingTime+":"+sndBoTime;
+			BookingDTO bookingDTO = BookingDTO.builder()
+					.scNo(scNo)
+					.meEmail(meEmail)
+					.roNo(roNo)
+					.boTime(boTimeStr)
+					.build();
+			bookingService.insertBook(bookingDTO);
 		}
 	}
 }

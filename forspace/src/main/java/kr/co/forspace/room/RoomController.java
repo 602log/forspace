@@ -1,7 +1,9 @@
 package kr.co.forspace.room;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.forspace.booking.BookingService;
 import kr.co.forspace.complaint.ComplaintDTO;
 import kr.co.forspace.complaint.ComplaintService;
 import kr.co.forspace.member.MemberService;
@@ -33,6 +36,7 @@ public class RoomController {
 	private final RoomService roomService;
 	private final MemberService memberService;
 	private final ComplaintService complaintService;
+	private final BookingService bookingService;
  
 	@PostMapping("/addroom")
 	public void addroom(RoomDTO roomDTO, int[] itNo, int[] riCnt, int roomCnt, Authentication auth) {
@@ -177,11 +181,13 @@ public class RoomController {
 
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/roomDetail")
-	public String roomDetail(@Param("roNo") int roNo, Model model, @Param("pagingDTO") PagingDTO pagingDTO,
+	public String roomDetail(@Param("roNo") int roNo, Model model, @Param("pagingDTO") PagingDTO pagingDTO, Authentication auth,
 					@RequestParam(value="nowPage", required=false) String nowPage,
 					@RequestParam(value="cntPerPage", required=false) String cntPerPage) {// 연습실별 상세정보
 		
 		log.info("roNo:" + roNo);
+		
+		String meEmail = auth.getName();
 		
 		int total = complaintService.countComplaint(roNo);
 		if(nowPage == null && cntPerPage == null) {
@@ -235,9 +241,7 @@ public class RoomController {
 		List<ComplaintDTO> com = complaintService.selectComplaint(roNo, pagingDTO);
 		log.info(com);
 
-		model.addAttribute("com", com);
-		
-		
+		model.addAttribute("com", com);	
 		
 		return "/room/roomDetail";
 		

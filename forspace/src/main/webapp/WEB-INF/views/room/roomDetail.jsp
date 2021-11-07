@@ -279,9 +279,9 @@ a {
 				<c:choose>
 					<c:when test="${scdDiff == 30}">
 						<tr id="timeTableTR">
-							<td class="timeTableTD" id="timeTableTD_${i }">${firstCloseTime}:${scdStartTimeStr }</td>
-							<td class="timeTableTD2" id="timeTableTD2_${i }" onclick="return selTime('${firstCloseTime}:${scdStartTimeStr }', ${i });">
-								<input type="hidden" value="N" id="tdInput_${i }" class="timeInput">
+							<td class="timeTableTD" id="timeTableTD_${diff.length+1 }">${firstCloseTime}:${scdStartTimeStr }</td>
+							<td class="timeTableTD2" id="timeTableTD2_${diff.length+1 }" onclick="return selTime('${firstCloseTime}:${scdStartTimeStr }', ${diff.length+1 });">
+								<input type="hidden" value="N" id="tdInput_${diff.length+1 }" class="timeInput">
 							</td>
 						</tr>
 					</c:when>
@@ -292,6 +292,27 @@ a {
 
 </div>
 <script>
+/* window.onload = function(){
+	
+ 	var rows = document.getElementById("timeTable").getElementsByTagName("tr");
+	
+ 	for(var r=0; r<rows.length; r++){
+		var cells = rows[r].getElementsByTagName("td");
+		var cell = cells[0].firstChild.data; //td의 값
+		console.log(cell);
+	}//end of for  
+	
+		 $.ajax({
+			url : "/booking/checkBook",
+			type : "post",
+			data : {roNo : ${dto.roNo }},
+			success : function(data){
+				alert(data);
+			}
+		}); 
+} */
+
+
 $(document).on("click", "#complaintBtn", function(){
 	//alert(${dto.roNo });
 	//alert($("#coContent").val());
@@ -457,20 +478,14 @@ function booking(){
 		type : "post",
 		url : "/booking/insertbook",
 		data : {roNo : roNo,
-				boStart : seltime,
+				boTime : seltime,
 				roLimit : roLimit,
 				scNo : scNo},
-		success : function(data){
-			if(data == "success"){
-				alert("예약되었습니다.");
-				$("#timeTable").load(window.location.href + " #timeTable");
-			}else{
-				alert("예약에 실패했습니다.");
-				$("#timeTable").load(window.location.href + " #timeTable");
+		success : function(){
+			alert("예약되었습니다.");
+			location.reload();
 			}
-		}
-	});
-
+		});
 }
 </script>
 <%@ include file="../include/footer.jsp"%>

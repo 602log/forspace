@@ -1,5 +1,6 @@
 package kr.co.forspace.room;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -32,4 +33,6 @@ public interface RoomService {
 	void insertRoomItem(RoomItemDTO roomItemDTO);
 	
 	List<RoomItemDTO> selectRoomItem(int roNo);
+	
+	
 }
