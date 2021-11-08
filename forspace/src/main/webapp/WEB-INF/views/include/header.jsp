@@ -27,15 +27,27 @@
 		<!-- timepicker -->
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">        
 		<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>		
-
   </head>
+  
+  	<style>
+	.img{
+		text-align : center;
+		margin : 5px;
+	}
+	#img{
+		border-radius: 50%;
+		width : 100px;
+	}
+	</style>
   
   <body>
 		
 		<div class="wrapper d-flex align-items-stretch">
 			<nav id="sidebar">
 				<div class="p-4 pt-5">
-		  		<a href="#" class="img logo rounded-circle mb-5"></a>
+		  		<a href="#" class="img logo rounded-circle">
+		  			<img id="img" src="../resources/images/user.png" alt="profile">
+		  		</a>
 	        <ul class="list-unstyled components mb-5">
 	          <li class="active">
 	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
@@ -159,7 +171,34 @@
           </div>
         </nav>
 
+
 	<sec:authorize access="isAuthenticated()">
 	    <sec:authentication property="principal.memberDTO.meRole" var="loginUserRole"/> 
 	   	<sec:authentication property="principal.memberDTO.meEmail" var="loginUser"/> 
    	</sec:authorize>
+   	
+<script>
+$(document).ready(function(){
+	var user = "${loginUser}";
+	
+	if(!(user == '') && !(user == null)){
+		console.log("로그인 함");
+		$.ajax({
+			url : "/member/myProfileImg",
+			type : "post",
+			success : function(data){
+				var img = data;
+				console.log(img);
+				var imgTag = $("#img");
+				
+				if(typeof img.imagePath == "undefined" || img.imagePath == null || img.imagePath == ""){
+					imgTag.attr("src", "../resources/images/user.png");
+				}else{
+					imgTag.attr("src", "/image/show?imagePath="+img.imagePath);
+				}
+			}
+		});
+	}
+
+});
+</script>

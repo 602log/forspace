@@ -252,6 +252,15 @@ public class MemberController {
 		return new ResponseEntity<String>(msg, HttpStatus.OK);
 	}
 	
+	@ResponseBody
+	@PostMapping("/myProfileImg")
+	public ImageDTO myProfileImg(Authentication auth, Model model) {
+		String meEmail = auth.getName();
+		ImageDTO imageDTO = memberService.myImg(meEmail);
+		log.info(imageDTO);
+		return imageDTO;
+	}
+	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/myProfile")
 	public void myProfile(String meEmail, Model model, Authentication auth) {
