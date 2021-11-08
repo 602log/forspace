@@ -19,20 +19,21 @@
 		width : 100%;
 		margin : 0px auto;
 		position : relative;
+		text-align : center;
 	}
 	
 	.post-slider .next{
 		position : absolute;
-		top : 0%;
+		top : 15%;
 		right : 30px;
 		font-size : 2em;
 		color : gray;
-		curxor : pointer;
+		cursor : pointer;
 	}
 	
 	.post-slider .prev{
 		position : absolute;
-		top : 0%;
+		top : 15%;
 		left : 30px;
 		font-size : 2em;
 		color : gray;
@@ -76,16 +77,15 @@
         		<div class="col-lg-12">
         		<!--층 수 시작-------------------------------------------------------------------------------------------------------------->
       				<div class="post-slider">
-						<i class="fas fa-chevron-left prev"></i>
-						<i class="fas fa-chevron-right next"></i>
-							<div class="post-wrapper">
-								<c:forEach var="roFloor" items="${floorList}">
-								<div class="post" onClick="location.href='/room/roomList?roFloor=${roFloor}'">
-									<a><h2><c:out value="${roFloor }"/>F</h2></a>
-								</div>
-								</c:forEach>
+      					<i class="fas fa-chevron-left prev"></i>
+      					<i class="fas fa-chevron-right next"></i>
+      					<div class="post-wrapper">
+						<c:forEach var="roFloor" items="${floorList}">
+							<div class="post" onClick="location.href='/room/roomList?roFloor=${roFloor}'">
+								<a><h2><c:out value="${roFloor }"/>F</h2></a>
 							</div>
-						
+						</c:forEach>
+						</div>
         			</div>
         		<!--층 수 끝--------------------------------------------------------------------------------------------------------------->
   	           
@@ -150,6 +150,14 @@ $(document).on("click", ".likeBtn", function(e){
 		}
 	});
 
+});
+
+$(".post-wrapper").slick({
+	slidesToShow : 4,
+	slidesToScroll : 1,
+	autoplay : true,
+	nextArrow : $(".next"),
+	prevArrow : $(".prev")
 });
 
 </script>
