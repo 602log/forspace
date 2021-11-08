@@ -12,5 +12,11 @@ public interface NoticeService {
 	
 	int countNotice(int scNo);
 	
-	NoticeDTO getNoticeDetail(int noNo);
+	NoticeDTO readNotice(int noNo);
+	
+	void modify(NoticeDTO noticeDTO);
+	
+	void removeNotice(int noNo);
+	
+	void updateCnt(int noNo);
 }

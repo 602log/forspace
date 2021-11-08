@@ -18,10 +18,24 @@ public class NoticeServiceImpl implements NoticeService{
 	private final NoticeMapper noticeMapper;
 	
 	@Override
-	public NoticeDTO getNoticeDetail(int noNo) {
-		log.info("service....."+" "+noNo);
-		return noticeMapper.getNoticeDetail(noNo);
+	public void updateCnt(int noNo) {
+		noticeMapper.updateCnt(noNo);
 	}
+	
+	@Override
+	public void removeNotice(int noNo) {
+		noticeMapper.removeNotice(noNo);
+	}
+	@Override
+	public void modify(NoticeDTO noticeDTO) {
+		noticeMapper.modify(noticeDTO);
+	}
+	
+	@Override
+	public NoticeDTO readNotice(int noNo) {
+		return noticeMapper.readNotice(noNo);
+	}
+	
 	@Override
 	public List<NoticeDTO> noticeList(@Param("scNo") int scNo, @Param("pagingDTO") PagingDTO pagingDTO) {
 		return noticeMapper.noticeList(scNo, pagingDTO);

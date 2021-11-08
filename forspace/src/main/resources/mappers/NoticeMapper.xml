@@ -16,12 +16,24 @@
 		<result column="NO_CNT" property="noCnt"/>
 	</resultMap>
 	
-	<select id="getNoticeDetail" parameterType="int" resultType="kr.co.forspace.notice.NoticeDTO">
-		<![CDATA[
-		SELECT NO_NO, ME_EMAIL, SC_NO, NO_SUBJECT, NO_CONTENT, NO_DATE, NO_CNT
+	<update id="updateCnt" parameterType="int">
+		UPDATE NOTICE SET NO_CNT = NO_CNT+1
+		WHERE NO_NO = #{noNo}
+	</update>
+	
+	<delete id="removeNotice" parameterType="int">
+		DELETE FROM NOTICE WHERE NO_NO = #{noNo}
+	</delete>
+	
+	<update id="modify" parameterType="kr.co.forspace.notice.NoticeDTO">
+		UPDATE NOTICE
+		SET NO_SUBJECT = #{noSubject}, NO_CONTENT = #{noContent}
+		WHERE NO_NO = #{noNo}
+	</update>
+	<select id="readNotice" resultMap="noticeMap" parameterType="int">
+		SELECT *
 		FROM NOTICE
 		WHERE NO_NO = #{noNo}
-		]]>
 	</select>
 	
 	<select id="noticeList"	resultMap="noticeMap">
