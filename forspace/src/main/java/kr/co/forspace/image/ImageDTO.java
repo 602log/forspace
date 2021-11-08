@@ -11,10 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ImageDTO {
 
-	private Integer imNo;
+	private int imNo;
+	private String imUuid;
 	private String imEmail;
 	private String imName;
-	private String imPath;
+	private String imDir;
 	private Long imSize;
 
+	public String getImagePath() throws Exception {
+		return imDir + "/" + imUuid + imName.substring(imName.lastIndexOf("."));
+	}
 }

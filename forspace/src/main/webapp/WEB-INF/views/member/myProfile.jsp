@@ -31,7 +31,14 @@
 				    <div class="col-lg-6"> 
 						<label>프로필</label>
 						<div class="img_wrap">
-							<img id="img" src="../resources/images/user.png" alt="profile">
+						<c:choose>
+							<c:when test="${not empty img && img.imName != '' }">
+								<img id="img" src="/image/show?imagePath=${img.imagePath }" alt="profile">
+							</c:when>
+							<c:otherwise>
+								<img id="img" src="../resources/images/user.png" alt="profile">
+							</c:otherwise>
+						</c:choose>
 						</div>
 						<div class="form-group form-default">
 							<input type="file" class="form-control form-control-user inputImg" name="image">

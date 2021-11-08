@@ -22,6 +22,12 @@ public class MemberServiceImpl implements MemberService {
 	private final PasswordEncoder passwordEncoder;
 
 	@Override
+	public ImageDTO myImg(String imEmail) {
+		log.info("myImg>>imEamil>>"+imEmail);
+		return imageMapper.myImg(imEmail);
+	}
+	
+	@Override
 	public void updateProfileWithoutPwd(MemberDTO memberDTO) throws Exception {
 		memberMapper.updateProfileWithoutPwd(memberDTO);
 		if (memberDTO.getImageDTO() != null && memberDTO.getImageDTO().getImName() != "") {

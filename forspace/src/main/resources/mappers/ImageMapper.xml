@@ -7,12 +7,19 @@
 <mapper namespace="kr.co.forspace.mapper.ImageMapper">
 
 	<resultMap type="kr.co.forspace.image.ImageDTO" id="imageMap">
-		<result column="IM_NO" property="imNo"/>
+		<id column="IM_NO" property="imNo"/>
+		<result column="IM_UUID" property="imUuid"/>
 		<result column="IM_EMAIL" property="imEmail"/>
 		<result column="IM_NAME" property="imName"/>
-		<result column="IM_PATH" property="imPath"/>
+		<result column="IM_DIR" property="imDir"/>
 		<result column="IM_SIZE" property="imSize"/>
 	</resultMap>
+	
+	<select id="myImg" parameterType="String" resultMap="imageMap">
+		SELECT *
+		FROM IMAGE
+		WHERE IM_EMAIL = #{imEmail}
+	</select>
 	
 	<select id="selectMyImg" parameterType="String" resultType="int">
 		SELECT COUNT(*)
@@ -22,13 +29,13 @@
 	
 	<update id="updateProfileImg" parameterType="kr.co.forspace.image.ImageDTO">
 		UPDATE IMAGE
-		SET IM_NAME = #{imName}, IM_PATH = #{imPath}, IM_SIZE = #{imSize}
+		SET IM_UUID = #{imUuid}, IM_NAME = #{imName}, IM_DIR= #{imDir}, IM_SIZE = #{imSize}
 		WHERE IM_EMAIL = #{imEmail}
 	</update>
 	
 	<insert id="memberjoinWithprofileImg">
-		INSERT INTO IMAGE (IM_NO, IM_EMAIL, IM_NAME, IM_PATH, IM_SIZE)
-		VALUES (SEQ_IM.NEXTVAL, #{imEmail}, #{imName}, #{imPath}, #{imSize})
+		INSERT INTO IMAGE (IM_NO, IM_UUID, IM_EMAIL, IM_NAME, IM_DIR, IM_SIZE)
+		VALUES (SEQ_IM.NEXTVAL, #{imUuid}, #{imEmail},  #{imName}, #{imDir}, #{imSize})
 	</insert>
 
 </mapper>

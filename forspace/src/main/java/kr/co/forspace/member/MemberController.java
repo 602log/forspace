@@ -67,7 +67,6 @@ public class MemberController {
 		String meEmail = auth.getName();
 		
 		String mePwd = memberDTO.getMePwd();
-		log.info("입력한 비밀번호:"+mePwd);
 		
 		memberDTO = memberService.myProfile(meEmail);
 		String encodedPwd = memberDTO.getMePwd();
@@ -256,9 +255,15 @@ public class MemberController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/myProfile")
 	public void myProfile(String meEmail, Model model, Authentication auth) {
+		log.info("myProfile...................................");
 		meEmail = auth.getName();
 		MemberDTO memberDTO = memberService.myProfile(meEmail);
 		model.addAttribute("dto", memberDTO);
+		
+		ImageDTO imageDTO = memberService.myImg(meEmail);
+		log.info(imageDTO);
+		model.addAttribute("img", imageDTO);
+		
 	}
 	
 	@GetMapping("/login")

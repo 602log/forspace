@@ -9,4 +9,6 @@ public interface ImageMapper {
 	void updateProfileImg(ImageDTO imageDTO);
 	
 	int selectMyImg(String imEmail);
+	
+	ImageDTO myImg(String imEmail);
 }

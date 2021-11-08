@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.co.forspace.image.ImageDTO;
+
 public interface MemberService {
 
 	List<SchoolDTO> getSchool(String scName);
@@ -27,4 +29,6 @@ public interface MemberService {
 	void updateProfileImg(MemberDTO memberDTO) throws Exception;
 	
 	void updateProfileWithoutPwd(MemberDTO memberDTO) throws Exception;
+	
+	ImageDTO myImg(String imEmail);
 }
