@@ -12,6 +12,15 @@
 		width : 65%;
 		margin : 0 10px 0 0;
 	}
+	
+	.img_wrap{
+		text-align : center;
+		margin : 20px;
+	}
+	#img{
+		border-radius: 50%;
+		width : 300px;
+	}
 </style>
 <%@ include file="../include/header.jsp"%>
         
@@ -21,6 +30,9 @@
 				
 				    <div class="col-lg-6"> 
 						<label>프로필</label>
+						<div class="img_wrap">
+							<img id="img" src="../resources/images/user.png" alt="profile">
+						</div>
 						<div class="form-group form-default">
 							<input type="file" class="form-control form-control-user inputImg" name="image">
 						</div>	
@@ -101,10 +113,33 @@
         
 <script>
 
+	var sel_file;
+	
 	$(document).ready(function(){
 		$("#cancel").on("click", function(){
 			location.href="/member/login";
 		});
+		
+		$(".inputImg").on("change", handleImgFileSelect);
+		
+		function handleImgFileSelect(e){
+			var files = e.target.files;
+			var filesArr = Array.prototype.slice.call(files);
+			
+			filesArr.forEach(function(f){
+				if(!f.type.match("image.*")){
+					alert("이미지 파일만 업로드해주세요.");
+					return;
+				}
+				sel_file = f;
+				
+				var reader = new FileReader();
+				reader.onload = function(e){
+					$("#img").attr("src", e.target.result);
+				}
+				reader.readAsDataURL(f);
+			});
+		}
 		
 		$("#submit").on("click", function(){
 			

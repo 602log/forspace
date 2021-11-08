@@ -16,6 +16,5 @@ public class ImageDTO {
 	private String imName;
 	private String imPath;
 	private Long imSize;
-	private String imDiv;
 
 }

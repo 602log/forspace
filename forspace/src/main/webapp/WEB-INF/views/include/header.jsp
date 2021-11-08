@@ -140,7 +140,7 @@
 						</a>
 						<!-- Dropdown user information -->
 							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#">
+								<a class="dropdown-item" href="/member/checkPwd">
 									<i class="fas fa-user-check fa-sm fa-fw mr-2">정보수정</i>
 								</a>
 							<sec:authorize access="hasRole('ROLE_ADMIN')">

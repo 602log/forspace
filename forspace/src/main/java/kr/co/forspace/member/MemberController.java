@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.forspace.image.ImageController;
 import kr.co.forspace.image.ImageDTO;
+import kr.co.forspace.image.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
@@ -31,7 +32,59 @@ public class MemberController {
 
 	private final MemberService memberService;
 	private final PasswordEncoder passwordEncoder;
+	private final ImageService imageService;
+	
+	@PostMapping("/updateProfile")
+	public String updateProfile(MultipartFile image, MemberDTO memberDTO, Model model, RedirectAttributes rttr) throws Exception {
+		
+		log.info("updateProfile..................");
+		
+		// 넘어온 파일의 정보를 출력
+		log.info("name:" + image.getOriginalFilename()); // 파일을 처음 올릴 때 이름
+		log.info("size:" + image.getSize());
 
+		if (!image.getOriginalFilename().isEmpty() && image != null && !(image.getOriginalFilename().equals(""))) {// 프로필
+																									// 등록&회원가입
+			ImageDTO imageDTO = ImageController.uploadImage(image);
+			imageDTO.setImEmail(memberDTO.getMeEmail());
+			memberDTO.setImageDTO(imageDTO);			
+		}
+		
+		if(memberDTO.getMePwd() != null && memberDTO.getMePwd().trim().length()!=0) {
+			memberService.updateProfileImg(memberDTO);
+		}else if(memberDTO.getMePwd().equals("")) {
+			memberService.updateProfileWithoutPwd(memberDTO);
+		}//end of if
+		
+		rttr.addFlashAttribute("msg", "수정되었습니다.");
+		return "redirect:/";
+
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping("/checkMyPwd")
+	public String checkMyPwd(MemberDTO memberDTO, Authentication auth, RedirectAttributes rttr) {
+		String meEmail = auth.getName();
+		
+		String mePwd = memberDTO.getMePwd();
+		log.info("입력한 비밀번호:"+mePwd);
+		
+		memberDTO = memberService.myProfile(meEmail);
+		String encodedPwd = memberDTO.getMePwd();
+		
+		if(passwordEncoder.matches(mePwd, encodedPwd)) {
+			return "redirect:/member/myProfile";
+		}else {
+			rttr.addFlashAttribute("msg", "비밀번호를 다시 입력해주세요.");
+			return "redirect:/member/checkPwd";
+		}
+	}
+	
+	@GetMapping("/checkPwd")
+	public void checkPwd() {
+		
+	}
+	
 	@GetMapping("/adminjoin")
 	public void adminjoin() {
 		log.info("/memberjoin.................");
@@ -99,7 +152,6 @@ public class MemberController {
 		if (!image.getOriginalFilename().isEmpty() && image != null && !(image.getOriginalFilename().equals(""))) {// 프로필
 																										// 등록&회원가입
 			ImageDTO imageDTO = ImageController.uploadImage(image);
-			imageDTO.setImDiv("TH");
 			imageDTO.setImEmail(memberDTO.getMeEmail());
 			memberDTO.setImageDTO(imageDTO);
 
@@ -158,7 +210,6 @@ public class MemberController {
 																													// 사진
 																													// 등록&회원가입
 			ImageDTO imageDTO = ImageController.uploadImage(image);
-			imageDTO.setImDiv("ST");
 			imageDTO.setImEmail(memberDTO.getMeEmail());
 			memberDTO.setImageDTO(imageDTO);
 

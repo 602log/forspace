@@ -23,6 +23,18 @@
 		<result column="ME_ROLE" property="meRole"/>
 	</resultMap>
 	
+	<update id="updateProfileWithoutPwd" parameterType="kr.co.forspace.member.MemberDTO">
+		UPDATE MEMBER
+		SET ME_NO = #{meNo}, ME_NAME = #{meName}
+		WHERE ME_EMAIL = #{meEmail}
+	</update>
+	
+	<update id="updateProfile" parameterType="kr.co.forspace.member.MemberDTO">
+		UPDATE MEMBER
+		SET ME_NO = #{meNo}, ME_NAME = #{meName}, ME_PWD = #{mePwd}
+		WHERE ME_EMAIL = #{meEmail}
+	</update>
+	
 	<insert id="insertSchool">
 	
 		<selectKey resultType="int" keyProperty="scNo" order="AFTER">

@@ -12,12 +12,23 @@
 		<result column="IM_NAME" property="imName"/>
 		<result column="IM_PATH" property="imPath"/>
 		<result column="IM_SIZE" property="imSize"/>
-		<result column="IM_DIV" property="imDiv"/>
 	</resultMap>
 	
+	<select id="selectMyImg" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM IMAGE
+		WHERE IM_EMAIL = #{imEmail}
+	</select>
+	
+	<update id="updateProfileImg" parameterType="kr.co.forspace.image.ImageDTO">
+		UPDATE IMAGE
+		SET IM_NAME = #{imName}, IM_PATH = #{imPath}, IM_SIZE = #{imSize}
+		WHERE IM_EMAIL = #{imEmail}
+	</update>
+	
 	<insert id="memberjoinWithprofileImg">
-		INSERT INTO IMAGE (IM_NO, IM_EMAIL, IM_NAME, IM_PATH, IM_SIZE, IM_DIV)
-		VALUES (SEQ_IM.NEXTVAL, #{imEmail}, #{imName}, #{imPath}, #{imSize}, #{imDiv})
+		INSERT INTO IMAGE (IM_NO, IM_EMAIL, IM_NAME, IM_PATH, IM_SIZE)
+		VALUES (SEQ_IM.NEXTVAL, #{imEmail}, #{imName}, #{imPath}, #{imSize})
 	</insert>
 
 </mapper>

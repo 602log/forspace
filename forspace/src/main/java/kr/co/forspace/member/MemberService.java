@@ -23,4 +23,8 @@ public interface MemberService {
 	void insertSchool(SchoolDTO schoolDTO);
 	
 	int duplecateSchool(@Param("scName") String scName, @Param("scCampus") String scCampus, @Param("scMajor") String scMajor);
+	
+	void updateProfileImg(MemberDTO memberDTO) throws Exception;
+	
+	void updateProfileWithoutPwd(MemberDTO memberDTO) throws Exception;
 }

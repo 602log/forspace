@@ -24,4 +24,8 @@ public interface MemberMapper {
 	void insertSchool(SchoolDTO schoolDTO);
 	
 	int duplecateSchool(@Param("scName") String scName, @Param("scCampus") String scCampus, @Param("scMajor") String scMajor);
+	
+	void updateProfile(MemberDTO memberDTO);
+	
+	void updateProfileWithoutPwd(MemberDTO memberDTO);
 }
