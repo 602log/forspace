@@ -15,11 +15,11 @@
 		<result column="BO_DATE" property="boDate"/>
 	</resultMap>
 	
-	<select id="checkBook" resultType="kr.co.forspace.booking.BookingDTO">
+	<select id="checkBook" resultType="kr.co.forspace.booking.BookingDTO" parameterType="kr.co.forspace.booking.BookingDTO">
 	<![CDATA[
-		SELECT BO_NO, SC_NO, ME_EMAIL, RO_NO, BO_TIME, BO_DATE
+		SELECT BO_NO AS boNo, SC_NO AS scNo, ME_EMAIL AS meEmail, RO_NO AS roNo, BO_TIME AS boTime, BO_DATE AS boDate
 		FROM BOOKING
-		WHERE RO_NO = #{roNo} AND TO_CHAR(BO_DATE, 'yyyy/mm/dd') = #{boDateStr}
+		WHERE RO_NO = #{roNo} AND TO_CHAR(BO_DATE, 'yyyy/MM/dd') = #{boDateStr}
 	]]>
 	</select>
 	

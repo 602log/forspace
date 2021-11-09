@@ -292,26 +292,33 @@ a {
 
 </div>
 <script>
-/* window.onload = function(){
-	
- 	var rows = document.getElementById("timeTable").getElementsByTagName("tr");
-	
- 	for(var r=0; r<rows.length; r++){
-		var cells = rows[r].getElementsByTagName("td");
-		var cell = cells[0].firstChild.data; //td의 값
-		console.log(cell);
-	}//end of for  
-	
-		 $.ajax({
-			url : "/booking/checkBook",
-			type : "post",
-			data : {roNo : ${dto.roNo }},
-			success : function(data){
-				alert(data);
-			}
-		}); 
-} */
+$(document).ready(function(){
+	$.ajax({
+		url : "/booking/checkBook",
+		type : "post",
+		data : {roNo : ${dto.roNo }},
+		success : function(data){
+			$(data).each(function(){
+				
+					
+					var rows = document.getElementById("timeTable").getElementsByTagName("tr");
+					
+					for(var r=0; r<rows.length; r++){
+						var cells = rows[r].getElementsByTagName("td");
+						var cell = cells[0].firstChild.data; //td의 값
+						
+						var boTime = this.boTime;
+						if(boTime == cell){
+							$("#timeTableTD2_"+(r+1)).css({
+								"background-color":"gray"
+							});
+						}
+					}
 
+			});
+		}
+	}); 
+});
 
 $(document).on("click", "#complaintBtn", function(){
 	//alert(${dto.roNo });

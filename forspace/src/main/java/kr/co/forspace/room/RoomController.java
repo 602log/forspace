@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.forspace.booking.BookingDTO;
 import kr.co.forspace.booking.BookingService;
 import kr.co.forspace.complaint.ComplaintDTO;
 import kr.co.forspace.complaint.ComplaintService;
@@ -185,6 +186,7 @@ public class RoomController {
 					@RequestParam(value="nowPage", required=false) String nowPage,
 					@RequestParam(value="cntPerPage", required=false) String cntPerPage) {// 연습실별 상세정보
 		
+		log.info("roomDetail.....................");
 		log.info("roNo:" + roNo);
 		
 		String meEmail = auth.getName();
@@ -241,7 +243,15 @@ public class RoomController {
 		List<ComplaintDTO> com = complaintService.selectComplaint(roNo, pagingDTO);
 		log.info(com);
 
-		model.addAttribute("com", com);	
+		model.addAttribute("com", com);
+		
+		//예약시간 가져오기
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String boDateStr = now.format(formatter);
+		List<BookingDTO> boList = bookingService.checkBook(roNo, boDateStr);
+		log.info("예약List"+boList);
+		model.addAttribute("boList", boList);
 		
 		return "/room/roomDetail";
 		

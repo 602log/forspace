@@ -1,6 +1,8 @@
 package kr.co.forspace.booking;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 
@@ -26,14 +28,13 @@ public class BookingController {
 	@PostMapping("/checkBook")
 	public List<BookingDTO> checkBook(int roNo, String boTime) {
 		//현재 날짜 string
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		Calendar c1 = Calendar.getInstance();
-		String boDateStr = sdf.format(c1.getTime());
-		log.info(roNo+boDateStr);
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String boDateStr = now.format(formatter);
 		//오늘 날짜의 해당 연습실 예약된 시간 찾기
 		List<BookingDTO> dto = bookingService.checkBook(roNo, boDateStr);
 	
-		log.info(dto.get(1).getBoTime());
+		log.info(dto);
 		return dto;
 		
 	}
