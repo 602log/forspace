@@ -17,6 +17,16 @@ public class BookingServiceImpl implements BookingService {
 	private final BookingMapper bookingMapper;
 	
 	@Override
+	public int findBookingTime(@Param("roNo") int roNo, @Param("boDateStr") String boDateStr, @Param("boTimeStr") String boTimeStr) {
+		return bookingMapper.findBookingTime(roNo, boDateStr, boTimeStr);
+	}
+	
+	@Override
+	public int findMyBook(@Param("roNo") int roNo, @Param("boDateStr") String boDateStr, @Param("meEmail") String meEmail) {
+		return bookingMapper.findMyBook(roNo, boDateStr, meEmail);
+	}
+	
+	@Override
 	public void insertBook(BookingDTO bookingDTO) {
 		bookingMapper.insertBook(bookingDTO);
 	}

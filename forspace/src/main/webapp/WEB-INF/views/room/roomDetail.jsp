@@ -291,8 +291,32 @@ a {
 	</div>
 
 </div>
+
+
+        <!-- modal -->
+        <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Result</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>${msg }</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
 <script>
 $(document).ready(function(){
+	
 	$.ajax({
 		url : "/booking/checkBook",
 		type : "post",
@@ -312,12 +336,14 @@ $(document).ready(function(){
 							$("#timeTableTD2_"+(r+1)).css({
 								"background-color":"gray"
 							});
+							$("#timeTableTD2_"+(r+1)).attr("onclick", "return false");
 						}
 					}
 
 			});
 		}
-	}); 
+	});
+	
 });
 
 $(document).on("click", "#complaintBtn", function(){
@@ -411,7 +437,7 @@ function selTime(time, idx){
 	
 	if(btnVal == "" || btnVal == null){//클릭한 적 없을 때
 		//이용제한시간에 따른 클릭
-	 	if(plusMax == 0){
+	 	if(plusMax == 0){//이용제한시간이 1시간일 때
 			//alert("0으로 옴");
 			
 			//선택한 칸 색상 바꾸기
@@ -424,25 +450,39 @@ function selTime(time, idx){
 			$("#bookingBtn").attr("value", time);
 
 		}else{
-			//alert("else로 옴");
-
+			//이용제한 시간이 2시간 이상일때
 			for(i=0; i<roLimit; i++){
-				//선택한 칸 + 이용제한시간까지 색상 바꾸기
-				$("#timeTableTD2_"+(idx+i)).css({
-					"background-color":"purple"
-				});
-				//선택한 칸 value Y로 변경
-				$("#tdInput_"+(idx+i)).attr("value", "Y");
-				//선택한 시간(예약시작시간)을 button value로 설정
-				$("#bookingBtn").attr("value", time);
+				if($("#timeTableTD2_"+(idx+i)).attr('style') == undefined || $("#timeTableTD2_"+(idx+i)).attr('style') == ""){
+					//선택한 칸 + 이용제한시간까지 색상 바꾸기
+					$("#timeTableTD2_"+(idx+i)).css({
+						"background-color":"purple"
+					});
+					//선택한 칸 value Y로 변경
+					$("#tdInput_"+(idx+i)).attr("value", "Y");
+					//선택한 시간(예약시작시간)을 button value로 설정
+					$("#bookingBtn").attr("value", time);
+				}else if($("#timeTableTD2_"+(idx+i)).attr('style') == 'gray'){
+					$("#bookingBtn").attr("value", time);
+				}
+
 			}//end of for
 		}
 		
 	}else{//클릭한 적 있을 때
-		$(".timeInput").attr("value", "");
+		
+		for(var i=1; i<=${diff+1}; i++){
+			if($('#tdInput_'+i).attr('value') == 'Y'){
+				$("#timeTableTD2_"+i).css({
+					"background-color":""
+				});
+			}
+		}
+	
+		$(".timeInput").attr("value", "N");
+/* 		$(".timeInput").attr("value", "");		
 		$(".timeTableTD2").css({
 			"background-color":""
-		});
+		}); */
 		//이용제한시간에 따른 클릭
 	 	if(plusMax == 0){
 			//alert("0으로 옴");
@@ -460,14 +500,19 @@ function selTime(time, idx){
 			//alert("else로 옴");
 
 			for(i=0; i<roLimit; i++){
-				//선택한 칸 + 이용제한시간까지 색상 바꾸기
-				$("#timeTableTD2_"+(idx+i)).css({
-					"background-color":"purple"
-				});
-				//선택한 칸 value Y로 변경
-				$("#tdInput_"+(idx+i)).attr("value", "Y");
-				//선택한 시간(예약시작시간)을 button value로 설정
-				$("#bookingBtn").attr("value", time);
+				
+				if($("#timeTableTD2_"+(idx+i)).attr('style') == undefined || $("#timeTableTD2_"+(idx+i)).attr('style') == ""){
+					//선택한 칸 + 이용제한시간까지 색상 바꾸기
+					$("#timeTableTD2_"+(idx+i)).css({
+						"background-color":"purple"
+					});
+					//선택한 칸 value Y로 변경
+					$("#tdInput_"+(idx+i)).attr("value", "Y");
+					//선택한 시간(예약시작시간)을 button value로 설정
+					$("#bookingBtn").attr("value", time);
+				}else if($("#timeTableTD2_"+(idx+i)).attr('style') == 'gray'){
+					$("#bookingBtn").attr("value", time);
+				}
 			}//end of for
 		}	
 	
@@ -488,8 +533,15 @@ function booking(){
 				boTime : seltime,
 				roLimit : roLimit,
 				scNo : scNo},
-		success : function(){
-			alert("예약되었습니다.");
+		success : function(msg){
+			var msg = '${msg}';
+			console.log("msg>>", msg);
+			if (!(msg === '' || history.state)) {
+				var modal = $(".modal");
+				console.log(modal);
+				modal.modal();
+			}
+			
 			location.reload();
 			}
 		});

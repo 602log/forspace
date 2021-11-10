@@ -17,7 +17,7 @@
 		text-align : center;
 		margin : 20px;
 	}
-	#img{
+	#imgProfile{
 		border-radius: 50%;
 		width : 300px;
 	}
@@ -31,7 +31,7 @@
 				    <div class="col-lg-6"> 
 						<label>프로필</label>
 						<div class="img_wrap">
-							<img id="img" src="../resources/images/user.png" alt="profile">
+							<img id="imgProfile" src="../resources/images/user.png" alt="profile">
 						</div>
 						<div class="form-group form-default">
 							<input type="file" class="form-control form-control-user inputImg" name="image">
@@ -135,7 +135,7 @@
 				
 				var reader = new FileReader();
 				reader.onload = function(e){
-					$("#img").attr("src", e.target.result);
+					$("#imgProfile").attr("src", e.target.result);
 				}
 				reader.readAsDataURL(f);
 			});

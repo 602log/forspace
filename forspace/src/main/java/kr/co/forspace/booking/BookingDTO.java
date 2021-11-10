@@ -21,4 +21,5 @@ public class BookingDTO {
 	private Date boDate;
 	
 	private String boDateStr;
+	private String boTimeStr;
 }

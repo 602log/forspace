@@ -15,6 +15,22 @@
 		<result column="BO_DATE" property="boDate"/>
 	</resultMap>
 	
+	<select id="findBookingTime" resultType="int" parameterType="kr.co.forspace.booking.BookingDTO">
+	<![CDATA[	
+		SELECT COUNT(BO_NO)
+		FROM BOOKING
+		WHERE RO_NO = #{roNo} AND TO_CHAR(BO_DATE, 'yyyy/MM/dd') = #{boDateStr} AND BO_TIME = #{boTimeStr}
+	]]>
+	</select>
+	
+	<select id="findMyBook" resultType="int" parameterType="kr.co.forspace.booking.BookingDTO">
+	<![CDATA[	
+		SELECT COUNT(BO_NO)
+		FROM BOOKING
+		WHERE ME_EMAIL = #{meEmail} AND RO_NO = #{roNo} AND TO_CHAR(BO_DATE, 'yyyy/MM/dd') = #{boDateStr}
+	]]>
+	</select>
+	
 	<select id="checkBook" resultType="kr.co.forspace.booking.BookingDTO" parameterType="kr.co.forspace.booking.BookingDTO">
 	<![CDATA[
 		SELECT BO_NO AS boNo, SC_NO AS scNo, ME_EMAIL AS meEmail, RO_NO AS roNo, BO_TIME AS boTime, BO_DATE AS boDate
