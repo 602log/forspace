@@ -13,7 +13,46 @@
 		<result column="RO_NO" property="roNo"/>
 		<result column="BO_TIME" property="boTime"/>
 		<result column="BO_DATE" property="boDate"/>
+		<collection property="roomList" resultMap="roomListMap"></collection>
 	</resultMap>
+	
+	<resultMap type="kr.co.forspace.booking.BookingDTO" id="roomListMap">
+		<result column="RO_NO" property="roNo"/>
+		<result column="SC_NO" property="scNo"/>
+		<result column="RO_NAME" property="roName"/>
+		<result column="RO_FLOOR" property="roFloor"/>
+		<result column="RO_MAX" property="roMax"/>
+		<result column="RO_START" property="roStart"/>
+		<result column="RO_CLOSE" property="roClose"/>
+		<result column="RO_LIMIT" property="roLimit"/>
+		<result column="RO_REGDATE" property="roRegdate"/>
+		<result column="RO_LIKECNT" property="roLikecnt"/>
+	</resultMap>
+
+	<select id="mybookingList" resultType="kr.co.forspace.booking.BookingDTO" parameterType="String">
+	<![CDATA[
+		SELECT R.RO_NAME as roName, A.BO_NO as boNo, A.BO_DATE as boDate, A.BO_TIME as boTime
+		FROM ROOM R, 
+					(SELECT bo_no, ro_no, bo_date, bo_time
+					FROM BOOKING
+					WHERE bo_no IN 
+									(SELECT bo_no FROM 
+										(SELECT ro_no, min(bo_no) as bo_no
+										 FROM booking
+										 WHERE me_email = #{meEmail}
+										 GROUP BY ro_no)
+									)
+					)A
+		WHERE R.RO_NO = A.RO_NO
+	]]>
+	</select>
+	
+<!-- 	<select id="mybookingList" resultType="kr.co.forspace.booking.BookingDTO" parameterType="String">
+		SELECT ME_EMAIL as meEmail, RO_NO as roNo, BO_TIME as boTime, BO_DATE as bo_date
+		FROM BOOKING
+		WHERE ME_EMAIL = #{meEmail}
+		GROUP BY RO_NO
+	</select> -->
 	
 	<select id="findBookingTime" resultType="int" parameterType="kr.co.forspace.booking.BookingDTO">
 	<![CDATA[	

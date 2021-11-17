@@ -6,9 +6,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +26,29 @@ import lombok.extern.log4j.Log4j;
 public class BookingController {
 	
 	private final BookingService bookingService;
+	
+	@ResponseBody
+	@PostMapping("/getMyBooking")
+	public List<BookingDTO> getMyBooking(String meEmail) {
+		log.info("getMyBooking...................................");
+		List<BookingDTO> list = bookingService.mybookingList(meEmail);
+		for(int i=0; i<list.size(); i++) {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+			String strNowDate = simpleDateFormat.format(list.get(i).getBoDate());
+			list.get(i).setBoDateStr(strNowDate);
+		}
+		log.info(list);		
+
+		return list;
+	}
+	
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/bookingList")
+	public void bookingList() {
+		log.info("bookingList...................................");
+	}
+	
 	
 	@ResponseBody
 	@PostMapping("/checkBook")

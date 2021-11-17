@@ -65,7 +65,7 @@
 		<![CDATA[
 		SELECT ROWNUM, SC_NO, SC_NAME, SC_CAMPUS, SC_MAJOR, SC_CHECKNUM
 		FROM SCHOOL
-		WHERE SC_NAME LIKE '%'||#{scName}||'%'
+		WHERE SC_NAME LIKE '%'||#{scName}||'%' AND ROWNUM <= 5
 		]]>
 	</select>
 	

@@ -1,7 +1,10 @@
 package kr.co.forspace.booking;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import kr.co.forspace.room.RoomDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +25,7 @@ public class BookingDTO {
 	
 	private String boDateStr;
 	private String boTimeStr;
+	
+	//private List<RoomDTO> roomList = new ArrayList<>();
+	private String roName;
 }

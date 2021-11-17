@@ -16,17 +16,16 @@
 
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="../resources/css/style.css">
-				
-		
+	
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/> <!-- 아이콘&ajax 사용 -->		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		
 		<!-- slick -->		
 		<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 		<script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
 
 		<!-- timepicker -->
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">        
@@ -147,6 +146,9 @@
 	                <li class="nav-item">
 	                    <a class="nav-link" href="../notice/noticeList">공지사항</a>
 	                </li>
+	               	<li class="nav-item">
+	                    <a class="nav-link" href="../booking/bookingList">예약확인</a>
+	                </li>
 	                <li class="nav-item dropdown no-arrow">
 	                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 										data-toggle="dropdown" aria-haspopup="ture" aria-expanded="false" style="color:#d0342c;">
@@ -157,15 +159,18 @@
 						</a>
 						<!-- Dropdown user information -->
 							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="/member/checkPwd">
+								<a class="dropdown-item" href="../member/checkPwd">
 									<i class="fas fa-user-check fa-sm fa-fw mr-2">정보수정</i>
 								</a>
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
-								<a class="dropdown-item" href="/room/addroom">
+								<a class="dropdown-item" href="../room/addroom">
 									<i class="fas fa-user-plus fa-sm fa-fw mr-2">연습실 등록</i>
 								</a>
+								<a class="dropdown-item" href="#">
+									<i class="fas fa-user-plus fa-sm fa-fw mr-2">인증번호</i>
+								</a>
 							</sec:authorize>
-								<a class="dropdown-item" href="/member/logout">
+								<a class="dropdown-item" href="../member/logout">
 									<i class="fas fa-user-plus fa-sm fa-fw mr-2">로그아웃</i>
 								</a>
 							</div>
@@ -206,4 +211,6 @@ $(document).ready(function(){
 	}
 
 });
+
+
 </script>

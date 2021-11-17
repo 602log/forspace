@@ -1,6 +1,5 @@
 package kr.co.forspace.paging;
 
-import jdk.internal.org.jline.utils.Log;
 import kr.co.forspace.image.ImageDTO;
 import kr.co.forspace.member.MemberDTO;
 import lombok.AllArgsConstructor;
