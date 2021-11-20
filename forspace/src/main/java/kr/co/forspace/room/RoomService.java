@@ -34,5 +34,9 @@ public interface RoomService {
 	
 	List<RoomItemDTO> selectRoomItem(int roNo);
 	
+	void deleteItem(int roNo);
 	
+	void updateRoom(RoomDTO roomDTO);
+	
+	void deleteRoom(int roNo);
 }

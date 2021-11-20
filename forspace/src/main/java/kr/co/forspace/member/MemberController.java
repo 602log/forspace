@@ -34,6 +34,11 @@ public class MemberController {
 	private final PasswordEncoder passwordEncoder;
 	private final ImageService imageService;
 	
+	@GetMapping("/join")
+	public void join() {
+		
+	}
+	
 	@PostMapping("/updateProfile")
 	public String updateProfile(MultipartFile image, MemberDTO memberDTO, Model model, RedirectAttributes rttr) throws Exception {
 		

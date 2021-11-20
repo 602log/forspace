@@ -258,41 +258,39 @@ a {
 
 <!-- 예약시간표 -->
 		<div class="col-lg-4">
-			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<button type="button" class="btn btn-secondary btn-md btn-block"
-					style="border: none; border-radius: 50px; background-color: purple;">수정하기</button>
-			</sec:authorize>
 			<sec:authorize access="hasRole('ROLE_USER')">
 				<button type="button" class="btn btn-primary btn-md btn-block" id="bookingBtn"
 					style="border: none; border-radius: 50px; background-color: purple;" value="" onclick="return booking();">예약하기</button>
 			</sec:authorize>
-			<br>
-			<table class="table table-bordered" id="timeTable">
-				<c:forEach begin="1" end="${diff }" var="i">
-					<tr id="timeTableTR">
-						<td class="timeTableTD" id="timeTableTD_${i }">${firstStartTime + (i-1)}:${scdStartTimeStr }</td>
-						<td class="timeTableTD2" id="timeTableTD2_${i }" onclick="return selTime('${firstStartTime + (i-1)}:${scdStartTimeStr }', ${i });">
-							<input type="hidden" value="N" id="tdInput_${i }" class="timeInput">
-						</td>
-					</tr>
-				</c:forEach>
-				<c:choose>
-					<c:when test="${scdDiff == 30}">
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<button type="button" class="btn btn-secondary btn-md btn-block"
+					style="border: none; border-radius: 50px; background-color: purple;" onclick="location.href='/room/modifyRoom?roNo=${dto.roNo}'">수정하기</button>		
+			</sec:authorize>
+				<br>
+				<table class="table table-bordered" id="timeTable">
+					<c:forEach begin="1" end="${diff }" var="i">
 						<tr id="timeTableTR">
-							<td class="timeTableTD" id="timeTableTD_${diff.length+1 }">${firstCloseTime}:${scdStartTimeStr }</td>
-							<td class="timeTableTD2" id="timeTableTD2_${diff.length+1 }" onclick="return selTime('${firstCloseTime}:${scdStartTimeStr }', ${diff.length+1 });">
-								<input type="hidden" value="N" id="tdInput_${diff.length+1 }" class="timeInput">
+							<td class="timeTableTD" id="timeTableTD_${i }">${firstStartTime + (i-1)}:${scdStartTimeStr }</td>
+							<td class="timeTableTD2" id="timeTableTD2_${i }" onclick="return selTime('${firstStartTime + (i-1)}:${scdStartTimeStr }', ${i });">
+								<input type="hidden" value="N" id="tdInput_${i }" class="timeInput">
 							</td>
 						</tr>
-					</c:when>
-				</c:choose>
-			</table>
+					</c:forEach>
+					<c:choose>
+						<c:when test="${scdDiff == 30}">
+							<tr id="timeTableTR">
+								<td class="timeTableTD" id="timeTableTD_${diff.length+1 }">${firstCloseTime}:${scdStartTimeStr }</td>
+								<td class="timeTableTD2" id="timeTableTD2_${diff.length+1 }" onclick="return selTime('${firstCloseTime}:${scdStartTimeStr }', ${diff.length+1 });">
+									<input type="hidden" value="N" id="tdInput_${diff.length+1 }" class="timeInput">
+								</td>
+							</tr>
+						</c:when>
+					</c:choose>
+				</table>
 		</div>
 	</div>
 
 </div>
-
-
         <!-- modal -->
         <div class="modal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -316,15 +314,12 @@ a {
         
 <script>
 $(document).ready(function(){
-	
 	$.ajax({
 		url : "/booking/checkBook",
 		type : "post",
 		data : {roNo : ${dto.roNo }},
 		success : function(data){
 			$(data).each(function(){
-				
-					
 					var rows = document.getElementById("timeTable").getElementsByTagName("tr");
 					
 					for(var r=0; r<rows.length; r++){
@@ -337,6 +332,7 @@ $(document).ready(function(){
 								"background-color":"gray"
 							});
 							$("#timeTableTD2_"+(r+1)).attr("onclick", "return false");
+							//console.log(this.meEmail);
 						}
 					}
 
@@ -546,6 +542,17 @@ function booking(){
 			}
 		});
 }
+
+$(document).ready(function() {
+	var msg = '${msg}';
+	console.log("msg>>", msg);
+	if (!(msg === '' || history.state)) {
+		var modal = $(".modal");
+		console.log(modal);
+		modal.modal();
+	}
+});
+
 </script>
 <%@ include file="../include/footer.jsp"%>
 

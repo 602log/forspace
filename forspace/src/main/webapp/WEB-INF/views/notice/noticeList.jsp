@@ -8,18 +8,25 @@
 	<div class="container">
 		<div class="col-lg-12">
 			<table class="table table-hover">
-				<tr>
-					<th style="width:10%; text-align:center;">NO</th>
-					<th style="width:80%; text-align:center;">제목</th>
-					<th style="width:10%; text-align:center;">조회수</th>
-				</tr>
-				<c:forEach var="list" items="${list }">
-					<tr>
-						<td style="width:10%; text-align:center;">${list.noNo }</td>
-						<td style="width:80%;"><a href="/notice/noticeDetail?noNo=${list.noNo }">${list.noSubject }</a></td>
-						<td style="width:10%; text-align:center;">${list.noCnt }</td>
-					</tr>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${empty list }">
+						<p class="text-center" style="color:red; font-size:20px;">등록된 내용이 없습니다.</p>
+					</c:when>
+					<c:otherwise>
+						<tr>
+							<th style="width:10%; text-align:center;">NO</th>
+							<th style="width:80%; text-align:center;">제목</th>
+							<th style="width:10%; text-align:center;">조회수</th>
+						</tr>
+						<c:forEach var="list" items="${list }">
+							<tr>
+								<td style="width:10%; text-align:center;">${list.noNo }</td>
+								<td style="width:80%;"><a href="/notice/noticeDetail?noNo=${list.noNo }">${list.noSubject }</a></td>
+								<td style="width:10%; text-align:center;">${list.noCnt }</td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</table>
 			
 			<!-- paging -->

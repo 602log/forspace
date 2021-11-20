@@ -39,4 +39,10 @@ public interface RoomMapper {
 	void insertRoomItem(RoomItemDTO roomItemDTO);
 	
 	List<RoomItemDTO> selectRoomItem(int roNo);
+	
+	void deleteItem(int roNo);
+	
+	void updateRoom(RoomDTO roomDTO);
+	
+	void deleteRoom(int roNo);
 }

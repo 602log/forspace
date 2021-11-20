@@ -23,7 +23,7 @@
 						<c:out value="${logout }"></c:out>
 					</div>
 					<div class="text-center">
-						<a class="small" href="/member/memberjoin">회원가입</a>
+						<a class="small" href="/member/join">회원가입</a>
 					</div>
 					<div class="text-center">
 						<a class="small" href="/">비밀번호 찾기</a>

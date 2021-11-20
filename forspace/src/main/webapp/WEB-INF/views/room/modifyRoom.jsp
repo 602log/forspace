@@ -9,36 +9,39 @@
 	.modalBtn:hover {
 	  color: #939597;
 	}
+	.buttons{
+	width : 300px;
+	}
 </style>
 <%@ include file="../include/header.jsp"%>
         <!-- Page content-->
         <div class="container mt-5 main-content">
-        	<form action="/room/addroom" method="post" id="roomFrm">
+        	<form action="/room/modify" method="post" id="modifyFrm">
 	        	<div class="row">
 	                <div class="col-lg-6"> 
 						<label>건물층</label>
 						<div class="form-group form-default">
-							<input type="number" name="roFloor" id="roFloor" class="form-control">
+							<input type="number" name="roFloor" id="roFloor" class="form-control" value="${dto.roFloor }">
 						</div>
-						<label>연습실 개수</label>
+						<label>연습실 이름</label>
 						<div class="form-group form-default">
-							<input type="number" name="roomCnt" id="roomCnt" class="form-control" min="1" placeholder="한번에 등록할 연습실의 개수를 입력해주세요.">
+							<input type="text" name="roName" id="roName" class="form-control" value="${dto.roName }">
 						</div>
 						<label>최대 수용인원</label>
 						<div class="form-group form-default">
-							<input type="number" name="roMax" id="roMax" class="form-control" min="1">
+							<input type="number" name="roMax" id="roMax" class="form-control" min="1" value="${dto.roMax }">
 						</div>
 						<label>1회당 이용가능시간</label>
 						<div class="form-group form-default">
-							<input type="number" name="roLimit" id="roLimit" class="form-control" min="1">
+							<input type="number" name="roLimit" id="roLimit" class="form-control" min="1" value="${dto.roLimit }">
 						</div>
 						<label>운영시간</label>
 						<div class="form-group form-default">
 							<table style="width:100%;">
 								<tr>
-									<td><input type="text" name="roStart" id="roStart" class="form-control"></td>
+									<td><input type="text" name="roStart" id="roStart" class="form-control" value="${dto.roStart }"></td>
 									<td>~</td>
-									<td><input type="text" name="roClose" id="roClose" class="form-control"></td>
+									<td><input type="text" name="roClose" id="roClose" class="form-control" value="${dto.roClose }"></td>
 								</tr>
 							</table>
 						</div>
@@ -50,11 +53,21 @@
 						<input type="hidden" id="itemCheckCnt" value="0">
 	                </div>
 	                
+	                
+	                <input type="hidden" name="roNo" id="roNo" class="form-control" value="${dto.roNo }">
+	                <input type="hidden" name="scNo" id="scNo" class="form-control" value="${dto.scNo }">
 				</div>
 				
-				<div class="mt-5" align="center">
-						<input type="submit" id="submit" name="submit" class="btn btn-primary" value="등록">
-						<input type=button id="cancel" name="cancel" class="btn btn-danger" value="취소">
+				<div align="center" class="rows" id="btns">
+					<div class="col-6 mt-1">
+						<input type="submit" id="submit" name="submit" class="btn btn-primary buttons" value="수정">
+					</div>
+					<div class="col-6 mt-1">
+						<input type="button" id="delete" class="btn btn-danger buttons" onclick="return false;" value="삭제하기" >
+					</div>
+					<div class="col-6 mt-1">
+						<input type=button id="cancel" name="cancel" class="btn btn-secondary buttons" value="취소">
+					</div>
 				</div>
 			</form>			
         </div>
@@ -86,9 +99,38 @@
 				</div>
 					
 			</div>
-
 <script>
 $(document).ready(function(){
+	
+	$.ajax({
+		type : "post",
+		url : "/room/findItem",
+		data : {roNo : ${dto.roNo }},
+		dataType : "json",
+		success : function(data){
+			var str = "";
+			var count = 1;
+			var items = data;
+			//console.log(items[3].itNo);
+			if(data.length>0){
+				for(var i=0; i<data.length; i++){
+					var str = "<div class='input-group mb-3 itemListDiv'>"
+						+ "<input type='text' class='form-control' aria-describedby='btnAddon"+count+"' value='"+items[i].itemDTO.itName+" ("+items[i].riCnt+"개)' readonly disabled>"
+						+ "<button class='btn btn-outline-secondary delItem' type='button'>"
+						+ "<i class='fas fa-minus'>"
+						+ "</i>"
+						+ "</button>"
+						+ "<input type='hidden' class='form-control' id='itNo' name='itNo' value='"+items[i].itNo+"'>"
+						+ "<input type='hidden' class='form-control' id='riNo' name='riNo' value='"+items[i].riNo+"'>"
+						+ "<input type='hidden' class='form-control' id='riCnt' name='riCnt' value='"+items[i].riCnt+"'>"
+						+ "</div>"
+					$("#selItem").append(str);
+				}//end of for
+			}//end of if
+
+		}
+		
+	});
 
 	$("input#roStart").timepicker({
 		timeFormat : "HH:mm",
@@ -112,6 +154,10 @@ $(document).ready(function(){
 		location.href="../room/roomList?roFloor=0";
 	});
 	
+	$("#delete").on("click", function(){
+		var roNo = $("#roNo").val();
+		location.href="../room/deleteRoom?roNo="+roNo
+	});
 	
 	$("#submit").on("click", function(){
 		
@@ -120,9 +166,9 @@ $(document).ready(function(){
 			$("#roFloor").focus();
 			return false;
 		}
-		if($("#roomCnt").val() == 0 || $("#roomCnt").val() == ""){
-			alert("등록할 연습실 개수를 입력해주세요.");
-			$("#roomCnt").focus();
+		if($("#roName").val() == ""){
+			alert("연습실 이름을 입력해주세요.");
+			$("#roName").focus();
 			return false;
 		}
 		if($("#roMax").val() == 0 || $("#roMax").val() == ""){
@@ -188,7 +234,7 @@ $(document).ready(function(){
 			return false;
 		}
 		
-		$("#roomFrm").submit();
+		$("#modifyFrm").submit();
 	});
 	
 	$(".modalBtn").on('click', function(){

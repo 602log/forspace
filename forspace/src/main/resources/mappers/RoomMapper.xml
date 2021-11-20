@@ -38,6 +38,22 @@
 		<association property="itemDTO" resultMap="itemMap"/>
 	</resultMap>
 	
+	<delete id="deleteRoom" parameterType="int">
+		DELETE FROM ROOM
+		WHERE RO_NO = #{roNo}
+	</delete>
+	
+	<update id="updateRoom" parameterType="kr.co.forspace.room.RoomDTO">
+		UPDATE ROOM
+		SET RO_NAME = #{roName}, RO_FLOOR = #{roFloor}, RO_MAX = #{roMax}, RO_START = #{roStart},
+			RO_CLOSE = #{roClose}, RO_LIMIT = #{roLimit}
+		WHERE RO_NO = ${roNo}
+	</update>
+	
+	<delete id="deleteItem" parameterType="int">
+		DELETE FROM ROOM_ITEM
+		WHERE RO_NO = #{roNo}
+	</delete>
 	
 	<select id="selectRoomItem" parameterType="int" resultMap="roomItemMap">
 		<![CDATA[

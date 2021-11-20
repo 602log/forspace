@@ -19,7 +19,7 @@
 	}
 	#imgProfile{
 		border-radius: 50%;
-		width : 300px;
+		width : 200px;
 	}
 </style>
 <%@ include file="../include/header.jsp"%>

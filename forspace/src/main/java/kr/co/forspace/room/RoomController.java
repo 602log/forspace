@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.forspace.booking.BookingDTO;
 import kr.co.forspace.booking.BookingService;
@@ -38,9 +39,63 @@ public class RoomController {
 	private final MemberService memberService;
 	private final ComplaintService complaintService;
 	private final BookingService bookingService;
+	
+	@GetMapping("/deleteRoom")
+	public String deleteRoom(int roNo, RedirectAttributes rttr) {
+		log.info("deleteRoom...............................");
+		log.info("roNo: "+roNo);
+		
+		roomService.deleteRoom(roNo);
+		roomService.deleteItem(roNo);
+		
+		rttr.addFlashAttribute("msg", "삭제되었습니다.");
+		return "redirect:/room/roomList?roFloor="+0;
+	}
+	
+	@PostMapping("/modify")
+	public String modify(RoomDTO roomDTO, int[] riNo, int[] itNo, int[] riCnt, RedirectAttributes rttr) {
+		log.info("modify.........................");
+		//log.info(roomDTO.getRoNo());
+		log.info(roomDTO);
+		log.info("riNo :"+riNo);
+		
+		roomService.updateRoom(roomDTO);
+		roomService.deleteItem(roomDTO.getRoNo());
+		
+		if(itNo != null) {
+			for(int a=0; a<itNo.length; a++) {
+				RoomItemDTO roomItemDTO = RoomItemDTO.builder()
+						.roNo(roomDTO.getRoNo())
+						.itNo(itNo[a])
+						.riCnt(riCnt[a])
+						.build();
+				roomService.insertRoomItem(roomItemDTO);
+			}
+		}
+		
+		rttr.addFlashAttribute("msg", "수정되었습니다.");
+		return "redirect:/room/roomDetail?roNo="+roomDTO.getRoNo();
+	}
+	
+	@ResponseBody
+	@PostMapping("/findItem")
+	public List<RoomItemDTO> findItem(int roNo) {
+		List<RoomItemDTO> items = roomService.selectRoomItem(roNo);
+		return items;
+	}
+	@GetMapping("/modifyRoom")
+	public void modifyRoom(int roNo, Model model) {
+		log.info("modifyRoom........................");
+		//log.info(roNo);
+		RoomDTO dto = roomService.roomDetail(roNo);
+		//List<RoomItemDTO> items = roomService.selectRoomItem(roNo);
+		//log.info(items);
+		model.addAttribute("dto", dto);
+		//model.addAttribute("it", items);
+	}
  
 	@PostMapping("/addroom")
-	public void addroom(RoomDTO roomDTO, int[] itNo, int[] riCnt, int roomCnt, Authentication auth) {
+	public String addroom(RoomDTO roomDTO, int[] itNo, int[] riCnt, int roomCnt, Authentication auth, RedirectAttributes rttr) {
 		log.info(roomDTO);
 		log.info(roomDTO.getRoClose().getClass().getSimpleName());
 		log.info(itNo.length);
@@ -161,7 +216,8 @@ public class RoomController {
 			
 		}//end of if
 		
-			
+		rttr.addFlashAttribute("msg", "등록되었습니다.");
+		return "redirect:/room/roomList?roFloor="+0;
 		
 	}//end of addroom()
 	

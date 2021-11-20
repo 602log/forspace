@@ -17,6 +17,21 @@ public class RoomServiceImpl implements RoomService {
 	private final RoomMapper roomMapper;
 
 	@Override
+	public void deleteRoom(int roNo) {
+		roomMapper.deleteRoom(roNo);
+	}
+	
+	@Override
+	public void updateRoom(RoomDTO roomDTO) {
+		roomMapper.updateRoom(roomDTO);
+	}
+	
+	@Override
+	public void deleteItem(int roNo) {
+		roomMapper.deleteItem(roNo);
+	}
+	
+	@Override
 	public List<RoomDTO> roomNoList(int scNo) {
 		return roomMapper.roomNoList(scNo);
 	}
