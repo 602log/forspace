@@ -10,17 +10,19 @@
 <%@ include file="../include/header.jsp"%>
         <!-- Page content-->
        	<div class="container main-container">
-	       	<div class="col-12 mb-3">
-				<div class="card shadow mb-3">
-					<div class="card-header py-3">
-						<h6 class="m-0 font-weight-bold text-primary">예약현황</h6>
-					</div>
-					<div class="card-body">
-					<div id="calendar"></div>
+		       	<div class="col-12 mb-3">
+		       		<h2>예약확인</h2>
+					<div class="card shadow mb-3">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">예약현황</h6>
+						</div>
+						<div class="card-body">
+						<div id="calendar"></div>
+						</div>
 					</div>
 				</div>
-			</div>
        	</div>
+
 
 <script>
 
@@ -48,9 +50,9 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
 		  }
 	  })
   ]
+
 });
 calendar.render();
-
 </script>
 	<%@ include file="../include/footer.jsp"%>
 

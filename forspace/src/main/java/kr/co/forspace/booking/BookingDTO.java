@@ -28,4 +28,7 @@ public class BookingDTO {
 	
 	//private List<RoomDTO> roomList = new ArrayList<>();
 	private String roName;
+	private String meName;
+	
+	private String refused;
 }

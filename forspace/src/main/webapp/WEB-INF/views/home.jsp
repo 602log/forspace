@@ -7,12 +7,7 @@
         <!-- Page content-->
         <div class="container">
         	<div class="row">
-        		<div class="col-lg-6">
-        			<a class="btn" style="background-color:purple;">이용자</a>
-        		</div>
-        		<div class="col-lg-6">
-        			<a class="btn" style="background-color:grey;">관리자</a>
-        		</div>
+				
         	</div>
         </div>
 <script>

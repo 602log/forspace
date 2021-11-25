@@ -529,29 +529,17 @@ function booking(){
 				boTime : seltime,
 				roLimit : roLimit,
 				scNo : scNo},
-		success : function(msg){
-			var msg = '${msg}';
-			console.log("msg>>", msg);
-			if (!(msg === '' || history.state)) {
-				var modal = $(".modal");
-				console.log(modal);
-				modal.modal();
+		success : function(data){
+			if(data == 'success'){
+				var msg = '예약되었습니다.';
+			}else if(data == 'already'){
+				msg = '이미 예약하셨습니다.';
 			}
-			
+			alert(msg);
 			location.reload();
 			}
 		});
 }
-
-$(document).ready(function() {
-	var msg = '${msg}';
-	console.log("msg>>", msg);
-	if (!(msg === '' || history.state)) {
-		var modal = $(".modal");
-		console.log(modal);
-		modal.modal();
-	}
-});
 
 </script>
 <%@ include file="../include/footer.jsp"%>

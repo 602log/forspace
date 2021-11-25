@@ -15,14 +15,14 @@
 					<c:otherwise>
 						<tr>
 							<th style="width:10%; text-align:center;">NO</th>
-							<th style="width:80%; text-align:center;">제목</th>
-							<th style="width:10%; text-align:center;">조회수</th>
+							<th style="width:70%; text-align:center;">제목</th>
+							<th style="width:20%; text-align:center;">조회수</th>
 						</tr>
 						<c:forEach var="list" items="${list }">
 							<tr>
 								<td style="width:10%; text-align:center;">${list.noNo }</td>
 								<td style="width:80%;"><a href="/notice/noticeDetail?noNo=${list.noNo }">${list.noSubject }</a></td>
-								<td style="width:10%; text-align:center;">${list.noCnt }</td>
+								<td style="width:20%; text-align:center;">${list.noCnt }</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>
