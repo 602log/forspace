@@ -20,4 +20,6 @@ public interface NoticeMapper {
 	void removeNotice(int noNo);
 	
 	void updateCnt(int noNo);
+	
+	void insertNotice(NoticeDTO noticeDTO);
 }

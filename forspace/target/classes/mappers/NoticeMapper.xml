@@ -16,6 +16,11 @@
 		<result column="NO_CNT" property="noCnt"/>
 	</resultMap>
 	
+	<insert id="insertNotice" parameterType="kr.co.forspace.notice.NoticeDTO">
+		INSERT INTO NOTICE (NO_NO, ME_EMAIL, SC_NO, NO_SUBJECT, NO_CONTENT)
+		VALUES (seq_no.nextval, #{meEmail}, #{scNo}, #{noSubject}, #{noContent})
+	</insert>
+	
 	<update id="updateCnt" parameterType="int">
 		UPDATE NOTICE SET NO_CNT = NO_CNT+1
 		WHERE NO_NO = #{noNo}

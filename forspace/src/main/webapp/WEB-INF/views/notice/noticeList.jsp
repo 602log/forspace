@@ -1,12 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <style>
-
+#noticeBtn{
+	border: none;
+	border-radius: 50px; 
+	background-color: purple;
+	text-align : center;
+}
 </style>
 <%@ include file="../include/header.jsp"%>
     <!-- Page content-->
 	<div class="container">
 		<div class="col-lg-12">
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+			<div class="col-lg-4" style="float : right;">
+				<button type="button" class="btn btn-primary btn-md btn-block" id="noticeBtn" onclick="return noticeIns();">공지사항 등록</button>
+			</div>
+		</sec:authorize>
 			<table class="table table-hover">
 				<c:choose>
 					<c:when test="${empty list }">
@@ -92,6 +102,10 @@ $(document).ready(function(){
 		modal.modal();
 	}
 });
+
+function noticeIns(){
+	location.href="../notice/noticeForm";
+}
 </script>
 	<%@ include file="../include/footer.jsp"%>
 

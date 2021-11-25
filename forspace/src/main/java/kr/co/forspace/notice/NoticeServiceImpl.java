@@ -18,6 +18,11 @@ public class NoticeServiceImpl implements NoticeService{
 	private final NoticeMapper noticeMapper;
 	
 	@Override
+	public void insertNotice(NoticeDTO noticeDTO) {
+		noticeMapper.insertNotice(noticeDTO);
+	}
+	
+	@Override
 	public void updateCnt(int noNo) {
 		noticeMapper.updateCnt(noNo);
 	}

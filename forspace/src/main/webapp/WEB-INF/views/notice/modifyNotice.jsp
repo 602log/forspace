@@ -4,10 +4,11 @@
 .buttons{
 	width : 300px;
 }
+
 </style>
 <%@ include file="../include/header.jsp"%>
     <!-- Page content-->
-    <form action="/notice/modify" method="post" id="modifyFrm" onkeydown="return event.key != 'Enter';">
+    <form action="/notice/modify" method="post" id="modifyFrm">
 	<div class="container" style="max-width: 900px; margin-top: 30px; margin-bottom: 30px">
 		<div class="row">
 			<div class="col-12 mb-4">

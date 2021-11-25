@@ -25,9 +25,29 @@ public class NoticeController {
 	private final MemberService memberService;
 	private final NoticeService noticeService;
 	
+	@PostMapping("/insertNotice")
+	public String insertNotice(NoticeDTO noticeDTO, Authentication auth, RedirectAttributes rttr) {
+		log.info("insertNotice....................................");
+		
+		String meEmail = auth.getName();
+		
+		noticeDTO.setMeEmail(meEmail);
+		noticeDTO.setScNo(memberService.mySchoolNo(meEmail));
+		noticeService.insertNotice(noticeDTO);
+		
+		rttr.addFlashAttribute("msg", "등록되었습니다. ");
+		return "redirect:/notice/noticeList";
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping("/noticeForm")
+	public void noticeForm() {
+		log.info("noticeForm.............................");
+	}
+	
 	@PreAuthorize("authentication.principal.username == #noticeDTO.meEmail or hasRole('ROLE_ADMIN')")
 	@PostMapping("/remove")
-	public String remove(NoticeDTO noticeDTO, RedirectAttributes rttr ) {
+	public String remove(NoticeDTO noticeDTO, RedirectAttributes rttr) {
 		noticeService.removeNotice(noticeDTO.getNoNo());
 		
 		rttr.addFlashAttribute("msg", "삭제되었습니다. ");
@@ -65,6 +85,7 @@ public class NoticeController {
 		//상세정보 불러오기
 		NoticeDTO dto;
 		dto = noticeService.readNotice(noNo);
+		dto.setNoContent(dto.getNoContent().replace("\r\n", "<br>"));
 
 
 		model.addAttribute("dto", dto);
