@@ -21,6 +21,17 @@ public class MemberServiceImpl implements MemberService {
 	private final ImageMapper imageMapper;
 	private final PasswordEncoder passwordEncoder;
 
+	
+	@Override
+	public void modifyCode(@Param("scNo") int scNo, @Param("scChecknum") String scChecknum) {
+		memberMapper.modifyCode(scNo, scChecknum);
+	}
+	
+	@Override
+	public SchoolDTO findCode(int scNo) {
+		return memberMapper.findCode(scNo);
+	}
+	
 	@Override
 	public ImageDTO myImg(String imEmail) {
 		log.info("myImg>>imEamil>>"+imEmail);

@@ -23,6 +23,18 @@
 		<result column="ME_ROLE" property="meRole"/>
 	</resultMap>
 	
+	<update id="modifyCode" parameterType="kr.co.forspace.member.SchoolDTO">
+		UPDATE SCHOOL
+		SET SC_CHECKNUM = #{scChecknum}
+		WHERE SC_NO = #{scNo}
+	</update>
+	
+	<select id="findCode" parameterType="int" resultMap="schoolMap">
+		SELECT SC_NO, SC_CHECKNUM
+		FROM SCHOOL
+		WHERE SC_NO = #{scNo}
+	</select>
+	
 	<update id="updateProfileWithoutPwd" parameterType="kr.co.forspace.member.MemberDTO">
 		UPDATE MEMBER
 		SET ME_NO = #{meNo}, ME_NAME = #{meName}

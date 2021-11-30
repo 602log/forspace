@@ -28,4 +28,8 @@ public interface MemberMapper {
 	void updateProfile(MemberDTO memberDTO);
 	
 	void updateProfileWithoutPwd(MemberDTO memberDTO);
+	
+	SchoolDTO findCode(int scNo);
+	
+	void modifyCode(@Param("scNo") int scNo, @Param("scChecknum") String scChecknum);
 }

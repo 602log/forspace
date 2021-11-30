@@ -31,4 +31,8 @@ public interface MemberService {
 	void updateProfileWithoutPwd(MemberDTO memberDTO) throws Exception;
 	
 	ImageDTO myImg(String imEmail);
+	
+	SchoolDTO findCode(int scNo);
+	
+	void modifyCode(@Param("scNo") int scNo, @Param("scChecknum") String scChecknum);
 }

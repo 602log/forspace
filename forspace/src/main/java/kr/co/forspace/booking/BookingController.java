@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.co.forspace.caution.CautionController;
+import kr.co.forspace.caution.CautionService;
 import kr.co.forspace.member.MemberService;
 import kr.co.forspace.paging.PagingDTO;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,7 @@ public class BookingController {
 	
 	private final BookingService bookingService;
 	private final MemberService memberService;
+	private final CautionService cautionService;
 	
 	@ResponseBody
 	@PostMapping("/cancelBooking")
@@ -157,46 +160,54 @@ public class BookingController {
 		log.info(roNo+" "+boTime+" "+roLimit);
 		String meEmail = auth.getName();
 		
-		String[] boTimeSplit = boTime.split(":");
-		
-		int firstBoTime = Integer.parseInt(boTimeSplit[0]);//시
-		String sndBoTime = boTimeSplit[1];//분
-		
-		LocalDate now = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String boDateStr = now.format(formatter);
-		
-		//내 예약 찾기
-		int cnt = bookingService.findMyBook(roNo, boDateStr, meEmail);
-		if(cnt > 0) {//오늘 예약 기록이 있으면
-			//rttr.addFlashAttribute("msg", "이미 예약하셨습니다.");
-			//model.addAttribute("msg", "이미 예약하셨습니다.");
-			return "already";
-		}else {//예약한 적이 없으면
+		CautionController cont = new CautionController(cautionService);
+		String str = cont.selMyCaution(meEmail);
+		if(str == "success") {
 			
-			//Limit에 맞춰서 insert
-			for(int i=0; i<roLimit; i++) {
-				int bookingTime = firstBoTime+i;
-				String boTimeStr = bookingTime+":"+sndBoTime;
+			String[] boTimeSplit = boTime.split(":");
+			
+			int firstBoTime = Integer.parseInt(boTimeSplit[0]);//시
+			String sndBoTime = boTimeSplit[1];//분
+			
+			LocalDate now = LocalDate.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			String boDateStr = now.format(formatter);
+			
+			//내 예약 찾기
+			int cnt = bookingService.findMyBook(roNo, boDateStr, meEmail);
+			if(cnt > 0) {//오늘 예약 기록이 있으면
+				//rttr.addFlashAttribute("msg", "이미 예약하셨습니다.");
+				//model.addAttribute("msg", "이미 예약하셨습니다.");
+				return "already";
+			}else {//예약한 적이 없으면
 				
-				//예약한 시간 찾기
-				int check = bookingService.findBookingTime(roNo, boDateStr, boTimeStr);
-				if(check == 0) {//예약시간이 없으면
-					BookingDTO bookingDTO = BookingDTO.builder()
-							.scNo(scNo)
-							.meEmail(meEmail)
-							.roNo(roNo)
-							.boTime(boTimeStr)
-							.build();
+				//Limit에 맞춰서 insert
+				for(int i=0; i<roLimit; i++) {
+					int bookingTime = firstBoTime+i;
+					String boTimeStr = bookingTime+":"+sndBoTime;
 					
-					//예약하기
-					bookingService.insertBook(bookingDTO);
-					//rttr.addFlashAttribute("msg", "예약되었습니다.");
-					//model.addAttribute("msg", "예약되었습니다.");
-					
-				}//end of if
-			}//end of for
-			return "success";
-		}//end of if
+					//예약한 시간 찾기
+					int check = bookingService.findBookingTime(roNo, boDateStr, boTimeStr);
+					if(check == 0) {//예약시간이 없으면
+						BookingDTO bookingDTO = BookingDTO.builder()
+								.scNo(scNo)
+								.meEmail(meEmail)
+								.roNo(roNo)
+								.boTime(boTimeStr)
+								.build();
+						
+						//예약하기
+						bookingService.insertBook(bookingDTO);
+						//rttr.addFlashAttribute("msg", "예약되었습니다.");
+						//model.addAttribute("msg", "예약되었습니다.");
+						
+					}//end of if
+				}//end of for
+				return "success";
+			}//end of if
+		}else {
+			return "dont";
+		}
+
 	}
 }

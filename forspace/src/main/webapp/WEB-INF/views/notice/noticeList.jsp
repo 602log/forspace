@@ -13,7 +13,7 @@
 	<div class="container">
 		<div class="col-lg-12">
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
-			<div class="col-lg-4" style="float : right;">
+			<div class="col-lg-3 mb-3" style="float : right;">
 				<button type="button" class="btn btn-primary btn-md btn-block" id="noticeBtn" onclick="return noticeIns();">공지사항 등록</button>
 			</div>
 		</sec:authorize>

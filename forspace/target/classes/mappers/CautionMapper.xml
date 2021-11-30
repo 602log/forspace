@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="kr.co.forspace.mapper.CautionMapper">
+
+	<resultMap type="kr.co.forspace.caution.CautionDTO" id="cautionMap">
+		<id column="CA_NO" property="caNo"/>
+		<result column="ME_EMAIL" property="meEmail"/>
+		<result column="CA_START" property="caStart"/>
+		<result column="CA_CLOSE" property="caClose"/>
+		<result column="CA_REASON" property="caReason"/>
+	</resultMap>
+	
+	<insert id="insertCaution" parameterType="String">
+		INSERT INTO CAUTION(CA_NO, ME_EMAIL, CA_REASON)
+		VALUES(SEQ_CA.NEXTVAL, #{meEmail}, #{caReason})
+	</insert>
+	
+	<select id="findCloseDate" parameterType="String" resultType="String">
+		<![CDATA[
+			SELECT TO_CHAR(CA_CLOSE, 'yyyy-MM-dd') as caCloseStr
+			FROM CAUTION 
+			WHERE CA_NO = (
+							SELECT CA_NO 
+							FROM (
+									SELECT ME_EMAIL, MAX(CA_NO) AS CA_NO
+									FROM CAUTION
+									WHERE ME_EMAIL = #{meEmail}
+									GROUP BY ME_EMAIL
+								)
+							)
+		]]>
+	</select>
+
+</mapper>

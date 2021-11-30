@@ -534,6 +534,8 @@ function booking(){
 				var msg = '예약되었습니다.';
 			}else if(data == 'already'){
 				msg = '이미 예약하셨습니다.';
+			}else if(data == 'dont'){
+				msg = '이용이 제한된 사용자입니다.';
 			}
 			alert(msg);
 			location.reload();

@@ -34,6 +34,65 @@ public class MemberController {
 	private final PasswordEncoder passwordEncoder;
 	private final ImageService imageService;
 	
+	@ResponseBody
+	@PostMapping("/findMember")
+	public MemberDTO findMember(String meEmail, Model model) {
+		log.info("findMember...............................");
+		log.info(meEmail);
+		MemberDTO dto = memberService.myProfile(meEmail);
+		
+		ImageDTO imageDTO = memberService.myImg(meEmail);
+		dto.setImageDTO(imageDTO);
+		return dto;
+	}
+	
+	@PostMapping("/modifyCode")
+	public String modifyCode(int scNo, String scChecknum, RedirectAttributes rttr) {
+		log.info("modifyCode.....................................");
+		
+		//난수(기관별 보안번호) 만들기
+		Random random = new Random();
+		int length = random.nextInt(5)+5;
+		
+		StringBuffer checkNum = new StringBuffer();
+		for(int i=0; i<length; i++) {
+			int mixed = random.nextInt(3);
+			switch(mixed) {
+			case 0 : 
+				checkNum.append(randomWord("lower", 1));
+				break;
+			case 1 :
+				checkNum.append(randomWord("upper", 1));
+				break;
+			case 2 :
+				checkNum.append(randomWord("number", 1));
+				break;
+			default :
+				break;
+			}
+		}
+		
+		//log.info(checkNum);
+		
+		scChecknum = checkNum.toString();
+
+		//log.info("string으로 형변환 함"+chNum);
+		memberService.modifyCode(scNo, scChecknum);
+		
+		rttr.addFlashAttribute("msg", "수정되었습니다.");
+		return "redirect:/member/codeCheck";
+		
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping("/codeCheck")
+	public void codeCheck(Authentication auth, Model model) {
+		String meEmail = auth.getName();
+		int scNo = memberService.mySchoolNo(meEmail);
+		
+		model.addAttribute("dto", memberService.findCode(scNo));
+	}
+	
 	@GetMapping("/join")
 	public void join() {
 		

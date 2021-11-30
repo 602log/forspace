@@ -140,12 +140,24 @@
 	                <li class="nav-item">
 	                    <a class="nav-link" href="../room/roomList?roFloor=0">연습실</a>
 	                </li>
+	               	<sec:authorize access="hasRole('ROLE_ADMIN')">
+	               	<li class="nav-item">
+	                    <a class="nav-link" href="../room/addroom">연습실등록</a>
+	                </li>
+	                </sec:authorize>
 	                <li class="nav-item">
 	                    <a class="nav-link" href="../notice/noticeList">공지사항</a>
 	                </li>
+	               	<sec:authorize access="hasRole('ROLE_ADMIN')">
+	               	<li class="nav-item">
+	                    <a class="nav-link" href="../booking/bookingAdminList">예약확인</a>
+	                </li>
+	                </sec:authorize>
+	                <sec:authorize access="hasRole('ROLE_USER')">
 	               	<li class="nav-item">
 	                    <a class="nav-link" href="../booking/bookingList">예약확인</a>
 	                </li>
+	                </sec:authorize>
 	                <li class="nav-item dropdown no-arrow">
 	                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 										data-toggle="dropdown" aria-haspopup="ture" aria-expanded="false" style="color:#d0342c;">
@@ -160,10 +172,7 @@
 									<i class="fas fa-user-check fa-sm fa-fw mr-2">정보수정</i>
 								</a>
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
-								<a class="dropdown-item" href="../room/addroom">
-									<i class="fas fa-user-plus fa-sm fa-fw mr-2">연습실 등록</i>
-								</a>
-								<a class="dropdown-item" href="#">
+								<a class="dropdown-item" href="../member/codeCheck">
 									<i class="fas fa-user-plus fa-sm fa-fw mr-2">인증번호</i>
 								</a>
 							</sec:authorize>

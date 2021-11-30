@@ -64,7 +64,12 @@
 	i{
 		cursor: pointer;
 	}
-
+	#roomBtn{
+		border: none;
+		border-radius: 50px; 
+		background-color: purple;
+		text-align : center;
+	}
 
 </style>
 <%@ include file="../include/header.jsp"%>
@@ -73,7 +78,6 @@
         <div class="container mt-5 main-content">
 
         	<div class="row">
-
         		<div class="col-lg-12">
         		<!--층 수 시작-------------------------------------------------------------------------------------------------------------->
       				<div class="post-slider">
@@ -90,6 +94,7 @@
         		<!--층 수 끝--------------------------------------------------------------------------------------------------------------->
   	           
   	            <!-- 층별 연습실------------------------------------------------------------------------------------------------------------>
+  	            	
   	                <c:choose>
   	                	<c:when test="${empty list}">
   	                		<p class="text-center" style="color:red; font-size:20px;">등록된 연습실이 없습니다.</p>
