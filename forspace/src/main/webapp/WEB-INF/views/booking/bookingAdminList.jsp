@@ -1,13 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <style>
-
+.card-title{
+font-size:20px;
+}
+.card-text{
+font-size:20px;
+}
 </style>
 <%@ include file="../include/header.jsp"%>
         <!-- Page content-->
        	<div class="container main-container">
 
 		       	<div class="col-12 mb-3">
-					<h2>예약확인</h2>
+					<p style="font-size:25px;">예약확인<p>
 					<br>
 					<c:choose>
 						<c:when test="${empty list }">
@@ -84,7 +89,7 @@
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Profile</h5>
+                    	<p class="modal-title" style="font-size:25px;">Profile</p>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -103,7 +108,7 @@
             <div class="modal-dialog msgModal" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Result</h5>
+                        <p class="modal-title" style="font-size:25px;">Result</p>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -170,9 +175,9 @@ function profileTr(idx){
 						+ "<p class='card-text'>"+dto.meNo+"</p>"
 						+ "<p class='card-text'>"+dto.meEmail+"</p>"
 						+ "<hr>"
-						+ "<p class='card-text'><h5>이용제한사유<h5></p>"
+						+ "<p class='card-text'>이용제한사유</p>"
 						+ "<p class='card-text'>"
-						+ "<input type='text' class='form-control' id='caReason' placeholder='사유를 30자 이내로 작성해주세요.'>"
+						+ "<input type='text' class='form-control' id='caReason' placeholder='30자 이내로 작성해주세요.'>"
 						+ "</p>"
 						+ '<input type="button" class="btn btn-primary btn-md btn-block" style="border: none; border-radius: 50px; background-color: purple;" onclick="return limited(\''+dto.meEmail+'\');" value="이용제한">'
 						+ "</div>"
@@ -180,7 +185,7 @@ function profileTr(idx){
 				}else{
 					str += "<div class='card' style='text-align:center;'>"
 						+ "<div class='card-body'>"
-						+ "<h4 class='card-title'>"+dto.meName+"</h4>"
+						+ "<p class='card-title'>"+dto.meName+"</p>"
 						+ "<p class='card-text'>"
 						+ "<a href='#' class='img logo rounded-circle'>"
 						+ "<img id='img' src='/image/show?imagePath="+dto.imageDTO.imagePath+"' alt='profile'>"
@@ -189,9 +194,9 @@ function profileTr(idx){
 						+ "<p class='card-text'>"+dto.meNo+"</p>"
 						+ "<p class='card-text'>"+dto.meEmail+"</p>"
 						+ "<hr>"
-						+ "<p class='card-text'><h5>이용제한사유<h5></p>"
+						+ "<p class='card-text'>이용제한사유</p>"
 						+ "<p class='card-text'>"
-						+ "<input type='text' class='form-control' id='caReason' placeholder='사유를 30자 이내로 작성해주세요.'>"
+						+ "<input type='text' class='form-control' id='caReason' placeholder='30자 이내로 작성해주세요.'>"
 						+ "</p>"
 						+ '<input type="button" class="btn btn-primary btn-md btn-block" style="border: none; border-radius: 50px; background-color: purple;" onclick="return limited(\''+dto.meEmail+'\');" value="이용제한">'
 						+ "</div>"

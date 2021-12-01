@@ -8,7 +8,7 @@
         <div class="container main-container">
         	<div class="row justify-content-center" style="display: flex; align-items: center; min-height: 500px;">
                <div class="col-xl-5 col-lg-5 col-md-5"> 
-					<h1 class="h3 mb-4 text-gray-800">비밀번호 확인</h1>
+					<p style="font-size:25px;">비밀번호 확인</p>
 					<form class="user" id="findFrm" action="/member/checkMyPwd" method="post">
 						<div class="form-group">
 							<input type="password" id="mePwd" name="mePwd" class="form-control form-control-user" placeholder="비밀번호">
@@ -24,7 +24,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Result</h5>
+                        <p class="modal-title" style="font-size:25px;">Result</p>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

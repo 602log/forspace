@@ -13,6 +13,7 @@
 <%@ include file="../include/header.jsp"%>
         <!-- Page content-->
         <div class="container mt-5 main-content">
+        <p style="font-size:25px;">연습실 등록</p>
         	<form action="/room/addroom" method="post" id="roomFrm">
 	        	<div class="row">
 	                <div class="col-lg-6"> 
@@ -65,7 +66,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">연습실 옵션 추가</h5>
+							<p class="modal-title" id="exampleModalLabel" style="font-size:25px;">연습실 옵션 추가</p>
 							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">×</span>
 							</button>
@@ -93,7 +94,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Result</h5>
+                        <p class="modal-title" style="font-size:25px;">Result</p>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

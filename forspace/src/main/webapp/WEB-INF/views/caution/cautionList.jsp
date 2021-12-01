@@ -7,7 +7,7 @@
        	<div class="container main-container">
 
 		       	<div class="col-12 mb-3">
-					<h2>이용제한</h2>
+					<p style="font-size:25px;">이용제한</p>
 					<br>
 					<c:choose>
 						<c:when test="${empty list }">
@@ -87,7 +87,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Result</h5>
+                        <p class="modal-title" style="font-size:25px;">Result</p>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

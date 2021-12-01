@@ -10,7 +10,12 @@
   <head>
   	<title>Forspace</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    
+	    <link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    
     
     	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet"> 
 
@@ -43,6 +48,10 @@
 		width : 100px;
 		height : 100px;
 	}
+	* {
+		font-family: 'Gowun Dodum', sans-serif;
+	}
+
 	</style>
   
   <body>
@@ -149,7 +158,7 @@
 	                    <a class="nav-link" href="../notice/noticeList">공지사항</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link" href="#"><sec:authentication property="principal.memberDTO.meName"/></a>
+	                    <a class="nav-link" href="#"><i style="color: purple;"><sec:authentication property="principal.memberDTO.meName"/></i></a>
 	                </li>
 	               </sec:authorize>
               </ul>

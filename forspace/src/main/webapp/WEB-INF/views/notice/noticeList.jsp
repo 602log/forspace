@@ -12,6 +12,7 @@
     <!-- Page content-->
 	<div class="container">
 		<div class="col-lg-12">
+		<p style="font-size:25px;">공지사항</p>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<div class="col-lg-3 mb-3" style="float : right;">
 				<button type="button" class="btn btn-primary btn-md btn-block" id="noticeBtn" onclick="return noticeIns();">공지사항 등록</button>
@@ -79,7 +80,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Result</h5>
+                        <p class="modal-title" style="font-size:25px;">Result</p>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

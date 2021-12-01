@@ -86,7 +86,15 @@
       					<div class="post-wrapper">
 						<c:forEach var="roFloor" items="${floorList}">
 							<div class="post" onClick="location.href='/room/roomList?roFloor=${roFloor}'">
-								<a><h2><c:out value="${roFloor }"/>F</h2></a>
+								<c:choose>
+									<c:when test="${roFloor <0}">
+										<a style="font-size : 25px;">B<c:out value="${roFloor*-1 }"/>F</a>
+									</c:when>
+									<c:otherwise>
+										<a style="font-size : 25px;"><c:out value="${roFloor }"/>F</a>
+									</c:otherwise>
+								</c:choose>
+								
 							</div>
 						</c:forEach>
 						</div>
@@ -104,7 +112,9 @@
 								<c:forEach var="list" items="${list }">
 									<div class="card" style="border-radius:50px;">
 										<div class="card-body text-center" onClick="location.href='/room/roomDetail?roNo=${list.roNo}'">
-											<i onClick="location.href='/room/roomDetail?roNo=${list.roNo}'"><h5><c:out value="${list.roName }"/></h5></i>
+											<i onClick="location.href='/room/roomDetail?roNo=${list.roNo}'">
+												<div style="font-size:21px;"><c:out value="${list.roName }"/></div>
+											</i>
 											<c:choose>
 												<c:when test="${list.myLike == 0}">
 													<a class="btn likeBtn" data-rono="${list.roNo }">
@@ -135,7 +145,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Result</h5>
+                        <p class="modal-title" style="font-size:25px;">Result</p>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

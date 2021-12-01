@@ -316,7 +316,7 @@ public class RoomController {
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/roomList")
 	public void roomList(Model model, int roFloor, Authentication auth) {// 연습실 리스트
-		
+		log.info("roomList.................................");
 		//이용자의 학교 번호 찾기
 		String meEmail = auth.getName();//이용자의 이메일
 		int scNo = memberService.mySchoolNo(meEmail);
@@ -344,7 +344,6 @@ public class RoomController {
 		 */
 		
 		model.addAttribute("list", list);
-		log.info(list);
 		List<RoomDTO> floorList = roomService.floorList(scNo);// 층 리스트
 		model.addAttribute("floorList", floorList);
 	}

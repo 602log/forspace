@@ -91,7 +91,7 @@
         	<div class="modal-dialog" role="document">
         		<div class="modal-content">
         			<div class="modal-header">
-        				<h5 class="modal-title" id="exampleModalLabel">소속 기관</h5>
+        				<p class="modal-title" id="exampleModalLabel" style="font-size:25px;">소속 기관</p>
         				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
         					<span aria-hidden="true">×</span>
         				</button>
@@ -117,7 +117,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Result</h5>
+                        <p class="modal-title" style="font-size:25px;">Result</p>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

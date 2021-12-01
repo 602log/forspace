@@ -53,7 +53,7 @@ public class BookingController {
 		String boDateStr = simpleDateFormat.format(now);
 		List<BookingDTO> list = bookingService.todayMyBooking(meEmail, boDateStr);
 
-		log.info(list.get(0).getRoNo());
+		//log.info(list.get(0).getRoNo());
 		return list;
 	}
 	

@@ -11,10 +11,10 @@
         <!-- Page content-->
        	<div class="container main-container">
 		       	<div class="col-12 mb-3">
-		       		<h2>예약확인</h2>
+		       		<p style="font-size:25px;">예약확인<p>
 					<div class="card shadow mb-3">
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">예약현황</h6>
+							<p style="font-size:20px;">예약현황<p>
 						</div>
 						<div class="card-body">
 						<div id="calendar"></div>

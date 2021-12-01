@@ -16,7 +16,7 @@
         <div class="container main-container">
         	<div class="row justify-content-center" style="display: flex; align-items: center; min-height: 500px;">
                <div class="col-xl-5 col-lg-5 col-md-5"> 
-					<h1 class="h3 mb-4 text-gray-800">인증번호</h1>
+					<p style="font-size:25px;">인증번호</p>
 					<form action="../member/modifyCode" method="post">
 						<div class="form-group">
 							<input type="text" id="scChecknum" name="scChecknum" class="form-control form-control-user" value="${dto.scChecknum }" readonly/>
@@ -34,7 +34,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Result</h5>
+                        <p class="modal-title" style="font-size:25px;">Result</p>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

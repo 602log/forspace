@@ -26,5 +26,4 @@ public class RoomDTO {
 	
 	private int myLike;
 	private LikeItDTO likeDTO;
-
 }

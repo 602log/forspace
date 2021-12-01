@@ -62,14 +62,14 @@ a {
 		<div class="col-lg-8">
 			<div class="row">
 				<div class="col-lg-6">
-					<h4 style="text-align: center;">연습실 상세정보</h4>
+					<p style="font-size:25px;">연습실 상세정보</p>
 					<div class="card shadow h-20 py-2 mb-4">
 						<div class="card-body py-2">
 							<div class="row no-gutters align-items-center">
 								<div class="col">
 									<div
 										class="text-sm font-weight-bold text-primary text-uppercase mb-1">건물층</div>
-									<div class="h5 mb-0">${dto.roFloor }</div>
+									<div class="mb-0" style="font-size:20px;">${dto.roFloor }</div>
 								</div>
 							</div>
 						</div>
@@ -83,7 +83,7 @@ a {
 								<div class="col">
 									<div
 										class="text-sm font-weight-bold text-primary text-uppercase mb-1">최대수용인원</div>
-									<div class="h5 mb-0">${dto.roMax }명까지</div>
+									<div class="mb-0" style="font-size:20px;">${dto.roMax }명까지</div>
 								</div>
 							</div>
 						</div>
@@ -97,7 +97,7 @@ a {
 								<div class="col">
 									<div
 										class="text-sm font-weight-bold text-primary text-uppercase mb-1">이용가능시간</div>
-									<div class="h5 mb-0">${dto.roStart }~${dto.roClose }</div>
+									<div class="mb-0" style="font-size:20px;">${dto.roStart }~${dto.roClose }</div>
 								</div>
 							</div>
 						</div>
@@ -109,7 +109,7 @@ a {
 								<div class="col">
 									<div
 										class="text-sm font-weight-bold text-primary text-uppercase mb-1">기본예약시간</div>
-									<div class="h5 mb-0">예약 1회당 ${dto.roLimit } 시간 이용가능</div>
+									<div class="mb-0" style="font-size:20px;">예약 1회당 ${dto.roLimit } 시간 이용가능</div>
 								</div>
 							</div>
 						</div>
@@ -118,7 +118,7 @@ a {
 
 
 				<div class="col-lg-6">
-					<h4 style="text-align: center;">연습실 옵션</h4>
+					<p style="font-size:25px;">연습실 옵션</p>
 					<c:choose>
 						<c:when test="${empty items }">
 							<p class="text-center" style="font-size: 20px;">옵션이 없습니다.</p>
@@ -129,7 +129,7 @@ a {
 									<div class="card-body py-2">
 										<div class="row no-gutters align-items-center">
 											<div class="col">
-												<div class="h5 mb-0">${items.itemDTO.itName }
+												<div class="mb-0" style="font-size:20px;">${items.itemDTO.itName }
 													${items.riCnt}개</div>
 											</div>
 										</div>
@@ -142,7 +142,7 @@ a {
 
 				<!-- complaint list-->
 				<div class="col-lg-12 policy-container" style="padding-top: 30px;" id="comListDiv">
-					<h3>불편사항</h3>
+					<p style="font-size:25px;">불편사항</p>
 					<div class="policy-table">
 						<div class="headings">
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -296,7 +296,7 @@ a {
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Result</h5>
+                        <p class="modal-title" style="font-size:25px;">Result</p>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -317,7 +317,7 @@ a {
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Result</h5>
+                        <p class="modal-title" style="font-size:25px;">Result</p>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

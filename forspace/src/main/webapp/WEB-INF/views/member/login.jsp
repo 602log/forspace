@@ -8,7 +8,7 @@
         <div class="container main-container">
         	<div class="row justify-content-center" style="display: flex; align-items: center; min-height: 500px;">
                <div class="col-xl-5 col-lg-5 col-md-5"> 
-					<h1 class="h3 mb-4 text-gray-800">로그인</h1>
+					<p style="font-size:25px;">로그인<p>
 					<form class="user" action="/login" method="post">
 						<div class="form-group">
 							<input type="email" name="username" class="form-control form-control-user" placeholder="이메일 주소" />
@@ -24,9 +24,6 @@
 					</div>
 					<div class="text-center">
 						<a class="small" href="/member/join">회원가입</a>
-					</div>
-					<div class="text-center">
-						<a class="small" href="/">비밀번호 찾기</a>
 					</div>
                 </div>
 			</div>	
