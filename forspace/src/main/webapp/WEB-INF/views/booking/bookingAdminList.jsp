@@ -23,9 +23,9 @@
 										<th>취소</th>
 									</tr>
 								<c:forEach items="${list }" var="list" varStatus="status">
-									<tr id="profileTr" onclick="return profileTr(${status.count});">
+									<tr id="profileTr">
 										<td>${list.boDateStr }</td>
-										<td>${list.meName }</td>
+										<td><input type="button" class="btn btn-outline-light text-dark" onclick="return profileTr(${status.count});" value="${list.meName }"></td>
 										<td>${list.roName }</td>
 										<td>${list.boTime }</td>
 										<td>

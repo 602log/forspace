@@ -69,7 +69,7 @@ public class BookingController {
 		return list;
 	}
 	
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/bookingAdminList")
 	public void bookingAdminList(Authentication auth, Model model, @Param("pagingDTO") PagingDTO pagingDTO, 
 			@RequestParam(value="nowPage", required=false) String nowPage,
@@ -131,7 +131,7 @@ public class BookingController {
 	}
 	
 	
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping("/bookingList")
 	public void bookingList() {
 		log.info("bookingList...................................");

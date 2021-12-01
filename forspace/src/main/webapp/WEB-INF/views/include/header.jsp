@@ -41,6 +41,7 @@
 	#img{
 		border-radius: 50%;
 		width : 100px;
+		height : 100px;
 	}
 	</style>
   
@@ -151,6 +152,9 @@
 	               	<sec:authorize access="hasRole('ROLE_ADMIN')">
 	               	<li class="nav-item">
 	                    <a class="nav-link" href="../booking/bookingAdminList">예약확인</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="../caution/cautionList">이용제한</a>
 	                </li>
 	                </sec:authorize>
 	                <sec:authorize access="hasRole('ROLE_USER')">

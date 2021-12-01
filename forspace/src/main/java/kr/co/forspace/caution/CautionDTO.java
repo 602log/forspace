@@ -2,6 +2,7 @@ package kr.co.forspace.caution;
 
 import java.util.Date;
 
+import kr.co.forspace.member.MemberDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,4 +19,12 @@ public class CautionDTO {
 	private Date caStart;
 	private Date caClose;
 	private String caReason;
+	private String caReg;
+	
+	private String meName;
+	private String meNo;
+	
+	private String caStartStr;
+	private String caCloseStr;
+	private String result;
 }

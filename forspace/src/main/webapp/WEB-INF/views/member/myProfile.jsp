@@ -17,9 +17,10 @@
 		text-align : center;
 		margin : 20px;
 	}
-	#img{
+	#imgPro{
 		border-radius: 50%;
-		width : 300px;
+		width : 250px;
+		height : 250px;
 	}
 </style>
 <%@ include file="../include/header.jsp"%>
@@ -33,10 +34,10 @@
 						<div class="img_wrap">
 						<c:choose>
 							<c:when test="${not empty img && img.imName != '' }">
-								<img id="img" src="/image/show?imagePath=${img.imagePath }" alt="profile">
+								<img id="imgPro" src="/image/show?imagePath=${img.imagePath }" alt="profile">
 							</c:when>
 							<c:otherwise>
-								<img id="img" src="../resources/images/user.png" alt="profile">
+								<img id="imgPro" src="../resources/images/user.png" alt="profile">
 							</c:otherwise>
 						</c:choose>
 						</div>
@@ -109,7 +110,7 @@
 				
 				var reader = new FileReader();
 				reader.onload = function(e){
-					$("#img").attr("src", e.target.result);
+					$("#imgPro").attr("src", e.target.result);
 				}
 				reader.readAsDataURL(f);
 			});
