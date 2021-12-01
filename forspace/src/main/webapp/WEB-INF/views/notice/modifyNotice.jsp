@@ -58,17 +58,51 @@
 		</div>
 	</div>
 	</form>
+	
+	                <!-- message용 modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="msgModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Result</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="msgBody">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
 <script>
 	
 	function modifyFrm(){
 		
+		var str="";
+		
 		if($("#noSubject").val() == ""){
-			alert("제목을 작성해주세요.");
+			$("#msgModal").modal();
+			$("#msgBody").empty();
+			str += "<p>제목을 작성해주세요.</p>";
+			$("#msgBody").append(str);
+			
+			//alert("제목을 작성해주세요.");
 			$("#noSubject").focus();
 			return false;
 		}
 		if($("#noContent").val() == ""){
-			alert("내용을 작성해주세요.");
+			$("#msgModal").modal();
+			$("#msgBody").empty();
+			str += "<p>내용을 작성해주세요.</p>";
+			$("#msgBody").append(str);
+			
+			//alert("내용을 작성해주세요.");
 			$("#noContent").focus();
 			return false;
 		}

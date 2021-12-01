@@ -18,6 +18,11 @@ public class ComplaintServiceImpl implements ComplaintService {
 	private final ComplaintMapper complaintMapper;
 	
 	@Override
+	public List<ComplaintDTO> notFinComplaint(String meEmail) {
+		return complaintMapper.notFinComplaint(meEmail);
+	}
+	
+	@Override
 	public List<ComplaintDTO> selectComplaint(@Param("roNo") int roNo, @Param("pagingDTO") PagingDTO pagingDTO) {
 		//log.info("serviceImpl"+roNo);
 		return complaintMapper.selectComplaint(roNo, pagingDTO);

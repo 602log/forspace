@@ -23,4 +23,6 @@ public interface BookingService {
 	int countBooking(int scNo);
 	
 	void cancelBooking(@Param("roNo") int roNo, @Param("meEmail") String meEmail, @Param("boDateStr") String boDateStr);
+	
+	List<BookingDTO> todayMyBooking(@Param("meEmail") String meEmail, @Param("boDateStr") String boDateStr);
 }

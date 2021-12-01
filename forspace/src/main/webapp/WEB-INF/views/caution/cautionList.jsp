@@ -81,12 +81,33 @@
 						</c:otherwise>
 					</c:choose>
        	</div>
+       	
+       	<!-- modal -->
+        <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Result</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 <script>
 function cancel(event, idx){
 	event.preventDefault();
 	console.log(idx);
-	
+	var str = "";
 	var caNo = $("#caNo_"+idx).val();
 	
 	console.log(caNo);
@@ -97,14 +118,22 @@ function cancel(event, idx){
 			data : {caNo : caNo},
 			success : function(data){
 				if(data == 'success'){
-					alert("해지되었습니다.");
+					
+					location.reload();
+					//alert("해지되었습니다.");
 				}else{
-					alert("해지에 실패했습니다. 관리자에게 문의해주세요.");
+					$(".modal").modal();
+					$(".modal-body").empty();
+					
+					str += "<p>해지에 실패했습니다. 관리자에게 문의해주세요.</p>";
+					
+					$(".modal-body").append(str);
+					//alert("해지에 실패했습니다. 관리자에게 문의해주세요.");
 				}
-				location.reload();
 			}
 		});
 	}
+	
 }
 
 $(document).ready(function() {

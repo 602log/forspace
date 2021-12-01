@@ -98,7 +98,7 @@ public class RoomController {
 	public String addroom(RoomDTO roomDTO, int[] itNo, int[] riCnt, int roomCnt, Authentication auth, RedirectAttributes rttr) {
 		log.info(roomDTO);
 		log.info(roomDTO.getRoClose().getClass().getSimpleName());
-		log.info(itNo.length);
+		//log.info(itNo.length);
 		log.info("만들 연습실 개수"+roomCnt);
 		
 		String meEmail = auth.getName();

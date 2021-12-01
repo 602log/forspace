@@ -53,46 +53,42 @@
 		  		<a href="#" class="img logo rounded-circle">
 		  			<img id="img" src="../resources/images/user.png" alt="profile">
 		  		</a>
+		  	<sec:authorize access="isAnonymous()">
+		  	<ul class="list-unstyled components mb-5">
+	          <li>
+	              <a href="../member/login">로그인</a>
+	          </li>
+	          <li>
+	              <a href="../member/join">회원가입</a>
+	          </li>
+	          <li>
+	        </ul>
+		  	</sec:authorize>
+		  	<sec:authorize access="isAuthenticated()">
 	        <ul class="list-unstyled components mb-5">
 	          <li class="active">
-	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">INFO</a>
 	            <ul class="collapse list-unstyled" id="homeSubmenu">
-                <li>
-                    <a href="#">Home 1</a>
-                </li>
-                <li>
-                    <a href="#">Home 2</a>
-                </li>
-                <li>
-                    <a href="#">Home 3</a>
+                <li class="roNoLi">
+                    
                 </li>
 	            </ul>
 	          </li>
+	          <sec:authorize access="hasRole('ROLE_ADMIN')">
 	          <li>
-	              <a href="#">About</a>
+	              <a href="../member/codeCheck">인증번호</a>
+	          </li>
+	          </sec:authorize>
+	          
+	          <li>
+	              <a href="../member/checkPwd">내정보</a>
 	          </li>
 	          <li>
-              <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-              <ul class="collapse list-unstyled" id="pageSubmenu">
-                <li>
-                    <a href="#">Page 1</a>
-                </li>
-                <li>
-                    <a href="#">Page 2</a>
-                </li>
-                <li>
-                    <a href="#">Page 3</a>
-                </li>
-              </ul>
+	              <a href="../member/logout">로그아웃</a>
 	          </li>
 	          <li>
-              <a href="#">Portfolio</a>
-	          </li>
-	          <li>
-              <a href="#">Contact</a>
-	          </li>
 	        </ul>
-
+			</sec:authorize>
 	        <div class="footer">
 	        	<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
@@ -120,22 +116,12 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="nav navbar-nav ml-auto">
               	<sec:authorize access="isAnonymous()">
-	              	<li class="nav-item dropdown no-arrow">
-						<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-										data-toggle="dropdown" aria-haspopup="ture" aria-expanded="false" style="color:#d0342c;">
-							<span class="mr-2 d-none d-lg-inline">게스트</span>
-							<i class="fas fa-user-time fa-lg"></i>
-						</a>
-					<!-- Dropdown user information -->
-						<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-							<a class="dropdown-item" href="../member/login">
-								<i class="fas fa-user-check fa-sm fa-fw mr-2">로그인</i>
-							</a>
-							<a class="dropdown-item" href="../member/memberjoin">
-								<i class="fas fa-user-plus fa-sm fa-fw mr-2">회원가입</i>
-							</a>
-						</div>
-					</li>
+              		<li class="nav-item">
+	                    <a class="nav-link" href="../member/login">로그인</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="../member/join">회원가입</a>
+	                </li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 	                <li class="nav-item">
@@ -146,9 +132,11 @@
 	                    <a class="nav-link" href="../room/addroom">연습실등록</a>
 	                </li>
 	                </sec:authorize>
-	                <li class="nav-item">
-	                    <a class="nav-link" href="../notice/noticeList">공지사항</a>
+	                <sec:authorize access="hasRole('ROLE_USER')">
+	               	<li class="nav-item">
+	                    <a class="nav-link" href="../booking/bookingList">예약확인</a>
 	                </li>
+	                </sec:authorize>
 	               	<sec:authorize access="hasRole('ROLE_ADMIN')">
 	               	<li class="nav-item">
 	                    <a class="nav-link" href="../booking/bookingAdminList">예약확인</a>
@@ -157,33 +145,11 @@
 	                    <a class="nav-link" href="../caution/cautionList">이용제한</a>
 	                </li>
 	                </sec:authorize>
-	                <sec:authorize access="hasRole('ROLE_USER')">
-	               	<li class="nav-item">
-	                    <a class="nav-link" href="../booking/bookingList">예약확인</a>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="../notice/noticeList">공지사항</a>
 	                </li>
-	                </sec:authorize>
-	                <li class="nav-item dropdown no-arrow">
-	                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-										data-toggle="dropdown" aria-haspopup="ture" aria-expanded="false" style="color:#d0342c;">
-							<span class="mr-2 d-none d-lg-inline">
-								<sec:authentication property="principal.memberDTO.meName"/>
-							</span>
-							<i class="fas fa-user-time fa-lg"></i>
-						</a>
-						<!-- Dropdown user information -->
-							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="../member/checkPwd">
-									<i class="fas fa-user-check fa-sm fa-fw mr-2">정보수정</i>
-								</a>
-							<sec:authorize access="hasRole('ROLE_ADMIN')">
-								<a class="dropdown-item" href="../member/codeCheck">
-									<i class="fas fa-user-plus fa-sm fa-fw mr-2">인증번호</i>
-								</a>
-							</sec:authorize>
-								<a class="dropdown-item" href="../member/logout">
-									<i class="fas fa-user-plus fa-sm fa-fw mr-2">로그아웃</i>
-								</a>
-							</div>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="#"><sec:authentication property="principal.memberDTO.meName"/></a>
 	                </li>
 	               </sec:authorize>
               </ul>
@@ -200,6 +166,7 @@
 <script>
 $(document).ready(function(){
 	var user = "${loginUser}";
+	var role = "${loginUserRole}";
 	
 	if(!(user == '') && !(user == null)){
 		console.log("로그인 함");
@@ -218,9 +185,51 @@ $(document).ready(function(){
 				}
 			}
 		});
+		
+		var str = "";
+		if(role == 'ADMIN'){
+			
+			$.ajax({
+				url : "/complaint/todayComplaint",
+				type : "post",
+				data : {meEmail : user},
+				success : function(data){
+					console.info(data);
+					if(data.length > 0){
+						$.each(data, function(index, dto){
+							str += "<a href='../room/roomDetail?roNo="+dto.roNo+"'>"+dto.roName+" "+dto.coContent+"</a>"
+						});
+						$(".roNoLi").append(str);
+					}else{
+						str += "<a href='#'>불편사항이 없습니다.</a>"
+						$(".roNoLi").append(str);
+					}
+				},
+				error : function(){
+					
+				}
+			});
+		}else if(role == 'USER'){
+			$.ajax({
+				url : "/booking/todayBooking",
+				type : "post",
+				data : {meEmail : user},
+				success : function(data){
+					console.info(data);
+					if(data.length > 0){
+						$.each(data, function(index, dto){
+							str += "<a href='../room/roomDetail?roNo="+dto.roNo+"'>"+dto.roName+"호 "+dto.boTime+"</a>"
+						});
+						$(".roNoLi").append(str);
+					}else{
+						str += "<a href='#'>금일 예약이 없습니다.</a>"
+						$(".roNoLi").append(str);
+					}
+				}
+			});
+		}
 	}
 
 });
-
 
 </script>

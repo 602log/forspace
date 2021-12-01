@@ -99,6 +99,28 @@
 				</div>
 					
 			</div>
+			
+			
+					<!-- message용 modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="msgModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Result</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="msgBody">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 <script>
 $(document).ready(function(){
 	
@@ -160,37 +182,63 @@ $(document).ready(function(){
 	});
 	
 	$("#submit").on("click", function(){
+		var cnt = $("#itemCheckCnt").val();
+		var str="";
 		
 		if($("#roFloor").val() == 0 || $("#roFloor").val() == ""){
-			alert("정확한 층수를 입력해주세요.");
+			$("#msgModal").modal();
+			$("#msgBody").empty();
+			str += "<p>정확한 층수를 입력해주세요.</p>";
+			$("#msgBody").append(str);
 			$("#roFloor").focus();
 			return false;
 		}
 		if($("#roName").val() == ""){
-			alert("연습실 이름을 입력해주세요.");
+			$("#msgModal").modal();
+			$("#msgBody").empty();
+			str += "<p>연습실 이름을 입력해주세요.</p>";
+			$("#msgBody").append(str);
+			//alert("연습실 이름을 입력해주세요.");
 			$("#roName").focus();
 			return false;
 		}
 		if($("#roMax").val() == 0 || $("#roMax").val() == ""){
-			alert("최대 수용인원을 입력해주세요.");
+			$("#msgModal").modal();
+			$("#msgBody").empty();
+			str += "<p>최대 수용인원을 입력해주세요.</p>";
+			$("#msgBody").append(str);
+			//alert("최대 수용인원을 입력해주세요.");
 			$("#roMax").focus();
 			return false;
 		}
 		if($("#roLimit").val() == 0 || $("#roLimit").val() == ""){
-			alert("예약 1회당 이용 가능시간을 입력해주세요.");
+			$("#msgModal").modal();
+			$("#msgBody").empty();
+			str += "<p>예약 1회당 이용 가능시간을 입력해주세요.</p>";
+			$("#msgBody").append(str);
+			//alert("예약 1회당 이용 가능시간을 입력해주세요.");
 			$("#roLimit").focus();
 			return false;
 		}
 		if($("#roStart").val() == ""){
-			alert("오픈 시간을 입력해주세요.");
+			$("#msgModal").modal();
+			$("#msgBody").empty();
+			str += "<p>오픈 시간을 입력해주세요.</p>";
+			$("#msgBody").append(str);
+			//alert("오픈 시간을 입력해주세요.");
 			$("#roStart").focus();
 			return false;
 		}
 		if($("#roClose").val() == ""){
-			alert("마감 시간을 입력해주세요.");
+			$("#msgModal").modal();
+			$("#msgBody").empty();
+			str += "<p>마감 시간을 입력해주세요.</p>";
+			$("#msgBody").append(str);
+			//alert("마감 시간을 입력해주세요.");
 			$("#roClose").focus();
 			return false;
 		}
+
 		
 		var roStartStr = $("#roStart").val();
 		var roCloseStr = $("#roClose").val();
@@ -208,7 +256,11 @@ $(document).ready(function(){
 
 			 
 			 if(roStartFirstInt > roCloseFirstInt){//오픈의 시가 클 경우
-				alert("마감시간보다 오픈시간이 빠릅니다. 다시 설정해주세요.");
+				 $("#msgModal").modal();
+					$("#msgBody").empty();
+					str += "<p>마감시간보다 오픈시간이 빠릅니다. 다시 설정해주세요.</p>";
+					$("#msgBody").append(str);
+				//alert("마감시간보다 오픈시간이 빠릅니다. 다시 설정해주세요.");
 			 	console.info("오픈의 시가 클 경우"+roStartFirstInt+" "+roCloseFirstInt);
 				return false;
 				
@@ -216,11 +268,19 @@ $(document).ready(function(){
 				 
 				 //분을 비교
 				 if(roStartScdInt > roCloseScdInt){//시는 같고 분은 오픈이 클 경우
-					 alert("마감시간보다 오픈시간이 빠릅니다. 다시 설정해주세요.");
+					 $("#msgModal").modal();
+						$("#msgBody").empty();
+						str += "<p>마감시간보다 오픈시간이 빠릅니다. 다시 설정해주세요.</p>";
+						$("#msgBody").append(str);
+					// alert("마감시간보다 오픈시간이 빠릅니다. 다시 설정해주세요.");
 					 console.info("시는 같고 분이 오픈이 클 경우"+roStartFirstInt+" "+roCloseFirstInt);
 					 return false;
 				 }else if(roStartScdInt < roCloseScdInt){//오픈과 마감이 한시간 이내
-					 alert("오픈시간과 마감시간이 한 시간 이내입니다. 다시 설정해주세요.");
+					 $("#msgModal").modal();
+						$("#msgBody").empty();
+						str += "<p>오픈시간과 마감시간이 한 시간 이내입니다. 다시 설정해주세요.</p>";
+						$("#msgBody").append(str);
+					 //alert("오픈시간과 마감시간이 한 시간 이내입니다. 다시 설정해주세요.");
 					 return false;
 				 }
 			 
@@ -229,7 +289,11 @@ $(document).ready(function(){
 			 }
 
 		}else if(roStartStr == roCloseStr){
-			alert("운영시간을 정확히 설정해주세요.");
+			$("#msgModal").modal();
+			$("#msgBody").empty();
+			str += "<p>운영시간을 정확히 설정해주세요.</p>";
+			$("#msgBody").append(str);
+			//alert("운영시간을 정확히 설정해주세요.");
 			$("#roClose").focus();
 			return false;
 		}

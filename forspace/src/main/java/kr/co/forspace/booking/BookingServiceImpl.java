@@ -16,6 +16,12 @@ import lombok.extern.log4j.Log4j;
 public class BookingServiceImpl implements BookingService {
 
 	private final BookingMapper bookingMapper;
+	
+	@Override
+	public List<BookingDTO> todayMyBooking(@Param("meEmail") String meEmail, @Param("boDateStr") String boDateStr) {
+		return bookingMapper.todayMyBooking(meEmail, boDateStr);
+	}
+	
 	@Override
 	public void cancelBooking(@Param("roNo") int roNo, @Param("meEmail") String meEmail, @Param("boDateStr") String boDateStr) {
 		bookingMapper.cancelBooking(roNo, meEmail, boDateStr);

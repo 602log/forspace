@@ -56,10 +56,11 @@ public class NoticeController {
 	
 	@PreAuthorize("authentication.principal.username == #noticeDTO.meEmail or hasRole('ROLE_ADMIN')")
 	@RequestMapping("/modify")
-	public String modify(NoticeDTO noticeDTO) {
+	public String modify(NoticeDTO noticeDTO, RedirectAttributes rttr) {
 		log.info("modify.................");
 		int noNo = noticeDTO.getNoNo();
 		noticeService.modify(noticeDTO);
+		rttr.addFlashAttribute("msg", "수정되었습니다.");
 		return "redirect:/notice/noticeDetail?noNo="+noNo;
 	}
 	
@@ -75,7 +76,7 @@ public class NoticeController {
 
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/noticeDetail")
-	public void noticeDetail(int noNo, Model model, RedirectAttributes rttr) {
+	public void noticeDetail(int noNo, Model model) {
 		log.info("noticeDetail...............");
 		log.info("noNo>>"+noNo);
 		
@@ -89,7 +90,7 @@ public class NoticeController {
 
 
 		model.addAttribute("dto", dto);
-		rttr.addFlashAttribute("msg", "수정되었습니다.");
+		
 	}
 	
 	@PreAuthorize("isAuthenticated()")

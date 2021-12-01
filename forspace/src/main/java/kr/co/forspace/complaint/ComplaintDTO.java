@@ -20,4 +20,6 @@ public class ComplaintDTO {
 	private String meEmail;
 	private Date coDate;
 	private Date coFinish;
+	
+	private String roName;
 }

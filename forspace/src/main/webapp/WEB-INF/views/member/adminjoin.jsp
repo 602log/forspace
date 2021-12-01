@@ -95,6 +95,28 @@
        </form> 
         </div>
         
+        <!-- modal -->
+        <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Result</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
 <script>
 
 var sel_file;
@@ -109,10 +131,17 @@ var sel_file;
 		function handleImgFileSelect(e){
 			var files = e.target.files;
 			var filesArr = Array.prototype.slice.call(files);
+			var str = "";
 			
 			filesArr.forEach(function(f){
 				if(!f.type.match("image.*")){
-					alert("이미지 파일만 업로드해주세요.");
+					
+					$(".modal").modal();
+					$(".modal-body").empty();
+					str += "<p>이미지 파일만 업로드해주세요.</p>";
+					$(".modal-body").append(str);
+					//alert("이미지 파일만 업로드해주세요.");
+					$(".inputImg").val("");
 					return;
 				}
 				sel_file = f;
@@ -129,51 +158,83 @@ var sel_file;
 		
 			var mePwd = $("#mePwd").val();
 			var mePwdCheck = $("#mePwdCheck").val();
+			var str="";
 			
 				if($("#scName").val() == ""){
-					alert("학교명을 입력해주세요.");
+					$(".modal").modal();
+					$(".modal-body").empty();
+					str += "<p>학교명을 입력해주세요.</p>";
+					$(".modal-body").append(str);
+					//alert("학교명을 입력해주세요.");
 					$("#scName").focus();
 					return false;
 				}
 				if($("#scCampus").val() == ""){
-					alert("캠퍼스명을 입력해주세요.");
+					$(".modal").modal();
+					$(".modal-body").empty();
+					str += "<p>캠퍼스명을 입력해주세요.</p>";
+					$(".modal-body").append(str);
+					//alert("캠퍼스명을 입력해주세요.");
 					$("#scCampus").focus();
 					return false;
 				}
 				if($("#scMajor").val() == ""){
-					alert("학과명을 입력해주세요.");
+					$(".modal").modal();
+					$(".modal-body").empty();
+					str += "<p>학과명을 입력해주세요.</p>";
+					$(".modal-body").append(str);
+					//alert("학과명을 입력해주세요.");
 					$("#scMajor").focus();
 					return false;
 				}
 			
 				if($("#meEmail").val() == ""){
-					alert("이메일을 입력해주세요.");
+					$(".modal").modal();
+					$(".modal-body").empty();
+					str += "<p>이메일을 입력해주세요.</p>";
+					$(".modal-body").append(str);
+					//alert("이메일을 입력해주세요.");
 					$("#meEmail").focus();
 					return false;
 				}
 				
 				
 				if($("#mePwd").val() == "" || mePwd.length<8 || mePwd.length>15){
-					
-					alert("비밀번호는 8~15자 사이로 입력해주시기 바랍니다.");
+					$(".modal").modal();
+					$(".modal-body").empty();
+					str += "<p>비밀번호는 8~15자 사이로 입력해주시기 바랍니다.</p>";
+					$(".modal-body").append(str);
+					//alert("비밀번호는 8~15자 사이로 입력해주시기 바랍니다.");
 					$("#mePwd").focus();
 					return false;
 				}
 				
 				if($("#mePwdCheck").val() == "" || mePwd != mePwdCheck){
-					alert("비밀번호가 일치하지 않습니다.");
+					$(".modal").modal();
+					$(".modal-body").empty();
+					str += "<p>비밀번호가 일치하지 않습니다.</p>";
+					$(".modal-body").append(str);
+					//alert("비밀번호가 일치하지 않습니다.");
 					$("#mePwdCheck").focus();
 					return false;
 				}
 				
 				if($("#meName").val() == ""){
-					alert("이름을 입력해주시기 바랍니다.");
+					$(".modal").modal();
+					$(".modal-body").empty();
+					str += "<p>이름을 입력해주시기 바랍니다.</p>";
+					$(".modal-body").append(str);
+					//alert("이름을 입력해주시기 바랍니다.");
 					$("#meName").focus();
 					return false;
 				}
 				
 				if($("#meNo").val() == ""){
-					alert("사번을 입력해주시기 바랍니다.");
+					$(".modal").modal();
+					$(".modal-body").empty();
+					str += "<p>사번을 입력해주시기 바랍니다.</p>";
+					$(".modal-body").append(str);
+					//alert("사번을 입력해주시기 바랍니다.");
 					$("#meNo").focus();
 					return false;
 				}
@@ -182,11 +243,19 @@ var sel_file;
 				var emailCheckVal = $("#emailCheckBtn").val();
 				
 				if(schoolCheckVal == "N"){
-					alert("기관명 중복확인버튼을 눌러주세요.");
+					$(".modal").modal();
+					$(".modal-body").empty();
+					str += "<p>기관명 중복확인버튼을 눌러주세요.</p>";
+					$(".modal-body").append(str);
+					//alert("기관명 중복확인버튼을 눌러주세요.");
 					return false;
 				}else if(schoolCheckVal == "Y"){
 					if(emailCheckVal == "N" ){
-						alert("중복확인버튼을 눌러주세요.");
+						$(".modal").modal();
+						$(".modal-body").empty();
+						str += "<p>중복확인버튼을 눌러주세요.</p>";
+						$(".modal-body").append(str);
+						//alert("중복확인버튼을 눌러주세요.");
 						return false;
 					}else if(emailCheckVal == "Y"){
 						$("#joinFrm").submit();
@@ -210,9 +279,14 @@ var sel_file;
 		var scName = $("#scName").val();
 		var scCampus = $("#scCampus").val();
 		var scMajor = $("#scMajor").val();
+		var str="";
 		
 		if(scName == "" || scCampus == "" || scMajor == ""){
-			alert("정확한 기관명을 작성해주세요.");
+			$(".modal").modal();
+			$(".modal-body").empty();
+			str += "<p>정확한 기관명을 작성해주세요.</p>";
+			$(".modal-body").append(str);
+			//alert("정확한 기관명을 작성해주세요.");
 			return false;
 		}
 		
@@ -225,9 +299,18 @@ var sel_file;
 			success : function(data){
 				if(data == "success"){
 					$("#schoolCheckBtn").attr("value", "Y");
-					alert("등록 가능한 기관입니다.");
+					
+					$(".modal").modal();
+					$(".modal-body").empty();
+					str += "<p>등록 가능한 기관입니다.</p>";
+					$(".modal-body").append(str);
+					//alert("등록 가능한 기관입니다.");
 				}else{
-					alert("이미 등록된 기관입니다.");
+					$(".modal").modal();
+					$(".modal-body").empty();
+					str += "<p>이미 등록된 기관입니다.</p>";
+					$(".modal-body").append(str);
+					//alert("이미 등록된 기관입니다.");
 					return false;
 				}
 			}
@@ -235,9 +318,14 @@ var sel_file;
 	}
 	
 	function emailCheck(){
+		var str = "";
 	
 		if(! (ECheck($("#meEmail").val()))){
-			alert("올바른 이메일을 입력해주세요.");
+			$(".modal").modal();
+			$(".modal-body").empty();
+			str += "<p>올바른 이메일을 입력해주세요.</p>";
+			$(".modal-body").append(str);
+			//alert("올바른 이메일을 입력해주세요.");
 			return false;
 		}
 		
@@ -250,9 +338,18 @@ var sel_file;
 				
 				if(data == 'success'){
 					$("#emailCheckBtn").attr("value", "Y");
-					alert("사용 가능한 아이디 입니다.");
+					
+					$(".modal").modal();
+					$(".modal-body").empty();
+					str += "<p>사용 가능한 아이디 입니다.</p>";
+					$(".modal-body").append(str);
+					//alert("사용 가능한 아이디 입니다.");
 				}else{
-					alert("중복된 아이디 입니다.");
+					$(".modal").modal();
+					$(".modal-body").empty();
+					str += "<p>중복된 아이디 입니다.</p>";
+					$(".modal-body").append(str);
+					//alert("중복된 아이디 입니다.");
 					return false;
 				}
 			}

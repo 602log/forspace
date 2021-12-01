@@ -312,6 +312,27 @@ a {
             </div>
         </div>
         
+        		<!-- message용 modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="msgModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Result</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="msgBody">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="return reload();">Ok</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="return reload();">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
 <script>
 $(document).ready(function(){
 	$.ajax({
@@ -346,13 +367,25 @@ $(document).on("click", "#complaintBtn", function(){
 	//alert(${dto.roNo });
 	//alert($("#coContent").val());
 	
-	var coContent = $("#coContent").val().length
+	var coContent = $("#coContent").val().length;
+	var str = "";
 	
 	if($("#coContent").val() == "" && $("#coContent").val() == null && $("#coContent").val("")){
-		alert("불편사항을 입력해주세요.");
+		$("#msgModal").modal();
+		$("#msgBody").empty();
+		str += "<p>불편사항을 입력해주세요.</p>";
+		$("#msgBody").append(str);
+		
+		//alert("불편사항을 입력해주세요.");
 		$("#coContent").focus();
 	}else if(coContent > 50){
-		alert("50자 이내로 작성해주세요.");
+		
+		$("#msgModal").modal();
+		$("#msgBody").empty();
+		str += "<p>50자 이내로 작성해주세요.</p>";
+		$("#msgBody").append(str);
+		
+		//alert("50자 이내로 작성해주세요.");
 		$("#coContent").focus();
 	}else{
 		$.ajax({
@@ -364,7 +397,11 @@ $(document).on("click", "#complaintBtn", function(){
 				if(data == 'success'){
 					$("#comListDiv").load(window.location.href + " #comListDiv");
 				}else{
-					alert("등록 실패했습니다.");
+					$("#msgModal").modal();
+					$("#msgBody").empty();
+					str += "<p>등록 실패했습니다.</p>";
+					$("#msgBody").append(str);
+					//alert("등록 실패했습니다.");
 				}
 			}
 		});
@@ -386,10 +423,19 @@ function cancelComp(coNo){
 					roNo : ${dto.roNo }},
 			success : function(data){
 				if(data == 'success'){
-					alert("삭제되었습니다.");
+					$("#msgModal").modal();
+					$("#msgBody").empty();
+					str += "<p>삭제되었습니다.</p>";
+					$("#msgBody").append(str);
+					
+					//alert("삭제되었습니다.");
 					$("#comListDiv").load(window.location.href + " #comListDiv");
 				}else{
-					alert("삭제에 실패했습니다.");
+					$("#msgModal").modal();
+					$("#msgBody").empty();
+					str += "<p>삭제에 실패했습니다.</p>";
+					$("#msgBody").append(str);
+					//alert("삭제에 실패했습니다.");
 				}
 			}
 		});
@@ -413,7 +459,12 @@ function comFinish(coNo){
 			if(data == 'success'){
 				$("#comListDiv").load(window.location.href + " #comListDiv");
 			}else{
-				alert("처리에 실패했습니다. 나중에 다시 시도해주세요.");
+				$("#msgModal").modal();
+				$("#msgBody").empty();
+				str += "<p>처리에 실패했습니다. 나중에 다시 시도해주세요.</p>";
+				$("#msgBody").append(str);
+				
+				//alert("처리에 실패했습니다. 나중에 다시 시도해주세요.");
 			}
 		}
 	});
@@ -530,19 +581,27 @@ function booking(){
 				roLimit : roLimit,
 				scNo : scNo},
 		success : function(data){
+			var msg = "";
+			var str = "";
 			if(data == 'success'){
-				var msg = '예약되었습니다.';
+				msg = '예약되었습니다.';
 			}else if(data == 'already'){
 				msg = '이미 예약하셨습니다.';
 			}else if(data == 'dont'){
 				msg = '이용이 제한된 사용자입니다.';
 			}
-			alert(msg);
-			location.reload();
+			$("#msgModal").modal();
+			$("#msgBody").empty();
+			str += "<p>"+msg+"</p>";
+			$("#msgBody").append(str);
 			}
+				
 		});
 }
 
+function reload(){
+	location.reload();
+}
 </script>
 <%@ include file="../include/footer.jsp"%>
 

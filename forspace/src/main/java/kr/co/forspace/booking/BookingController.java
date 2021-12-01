@@ -6,13 +6,16 @@ import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +41,21 @@ public class BookingController {
 	private final BookingService bookingService;
 	private final MemberService memberService;
 	private final CautionService cautionService;
+	
+	@ResponseBody
+	@PostMapping("/todayBooking")
+	public List<BookingDTO> todayBooking(String meEmail, Authentication auth) {
+		log.info("todayBooking.................................");
+		log.info(meEmail);
+		
+		Date now = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		String boDateStr = simpleDateFormat.format(now);
+		List<BookingDTO> list = bookingService.todayMyBooking(meEmail, boDateStr);
+
+		log.info(list.get(0).getRoNo());
+		return list;
+	}
 	
 	@ResponseBody
 	@PostMapping("/cancelBooking")

@@ -75,10 +75,10 @@
 <%@ include file="../include/header.jsp"%>
 
         <!-- Page content-->
-        <div class="container mt-5 main-content">
+        <div class="container main-container">
 
         	<div class="row">
-        		<div class="col-lg-12">
+        		<div class="col-12 mb-3">
         		<!--층 수 시작-------------------------------------------------------------------------------------------------------------->
       				<div class="post-slider">
       					<i class="fas fa-chevron-left prev"></i>
@@ -180,8 +180,8 @@ $(document).on("click", ".likeBtn", function(e){
 });
 
 $(".post-wrapper").slick({
-	slidesToShow : 4,
-	slidesToScroll : 1,
+	slidesToShow : 5,
+	slidesToScroll : 5,
 	autoplay : false,
 	nextArrow : $(".next"),
 	prevArrow : $(".prev")

@@ -80,7 +80,7 @@
        	</div>
        	
        	<!-- modal -->
-        <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal" tabindex="-1" role="dialog" id="proModal">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -89,9 +89,30 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" id="modal-body">
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="msgModal">
+            <div class="modal-dialog msgModal" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Result</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="msgBody">
+                       
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -125,7 +146,7 @@ function cancel(event, idx){
 
 function profileTr(idx){
 	
-	$(".modal").modal();
+	$("#proModal").modal();
 	var meEmail = $("#meEmail_"+idx).val();
 	
 	$.ajax({
@@ -134,7 +155,7 @@ function profileTr(idx){
 		data : {meEmail : meEmail},
 		dataType : "json",
 		success : function(data){
-			$(".modal-body").empty();
+			$("#modal-body").empty();
 			var str = "";
 			var dto = data;
 				if(dto.imageDTO == null){
@@ -177,7 +198,7 @@ function profileTr(idx){
 						+ "</div>";
 				}
 
-			$(".modal-body").append(str);
+			$("#modal-body").append(str);
 		},
 		error : function(){
 			
@@ -187,6 +208,7 @@ function profileTr(idx){
 
 function limited(meEmail){
 	var caReason = $("#caReason").val();
+	var str = "";
 	console.log(caReason);
 	if(caReason.length>30 || caReason.length<1){
 		$("#caReason").css({"border" : "solid 2px", "border-color" : "red"});
@@ -203,9 +225,23 @@ function limited(meEmail){
 					caReason : caReason},
 			success : function(data){
 				if(data == 'success'){
-					alert('이용이 제한되었습니다.');
+					$("#msgModal").modal();
+					$("#msgBody").empty();
+					
+					str += "<p>이용이 제한되었습니다.</p>";
+					
+					$("#msgBody").append(str);
+					$("#caReason").val("");
+					//alert('이용이 제한되었습니다.');
 				}else{
-					alert('이미 제한된 이용자입니다.');
+					$("#msgModal").modal();
+					$("#msgBody").empty();
+					
+					str += "<p>이미 제한된 이용자입니다.</p>";
+					
+					$("#msgBody").append(str);
+					$("#caReason").val("");
+					//alert('이미 제한된 이용자입니다.');
 				}
 			}, error : function(){
 				
@@ -213,19 +249,6 @@ function limited(meEmail){
 		});
 	
 };
-
-$(document).ready(function() {
-	function messages(){
-		var msg = '${msg}';
-		console.log("msg>>", msg);
-		if (!(msg === '' || history.state)) {
-			var modal = $(".modal");
-			console.log(modal);
-			modal.modal();
-		}
-		
-	}
-});
 </script>
 	<%@ include file="../include/footer.jsp"%>
 

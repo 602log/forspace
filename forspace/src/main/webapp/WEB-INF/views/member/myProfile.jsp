@@ -86,6 +86,26 @@
        </form> 
         </div>
         
+                <!-- message용 modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="msgModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Result</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="msgBody">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 <script>
 
 	var sel_file;
@@ -100,10 +120,16 @@
 		function handleImgFileSelect(e){
 			var files = e.target.files;
 			var filesArr = Array.prototype.slice.call(files);
+			var str="";
 			
 			filesArr.forEach(function(f){
 				if(!f.type.match("image.*")){
-					alert("이미지 파일만 업로드해주세요.");
+					$("#msgModal").modal();
+					$("#msgBody").empty();
+					str += "<p>이미지 파일만 업로드해주세요.</p>";
+					$("#msgBody").append(str);
+					//alert("이미지 파일만 업로드해주세요.");
+					$(".inputImg").val("");
 					return;
 				}
 				sel_file = f;
@@ -118,16 +144,30 @@
 		
 		$("#submit").on("click", function(){
 			
+			var str="";
+			
 				if ($("#mePwd").val() != "") {
 					if ($("#mePwd").val() != $("#mePwdCheck").val()) {
-						alert("비밀번호가 일치하지 않습니다.");
+						
+						$("#msgModal").modal();
+						$("#msgBody").empty();
+						str += "<p>비밀번호가 일치하지 않습니다.</p>";
+						$("#msgBody").append(str);
+						
+						//alert("비밀번호가 일치하지 않습니다.");
 						$("#mePwdCheck").focus();
 						return false;
 					}
 				}
 				
 				if($("#meNo").val() == ""){
-					alert("학번을 입력해주시기 바랍니다.");
+					
+					$("#msgModal").modal();
+					$("#msgBody").empty();
+					str += "<p>학번을 입력해주시기 바랍니다.</p>";
+					$("#msgBody").append(str);
+					
+					//alert("학번을 입력해주시기 바랍니다.");
 					$("#meNo").focus();
 					return false;
 				}

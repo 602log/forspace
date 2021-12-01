@@ -85,6 +85,29 @@
             WHERE D.RN BETWEEN #{pagingDTO.start} AND #{pagingDTO.end}
 		]]>
 	</select>
+	
+	<select id="todayMyBooking" parameterType="String" resultType="kr.co.forspace.booking.BookingDTO">
+		<![CDATA[
+	    	SELECT B.RN, B.RO_NO as roNo, R.RO_NAME as roName, B.BO_NO as boNo, B.BO_DATE as boDate, B.BO_TIME as boTime
+            FROM ROOM R, (
+            				select ROWNUM RN, A.*
+            				from (
+            						SELECT bo_no, ro_no, bo_date, bo_time
+									FROM BOOKING
+									WHERE bo_no IN (
+														SELECT bo_no FROM (
+																			SELECT ro_no, bo_date, min(bo_no) as bo_no
+											 								FROM booking
+											 								WHERE me_email = #{meEmail}
+											 								GROUP BY ro_no, bo_date
+											 							  )
+													)
+									)A
+            				where TO_CHAR(A.bo_date, 'yyyy/MM/dd') = #{boDateStr}
+            			 )B 
+            WHERE R.RO_NO = B.RO_NO
+    	]]>
+	</select>
 
 	<select id="mybookingList" resultType="kr.co.forspace.booking.BookingDTO" parameterType="String">
 		<![CDATA[

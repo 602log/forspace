@@ -17,4 +17,6 @@ public interface ComplaintService {
 	boolean deleteComplaint(@Param("coNo") int coNo, @Param("roNo") int roNo);
 	
 	boolean FinishComplaint(@Param("coNo") int coNo, @Param("roNo") int roNo);
+	
+	List<ComplaintDTO> notFinComplaint(String meEmail);
 }
