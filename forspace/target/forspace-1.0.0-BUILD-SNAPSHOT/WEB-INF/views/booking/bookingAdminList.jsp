@@ -188,7 +188,7 @@ function profileTr(idx){
 						+ "<p class='card-title'>"+dto.meName+"</p>"
 						+ "<p class='card-text'>"
 						+ "<a href='#' class='img logo rounded-circle'>"
-						+ "<img id='img' src='/image/show?imagePath="+dto.imageDTO.imagePath+"' alt='profile'>"
+						+ "<img id='img' src='../image/show?imagePath="+dto.imageDTO.imagePath+"' alt='profile'>"
 						+ "</a>"
 						+ "</p>"
 						+ "<p class='card-text'>"+dto.meNo+"</p>"

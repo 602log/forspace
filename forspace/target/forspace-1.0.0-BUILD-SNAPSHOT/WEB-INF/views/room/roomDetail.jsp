@@ -412,7 +412,7 @@ $(document).on("click", "#complaintBtn", function(){
 function cancelComp(coNo){
 	//alert(${dto.roNo });
 	//alert(coNo);
-	
+	var str="";
 	var con_text = confirm("삭제하시겠습니까?");
 	if(con_text == true){
 		
