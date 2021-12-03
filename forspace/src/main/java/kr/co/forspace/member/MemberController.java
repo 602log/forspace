@@ -150,7 +150,7 @@ public class MemberController {
 	
 	@GetMapping("/adminjoin")
 	public void adminjoin() {
-		log.info("/memberjoin.................");
+		log.info("/adminjoin.................");
 	}
 	
 	@GetMapping("/memberjoin")

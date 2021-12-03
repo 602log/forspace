@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="kr.co.forspace.mapper.MemberMapper">
+
+	<resultMap type="kr.co.forspace.member.SchoolDTO" id="schoolMap">
+		<result column="SC_NO" property="scNo"/>
+		<result column="SC_NAME" property="scName"/>
+		<result column="SC_CAMPUS" property="scCampus"/>
+		<result column="SC_MAJOR" property="scMajor"/>
+		<result column="SC_CHECKNUM" property="scChecknum"/>
+	</resultMap>
+	
+	<resultMap type="kr.co.forspace.member.MemberDTO" id="memberMap">
+		<result column="ME_EMAIL" property="meEmail"/>
+		<result column="SC_NO" property="scNo"/>
+		<result column="ME_NO" property="meNo"/>
+		<result column="ME_NAME" property="meName"/>
+		<result column="ME_PWD" property="mePwd"/>
+		<result column="ME_ROLE" property="meRole"/>
+	</resultMap>
+	
+	<update id="modifyCode" parameterType="kr.co.forspace.member.SchoolDTO">
+		UPDATE SCHOOL
+		SET SC_CHECKNUM = #{scChecknum}
+		WHERE SC_NO = #{scNo}
+	</update>
+	
+	<select id="findCode" parameterType="int" resultMap="schoolMap">
+		SELECT SC_NO, SC_CHECKNUM
+		FROM SCHOOL
+		WHERE SC_NO = #{scNo}
+	</select>
+	
+	<update id="updateProfileWithoutPwd" parameterType="kr.co.forspace.member.MemberDTO">
+		UPDATE MEMBER
+		SET ME_NO = #{meNo}, ME_NAME = #{meName}
+		WHERE ME_EMAIL = #{meEmail}
+	</update>
+	
+	<update id="updateProfile" parameterType="kr.co.forspace.member.MemberDTO">
+		UPDATE MEMBER
+		SET ME_NO = #{meNo}, ME_NAME = #{meName}, ME_PWD = #{mePwd}
+		WHERE ME_EMAIL = #{meEmail}
+	</update>
+	
+	<insert id="insertSchool">
+	
+		<selectKey resultType="int" keyProperty="scNo" order="AFTER">
+			SELECT MAX(SC_NO) FROM SCHOOL
+	    </selectKey>
+		INSERT INTO SCHOOL (SC_NO, SC_NAME, SC_CAMPUS, SC_MAJOR, SC_CHECKNUM)
+		VALUES (SEQ_SC.NEXTVAL, #{scName}, #{scCampus}, #{scMajor}, #{scChecknum})
+	</insert>
+	
+	<select id="mySchoolNo" parameterType="String" resultType="int">
+		SELECT SC_NO
+		FROM MEMBER
+		WHERE ME_EMAIL = #{meEmail}		
+	</select>
+	
+	<select id="myProfile" parameterType="String" resultMap="memberMap">
+		SELECT ME_EMAIL, SC_NO, ME_NO, ME_NAME, ME_PWD, ME_ROLE
+		FROM MEMBER
+		WHERE ME_EMAIL = #{meEmail}
+	</select>
+	
+	<insert id="memberjoin">
+		INSERT INTO MEMBER (ME_EMAIL, SC_NO, ME_NO, ME_NAME, ME_PWD, ME_ROLE)
+		VALUES (#{meEmail}, #{scNo}, #{meNo}, #{meName}, #{mePwd}, #{meRole})
+	</insert>
+			
+	<select id="getSchool" parameterType="String" resultMap="schoolMap">
+		<![CDATA[
+		SELECT ROWNUM, SC_NO, SC_NAME, SC_CAMPUS, SC_MAJOR, SC_CHECKNUM
+		FROM SCHOOL
+		WHERE SC_NAME LIKE '%'||#{scName}||'%' AND ROWNUM <= 5
+		]]>
+	</select>
+	
+	<select id="duplecateSchool" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM SCHOOL
+		WHERE SC_NAME = #{scName} AND SC_CAMPUS = #{scCampus} AND SC_MAJOR = #{scMajor}
+	</select>
+	
+	<select id="duplecateEmail" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM member
+		WHERE ME_EMAIL = #{meEmail}
+	</select>
+	
+	<select id="numCheck" resultType="int">
+		SELECT COUNT(*)
+		FROM school
+		WHERE SC_NO = #{scNo} AND SC_CHECKNUM = #{scCheckNum}
+	</select>
+	
+</mapper>

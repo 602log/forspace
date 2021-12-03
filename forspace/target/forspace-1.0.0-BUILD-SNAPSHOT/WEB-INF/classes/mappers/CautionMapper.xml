@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="kr.co.forspace.mapper.CautionMapper">
+
+	<resultMap type="kr.co.forspace.caution.CautionDTO" id="cautionMap">
+		<id column="CA_NO" property="caNo"/>
+		<result column="ME_EMAIL" property="meEmail"/>
+		<result column="CA_START" property="caStart"/>
+		<result column="CA_CLOSE" property="caClose"/>
+		<result column="CA_REASON" property="caReason"/>
+		<result column="CA_REG" property="caReg"/>
+	</resultMap>
+	
+	<update id="cancelCaution" parameterType="int">
+		<![CDATA[
+			UPDATE CAUTION
+			SET CA_CLOSE = sysdate-1
+			WHERE CA_NO = #{caNo}
+		]]>
+	</update>
+	
+	<select id="cntCaution" resultType="int" parameterType="String">
+		SELECT COUNT(*)
+		FROM CAUTION
+		WHERE CA_REG = #{caReg}
+	</select>
+	
+	<select id="cautionList" resultType="kr.co.forspace.caution.CautionDTO">
+		<![CDATA[
+			SELECT D.CA_NO as caNo, D.ME_EMAIL as meEmail, D.CA_START as caStart, D.CA_CLOSE as caClose, D.CA_REASON as caReason, D.CA_REG as caReg, D.me_name as meName, D.me_no as meNo
+			FROM (
+					SELECT ROWNUM RN, C.*
+					FROM (
+							SELECT A.CA_NO, A.ME_EMAIL, A.CA_START, A.CA_CLOSE, A.CA_REASON, A.CA_REG, B.me_name, B.me_no
+							FROM (
+									SELECT CA_NO, ME_EMAIL, CA_START, CA_CLOSE, CA_REASON, CA_REG
+									FROM CAUTION
+									WHERE CA_REG = #{caReg}
+									ORDER BY CA_NO DESC
+								)A
+							LEFT JOIN MEMBER B
+							ON A.ME_EMAIL = B.ME_EMAIL
+						)C
+				)D
+			WHERE D.RN BETWEEN #{pagingDTO.start} AND #{pagingDTO.end}
+		]]>
+	</select>
+	
+	<insert id="insertCaution" parameterType="String">
+		INSERT INTO CAUTION(CA_NO, ME_EMAIL, CA_REASON, CA_REG)
+		VALUES(SEQ_CA.NEXTVAL, #{meEmail}, #{caReason}, #{caReg})
+	</insert>
+	
+	<select id="findCloseDate" parameterType="String" resultType="String">
+		<![CDATA[
+			SELECT TO_CHAR(CA_CLOSE, 'yyyy-MM-dd') as caCloseStr
+			FROM CAUTION 
+			WHERE CA_NO = (
+							SELECT CA_NO 
+							FROM (
+									SELECT ME_EMAIL, MAX(CA_NO) AS CA_NO
+									FROM CAUTION
+									WHERE ME_EMAIL = #{meEmail}
+									GROUP BY ME_EMAIL
+								)
+							)
+		]]>
+	</select>
+
+</mapper>

@@ -100,9 +100,9 @@
 	
 	<select id="searchItem" parameterType="String" resultMap="itemMap">
 		<![CDATA[
-		SELECT IT_NO, IT_NAME 
+		SELECT ROWNUM, IT_NO, IT_NAME 
 		FROM ITEM
-		WHERE IT_NAME LIKE '%'||#{itName}||'%'
+		WHERE IT_NAME LIKE '%'||#{itName}||'%' AND ROWNUM <=5
 		]]>
 	</select>
 	
@@ -139,6 +139,7 @@
 				</otherwise>
 			</choose>
 		and sc_no = #{scNo}
+		order by ro_no
 	</select>
 	
 <!-- 	<select id="roomNoList" parameterType="int" resultMap="roomMap">

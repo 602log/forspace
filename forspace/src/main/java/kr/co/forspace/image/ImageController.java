@@ -32,13 +32,13 @@ public class ImageController {
 	@ResponseBody
 	@GetMapping("/show")
     public ResponseEntity<byte[]> showImage(String imagePath) throws Exception{
- 
-         File file = new File(uploadFolder + File.separator + imagePath);
-         HttpHeaders header = new HttpHeaders();
-         header.add("Content-Type", Files.probeContentType(file.toPath()));
-        
-         return new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);     
-    } 
+    	 
+        File file = new File(uploadFolder + File.separator + imagePath);
+        HttpHeaders header = new HttpHeaders();
+        header.add("Content-Type", Files.probeContentType(file.toPath()));
+       
+        return new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);     
+   } 
 
 	public static ImageDTO uploadImage(MultipartFile image) throws Exception {
 		if (!(image.getContentType().startsWith("image"))) {// 이미지 파일이 아닐때
@@ -71,9 +71,13 @@ public class ImageController {
 		String directory = str.replace("//", File.separator);
 		log.info("파일:" + directory);
 		File uploadDirectory = new File(uploadFolder, directory);
+		
+		log.info("uploadDirectory : "+uploadDirectory);
+		
 		if (uploadDirectory.exists() == false) {
 			uploadDirectory.mkdirs();
 		}
+
 		return directory;
 	}
 

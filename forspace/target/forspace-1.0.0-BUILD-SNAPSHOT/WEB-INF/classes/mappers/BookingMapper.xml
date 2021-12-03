@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="kr.co.forspace.mapper.BookingMapper">
+
+	<resultMap type="kr.co.forspace.booking.BookingDTO" id="bookingMap">
+		<id column="BO_NO" property="boNo"/>
+		<result column="SC_NO" property="scNo"/>
+		<result column="ME_EMAIL" property="meEmail"/>
+		<result column="RO_NO" property="roNo"/>
+		<result column="BO_TIME" property="boTime"/>
+		<result column="BO_DATE" property="boDate"/>
+		<collection property="roomList" resultMap="roomListMap"></collection>
+		<collection property="memberList" resultMap="memberMap"></collection>
+	</resultMap>
+	
+	<resultMap type="kr.co.forspace.booking.BookingDTO" id="roomListMap">
+		<result column="RO_NO" property="roNo"/>
+		<result column="SC_NO" property="scNo"/>
+		<result column="RO_NAME" property="roName"/>
+		<result column="RO_FLOOR" property="roFloor"/>
+		<result column="RO_MAX" property="roMax"/>
+		<result column="RO_START" property="roStart"/>
+		<result column="RO_CLOSE" property="roClose"/>
+		<result column="RO_LIMIT" property="roLimit"/>
+		<result column="RO_REGDATE" property="roRegdate"/>
+		<result column="RO_LIKECNT" property="roLikecnt"/>
+	</resultMap>
+	
+	<resultMap type="kr.co.forspace.member.MemberDTO" id="memberMap">
+		<result column="ME_EMAIL" property="meEmail"/>
+		<result column="SC_NO" property="scNo"/>
+		<result column="ME_NO" property="meNo"/>
+		<result column="ME_NAME" property="meName"/>
+		<result column="ME_PWD" property="mePwd"/>
+		<result column="ME_ROLE" property="meRole"/>
+	</resultMap>
+	
+	<delete id="cancelBooking" parameterType="kr.co.forspace.booking.BookingDTO">
+		<![CDATA[
+			DELETE FROM BOOKING
+			WHERE RO_NO = #{roNo} AND ME_EMAIL = #{meEmail} AND TO_CHAR(BO_DATE, 'yyyy/MM/dd') = #{boDateStr}
+		]]>
+	</delete>
+	
+	<select id="countBooking" resultType="int" parameterType="int">
+	<![CDATA[
+		select count(*)
+        from(
+          select me_email, ro_no, bo_date, min(bo_no) as bo_no
+          from booking
+          where sc_no = #{scNo}
+          group by me_email, ro_no, bo_date)
+     ]]>
+	</select>
+	
+	<select id="findAll" resultType="kr.co.forspace.booking.BookingDTO" parameterType="int">
+		<![CDATA[
+            SELECT D.BO_NO as boNo, D.SC_NO as scNo, D.ME_EMAIL as meEmail, D.RO_NO as roNo, D.BO_TIME as boTime, D.BO_DATE as boDate, D.ME_NAME as meName, D.RO_NAME as roName
+            FROM
+            (SELECT ROWNUM RN, C.*
+            FROM
+            (SELECT B.BO_NO, B.SC_NO, B.ME_EMAIL, B.RO_NO, B.BO_TIME, B.BO_DATE, M.ME_NAME, R.RO_NAME
+            FROM member M, room R,
+                (SELECT A.*
+                 FROM
+                    (select BO_NO, SC_NO, ME_EMAIL, RO_NO, BO_TIME, BO_DATE
+                        from booking
+                        where bo_no in
+                            (select bo_no from 
+                                (   select me_email, ro_no, bo_date, min(bo_no) as bo_no
+                                    from booking
+                                    where sc_no = #{scNo}
+                                    group by me_email, ro_no, bo_date
+                                )
+                             )
+                        )A
+               )B
+            where M.ME_EMAIL = B.ME_EMAIL and B.RO_NO = R.RO_NO
+            ORDER BY B.BO_NO DESC)C
+            )D
+            WHERE D.RN BETWEEN #{pagingDTO.start} AND #{pagingDTO.end}
+		]]>
+	</select>
+	
+	<select id="todayMyBooking" parameterType="String" resultType="kr.co.forspace.booking.BookingDTO">
+		<![CDATA[
+	    	SELECT B.RN, B.RO_NO as roNo, R.RO_NAME as roName, B.BO_NO as boNo, B.BO_DATE as boDate, B.BO_TIME as boTime
+            FROM ROOM R, (
+            				select ROWNUM RN, A.*
+            				from (
+            						SELECT bo_no, ro_no, bo_date, bo_time
+									FROM BOOKING
+									WHERE bo_no IN (
+														SELECT bo_no FROM (
+																			SELECT ro_no, bo_date, min(bo_no) as bo_no
+											 								FROM booking
+											 								WHERE me_email = #{meEmail}
+											 								GROUP BY ro_no, bo_date
+											 							  )
+													)
+									)A
+            				where TO_CHAR(A.bo_date, 'yyyy/MM/dd') = #{boDateStr}
+            			 )B 
+            WHERE R.RO_NO = B.RO_NO
+    	]]>
+	</select>
+
+	<select id="mybookingList" resultType="kr.co.forspace.booking.BookingDTO" parameterType="String">
+		<![CDATA[
+			SELECT R.RO_NAME as roName, A.BO_NO as boNo, A.BO_DATE as boDate, A.BO_TIME as boTime
+			FROM ROOM R, 
+						(SELECT bo_no, ro_no, bo_date, bo_time
+						FROM BOOKING
+						WHERE bo_no IN 
+										(SELECT bo_no FROM 
+											(SELECT ro_no, bo_date, min(bo_no) as bo_no
+											 FROM booking
+											 WHERE me_email = #{meEmail}
+											 GROUP BY ro_no, bo_date)
+										)
+						)A
+			WHERE R.RO_NO = A.RO_NO
+		]]>
+	</select>
+	
+<!-- 	<select id="mybookingList" resultType="kr.co.forspace.booking.BookingDTO" parameterType="String">
+		SELECT ME_EMAIL as meEmail, RO_NO as roNo, BO_TIME as boTime, BO_DATE as bo_date
+		FROM BOOKING
+		WHERE ME_EMAIL = #{meEmail}
+		GROUP BY RO_NO
+	</select> -->
+	
+	<select id="findBookingTime" resultType="int" parameterType="kr.co.forspace.booking.BookingDTO">
+	<![CDATA[	
+		SELECT COUNT(BO_NO)
+		FROM BOOKING
+		WHERE RO_NO = #{roNo} AND TO_CHAR(BO_DATE, 'yyyy/MM/dd') = #{boDateStr} AND BO_TIME = #{boTimeStr}
+	]]>
+	</select>
+	
+	<select id="findMyBook" resultType="int" parameterType="kr.co.forspace.booking.BookingDTO">
+	<![CDATA[	
+		SELECT COUNT(BO_NO)
+		FROM BOOKING
+		WHERE ME_EMAIL = #{meEmail} AND RO_NO = #{roNo} AND TO_CHAR(BO_DATE, 'yyyy/MM/dd') = #{boDateStr}
+	]]>
+	</select>
+	
+	<select id="checkBook" resultType="kr.co.forspace.booking.BookingDTO" parameterType="kr.co.forspace.booking.BookingDTO">
+	<![CDATA[
+		SELECT BO_NO AS boNo, SC_NO AS scNo, ME_EMAIL AS meEmail, RO_NO AS roNo, BO_TIME AS boTime, BO_DATE AS boDate
+		FROM BOOKING
+		WHERE RO_NO = #{roNo} AND TO_CHAR(BO_DATE, 'yyyy/MM/dd') = #{boDateStr}
+	]]>
+	</select>
+	
+	<insert id="insertBook">
+		<![CDATA[
+		INSERT INTO BOOKING (BO_NO, SC_NO, ME_EMAIL, RO_NO, BO_TIME)
+		VALUES(SEQ_BO.nextval, #{scNo}, #{meEmail}, #{roNo}, #{boTime})
+		]]>
+	</insert>
+
+
+</mapper>

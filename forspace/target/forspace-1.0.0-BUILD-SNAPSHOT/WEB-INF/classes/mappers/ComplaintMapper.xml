@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="kr.co.forspace.mapper.ComplaintMapper">
+
+	<resultMap type="kr.co.forspace.complaint.ComplaintDTO" id="complaintMap">
+		<id column="CO_NO" property="coNo"/>
+		<result column="RO_NO" property="roNo"/>
+		<result column="CO_CONTENT" property="coContent"/>
+		<result column="ME_EMAIL" property="meEmail"/>
+		<result column="CO_DATE" property="coDate"/>
+		<result column="CO_FINISH" property="coFinish"/>
+	</resultMap>
+	
+	<select id="notFinComplaint" resultType="kr.co.forspace.complaint.ComplaintDTO" parameterType="String">
+	<![CDATA[
+	    select a.co_no as coNo, a.ro_no as roNo, a.co_content as coContent, a.me_email as meEmail, a.co_date as coDate, a.co_finish as coFinish, a.ro_name as roName
+    	from (
+    			select rownum rn, c.co_no, r.ro_no, c.co_content, c.me_email, c.co_date, c.co_finish, r.ro_name
+    			from complaint c, (
+    								select ro_no, ro_name
+    								from room
+    								where ro_no in (
+    												select ro_no
+    												from room
+    												where sc_no in(
+       																select sc_no
+       																from member
+       																where me_email = #{meEmail}
+       															   )
+       										        )
+       								) r
+    			where c.ro_no = r.ro_no
+    			and c.co_finish is null
+    		) a
+    	where a.rn BETWEEN 1 and 5
+    ]]>
+	</select>
+	
+	<update id="FinishComplaint" parameterType="int">
+	<![CDATA[
+		UPDATE COMPLAINT SET CO_FINISH = SYSDATE
+		WHERE CO_NO = #{coNo} AND RO_NO = #{roNo}
+	]]>
+	</update>
+	
+	<delete id="deleteComplaint" parameterType="int">
+		DELETE FROM COMPLAINT 
+		WHERE CO_NO = #{coNo} AND RO_NO = #{roNo} 
+	</delete>
+	
+	<insert id="insertComplaint" parameterType="kr.co.forspace.complaint.ComplaintDTO">
+		INSERT INTO COMPLAINT (CO_NO, RO_NO, CO_CONTENT, ME_EMAIL)
+		VALUES (SEQ_CO.NEXTVAL, #{roNo}, #{coContent}, #{meEmail})
+	</insert>
+	
+	<select id="countComplaint" resultType="int" parameterType="int">
+		SELECT COUNT(CO_NO) FROM COMPLAINT WHERE RO_NO = #{roNo}
+	</select>
+	
+	<select id="selectComplaint" resultMap="complaintMap">
+	<![CDATA[
+		SELECT B.CO_NO, B.RO_NO, B.CO_CONTENT, B.ME_EMAIL, B.CO_DATE, B.CO_FINISH FROM(  
+        	SELECT ROWNUM RN, A.* FROM(
+                (SELECT * FROM COMPLAINT WHERE RO_NO = #{roNo} ORDER BY CO_NO DESC)A
+            )
+        )B WHERE RN BETWEEN #{pagingDTO.start} AND #{pagingDTO.end}
+    ]]>
+	</select>
+
+</mapper>

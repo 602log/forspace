@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="kr.co.forspace.mapper.ImageMapper">
+
+	<resultMap type="kr.co.forspace.image.ImageDTO" id="imageMap">
+		<id column="IM_NO" property="imNo"/>
+		<result column="IM_UUID" property="imUuid"/>
+		<result column="IM_EMAIL" property="imEmail"/>
+		<result column="IM_NAME" property="imName"/>
+		<result column="IM_DIR" property="imDir"/>
+		<result column="IM_SIZE" property="imSize"/>
+	</resultMap>
+	
+	<select id="myImg" parameterType="String" resultMap="imageMap">
+		SELECT *
+		FROM IMAGE
+		WHERE IM_EMAIL = #{imEmail}
+	</select>
+	
+	<select id="selectMyImg" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM IMAGE
+		WHERE IM_EMAIL = #{imEmail}
+	</select>
+	
+	<update id="updateProfileImg" parameterType="kr.co.forspace.image.ImageDTO">
+		UPDATE IMAGE
+		SET IM_UUID = #{imUuid}, IM_NAME = #{imName}, IM_DIR= #{imDir}, IM_SIZE = #{imSize}
+		WHERE IM_EMAIL = #{imEmail}
+	</update>
+	
+	<insert id="memberjoinWithprofileImg">
+		INSERT INTO IMAGE (IM_NO, IM_UUID, IM_EMAIL, IM_NAME, IM_DIR, IM_SIZE)
+		VALUES (SEQ_IM.NEXTVAL, #{imUuid}, #{imEmail},  #{imName}, #{imDir}, #{imSize})
+	</insert>
+
+</mapper>
