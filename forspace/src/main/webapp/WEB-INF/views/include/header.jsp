@@ -199,6 +199,26 @@ $(document).ready(function(){
 			}
 		});
 		
+		$.ajax({
+			url : "../caution/myCaution",
+			type : "post",
+			data : {meEmail : user},
+			success : function(data){
+				var str = "";
+				if(data == 'nothing'){
+					str += "<a href='#'>즐거운 하루 되세요💜";
+					$(".commentInput").append(str);
+				}else{
+					str += "<a href='#' style='color:red;'>"+data+"까지 이용제한되었습니다.</a>";
+					$(".commentInput").append(str);
+				}
+			},
+			error : function(){
+				
+			}
+				
+		});
+		
 		if(role == 'ADMIN'){
 			
 			$.ajax({
@@ -223,25 +243,6 @@ $(document).ready(function(){
 				}
 			});
 		}else if(role == 'USER'){
-			$.ajax({
-				url : "../caution/myCaution",
-				type : "post",
-				data : {meEmail : user},
-				success : function(data){
-					var str = "";
-					if(data == 'nothing'){
-						str += "<a href='#'>즐거운 하루 되세요💜";
-						$(".commentInput").append(str);
-					}else{
-						str += "<a href='#' style='color:red;'>"+data+"까지 이용제한되었습니다.</a>";
-						$(".commentInput").append(str);
-					}
-				},
-				error : function(){
-					
-				}
-					
-			});
 			
 			$.ajax({
 				url : "../booking/todayBooking",

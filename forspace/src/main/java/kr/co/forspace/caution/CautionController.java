@@ -38,9 +38,14 @@ public class CautionController {
 		String today = simpleDateFormat.format(now);
 		
 		String caCloseStr = cautionService.myCaution(meEmail);
-		if(today.compareTo(caCloseStr) < 0 || today.compareTo(caCloseStr) == 0) {//아직 이용이 제한된 경우
-			return caCloseStr;
+		if(caCloseStr == null || caCloseStr == "") {
+			return "nothing";
+		}else {
+			if(today.compareTo(caCloseStr) < 0 || today.compareTo(caCloseStr) == 0) {//아직 이용이 제한된 경우
+				return caCloseStr;
+			}
 		}
+
 		return "nothing";
 	}
 	

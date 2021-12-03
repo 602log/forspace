@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/image")
 public class ImageController {
 
-	private static String uploadFolder = "C:/study/upload";
+	private static String uploadFolder = "/var/lib/tomcat9/webapps/ROOT/resources/imgUpload";
 	
 	@ResponseBody
 	@GetMapping("/show")
