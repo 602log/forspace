@@ -17,5 +17,7 @@ public interface CautionService {
 	int cntCaution(String caReg);
 	
 	void cancelCaution(int caNo);
+	
+	String myCaution(String meEmail);
 
 }

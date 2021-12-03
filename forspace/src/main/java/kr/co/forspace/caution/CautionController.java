@@ -31,6 +31,20 @@ public class CautionController {
 	private final CautionService cautionService;
 	
 	@ResponseBody
+	@PostMapping("/myCaution")
+	public String myCaution(String meEmail) {
+		Date now = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String today = simpleDateFormat.format(now);
+		
+		String caCloseStr = cautionService.myCaution(meEmail);
+		if(today.compareTo(caCloseStr) < 0 || today.compareTo(caCloseStr) == 0) {//아직 이용이 제한된 경우
+			return caCloseStr;
+		}
+		return "nothing";
+	}
+	
+	@ResponseBody
 	@PostMapping("/cancelCaution")
 	public String cancelCaution(int caNo) throws Exception{
 		try {

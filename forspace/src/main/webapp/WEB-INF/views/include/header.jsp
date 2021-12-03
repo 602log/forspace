@@ -62,6 +62,7 @@
 		  		<a href="#" class="img logo rounded-circle">
 		  			<img id="img" src="../resources/images/user.png" alt="profile">
 		  		</a>
+		  		<p id="mySchool"></p>
 		  	<sec:authorize access="isAnonymous()">
 		  	<ul class="list-unstyled components mb-5">
 	          <li>
@@ -75,6 +76,9 @@
 		  	</sec:authorize>
 		  	<sec:authorize access="isAuthenticated()">
 	        <ul class="list-unstyled components mb-5">
+	        	<li class="commentInput">
+	        	
+	        	</li>
 	          <li class="active">
 	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">INFO</a>
 	            <ul class="collapse list-unstyled" id="homeSubmenu">
@@ -195,7 +199,6 @@ $(document).ready(function(){
 			}
 		});
 		
-		var str = "";
 		if(role == 'ADMIN'){
 			
 			$.ajax({
@@ -203,14 +206,15 @@ $(document).ready(function(){
 				type : "post",
 				data : {meEmail : user},
 				success : function(data){
+					var str = "";
 					console.info(data);
 					if(data.length > 0){
 						$.each(data, function(index, dto){
-							str += "<a href='../room/roomDetail?roNo="+dto.roNo+"'>"+dto.roName+" "+dto.coContent+"</a>"
+							str += "<a href='../room/roomDetail?roNo="+dto.roNo+"'>"+dto.roName+" "+dto.coContent+"</a>";
 						});
 						$(".roNoLi").append(str);
 					}else{
-						str += "<a href='#'>불편사항이 없습니다.</a>"
+						str += "<a href='#'>불편사항이 없습니다.</a>";
 						$(".roNoLi").append(str);
 					}
 				},
@@ -220,20 +224,44 @@ $(document).ready(function(){
 			});
 		}else if(role == 'USER'){
 			$.ajax({
+				url : "../caution/myCaution",
+				type : "post",
+				data : {meEmail : user},
+				success : function(data){
+					var str = "";
+					if(data == 'nothing'){
+						str += "<a href='#'>즐거운 하루 되세요💜";
+						$(".commentInput").append(str);
+					}else{
+						str += "<a href='#' style='color:red;'>"+data+"까지 이용제한되었습니다.</a>";
+						$(".commentInput").append(str);
+					}
+				},
+				error : function(){
+					
+				}
+					
+			});
+			
+			$.ajax({
 				url : "../booking/todayBooking",
 				type : "post",
 				data : {meEmail : user},
 				success : function(data){
+					var str = "";
 					console.info(data);
 					if(data.length > 0){
 						$.each(data, function(index, dto){
-							str += "<a href='../room/roomDetail?roNo="+dto.roNo+"'>"+dto.roName+"호 "+dto.boTime+"</a>"
+							str += "<a href='../room/roomDetail?roNo="+dto.roNo+"'>"+dto.roName+"호 "+dto.boTime+"</a>";
 						});
 						$(".roNoLi").append(str);
 					}else{
-						str += "<a href='#'>금일 예약이 없습니다.</a>"
+						str += "<a href='#'>금일 예약이 없습니다.</a>";
 						$(".roNoLi").append(str);
 					}
+				},
+				error : function(){
+					
 				}
 			});
 		}

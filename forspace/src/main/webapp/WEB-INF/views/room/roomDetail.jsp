@@ -263,7 +263,7 @@ a {
 					style="border: none; border-radius: 50px; background-color: purple;" value="" onclick="return booking();">예약하기</button>
 			</sec:authorize>
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<button type="button" class="btn btn-secondary btn-md btn-block"
+				<button type="button" class="btn btn-secondary btn-md btn-block" id="bookingBtn"
 					style="border: none; border-radius: 50px; background-color: purple;" onclick="location.href='../room/modifyRoom?roNo=${dto.roNo}'">수정하기</button>		
 			</sec:authorize>
 				<br>

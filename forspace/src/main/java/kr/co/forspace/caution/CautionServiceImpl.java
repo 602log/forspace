@@ -18,6 +18,11 @@ public class CautionServiceImpl implements CautionService{
 	private final CautionMapper cautionMapper;
 	
 	@Override
+	public String myCaution(String meEmail) {
+		return cautionMapper.myCaution(meEmail);
+	}
+	
+	@Override
 	public void cancelCaution(int caNo) {
 		cautionMapper.cancelCaution(caNo);
 	}

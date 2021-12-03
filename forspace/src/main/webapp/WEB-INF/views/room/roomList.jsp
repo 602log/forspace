@@ -173,7 +173,7 @@ $(document).on("click", ".likeBtn", function(e){
 
 	$.ajax({
 		type : "POST",
-		url : "/room/insertLike",
+		url : "../room/insertLike",
 		data : {roNo : roNo,
 				meEmail : meEmail},
 		dataType : "text",

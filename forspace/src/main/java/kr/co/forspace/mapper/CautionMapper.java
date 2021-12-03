@@ -14,4 +14,5 @@ public interface CautionMapper {
 	List<CautionDTO> cautionList(@Param("caReg") String caReg, @Param("pagingDTO") PagingDTO pagingDTO);
 	int cntCaution(String caReg);
 	void cancelCaution(int caNo);
+	String myCaution(String meEmail);
 }
