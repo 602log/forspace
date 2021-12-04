@@ -25,7 +25,7 @@ Tools
 ```
 
 ### ERD
-* ERD 사진
+![image](https://user-images.githubusercontent.com/80696631/144721376-b36f3761-5f48-4216-8c8c-f56d8936152b.png)
 
 ### 사이트맵
 * 사이트 맵
