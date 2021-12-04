@@ -69,7 +69,7 @@ Tools
 
 ### 불편사항
 * ADMIN & USER
-![image](https://user-images.githubusercontent.com/80696631/144720424-9acec54a-f5b2-4569-83d4-29740397d9f8.png)
+![image](https://user-images.githubusercontent.com/80696631/144720910-6b48c3e4-d83a-472c-9ee7-d88d680279de.png)
 
 
 ---------------------------------------------------------------------------------------------------------------
