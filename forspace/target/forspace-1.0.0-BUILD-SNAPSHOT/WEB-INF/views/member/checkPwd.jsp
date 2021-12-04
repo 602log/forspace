@@ -13,7 +13,7 @@
 						<div class="form-group">
 							<input type="password" id="mePwd" name="mePwd" class="form-control form-control-user" placeholder="비밀번호">
 						</div>
-						<button type="submit" class="btn btn-primary btn-lg btn-block btn-user" id="find">비밀번호 찾기</button>
+						<button type="submit" class="btn btn-primary btn-lg btn-block btn-user" id="find">확인</button>
 					</form>
                 </div>
 			</div>	

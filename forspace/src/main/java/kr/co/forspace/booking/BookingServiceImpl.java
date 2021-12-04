@@ -18,6 +18,16 @@ public class BookingServiceImpl implements BookingService {
 	private final BookingMapper bookingMapper;
 	
 	@Override
+	public List<BookingDTO> findAllmyBooking(@Param("meEmail") String meEmail, @Param("pagingDTO") PagingDTO pagingDTO) {
+		return bookingMapper.findAllmyBooking(meEmail, pagingDTO);
+	}
+	
+	@Override
+	public int mybookingCnt(String meEmail) {
+		return bookingMapper.mybookingCnt(meEmail);
+	}
+	
+	@Override
 	public List<BookingDTO> todayMyBooking(@Param("meEmail") String meEmail, @Param("boDateStr") String boDateStr) {
 		return bookingMapper.todayMyBooking(meEmail, boDateStr);
 	}

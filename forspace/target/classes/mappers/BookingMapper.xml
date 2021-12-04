@@ -39,6 +39,46 @@
 		<result column="ME_ROLE" property="meRole"/>
 	</resultMap>
 	
+	<select id="findAllmyBooking" resultType="kr.co.forspace.booking.BookingDTO">
+		<![CDATA[
+            SELECT d.BO_NO as boNo, d.SC_NO as scNo, d.ME_EMAIL as meEmail, d.RO_NO as roNo, d.BO_TIME as boTime, d.BO_DATE as boDate, d.RO_NAME as roName
+            FROM (
+                select rownum rn, c.*
+                from (
+                    select b.bo_no, b.sc_no, b.me_email, b.ro_no, b.bo_time, b.bo_date, r.ro_name
+                    from room r, (
+                                    select bo_no, sc_no, me_email, ro_no, bo_time, bo_date
+                                    from booking
+                                    where bo_no in(
+                                                     select bo_no 
+                                                     from (
+                                                            select me_email,ro_no, bo_date, min(bo_no) as bo_no
+                                                            from booking
+                                                            where me_email = #{meEmail}
+                                                            group by me_email, ro_no, bo_date
+                                                            )
+                                                    )
+                                    )b
+                    where b.ro_no = r.ro_no
+                    order by bo_no desc
+                    )c
+                )d
+            WHERE d.RN BETWEEN #{pagingDTO.start} AND #{pagingDTO.end}
+		]]>
+	</select>
+	
+	<select id="mybookingCnt" parameterType="String" resultType="int">
+	<![CDATA[
+		select count(*)
+        from(
+			select me_email,ro_no, bo_date, min(bo_no) as bo_no
+			from booking
+			where me_email = #{meEmail}
+			group by me_email, ro_no, bo_date
+			)
+		 ]]>
+	</select>
+	
 	<delete id="cancelBooking" parameterType="kr.co.forspace.booking.BookingDTO">
 		<![CDATA[
 			DELETE FROM BOOKING
@@ -160,8 +200,8 @@
 	
 	<insert id="insertBook">
 		<![CDATA[
-		INSERT INTO BOOKING (BO_NO, SC_NO, ME_EMAIL, RO_NO, BO_TIME)
-		VALUES(SEQ_BO.nextval, #{scNo}, #{meEmail}, #{roNo}, #{boTime})
+		INSERT INTO BOOKING (BO_NO, SC_NO, ME_EMAIL, RO_NO, BO_TIME, BO_DATE)
+		VALUES(SEQ_BO.nextval, #{scNo}, #{meEmail}, #{roNo}, #{boTime}, sysdate)
 		]]>
 	</insert>
 

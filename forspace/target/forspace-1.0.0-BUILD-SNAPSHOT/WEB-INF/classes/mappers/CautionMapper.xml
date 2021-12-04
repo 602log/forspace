@@ -23,6 +23,17 @@
 		]]>
 	</update>
 	
+	<select id="myCaution" resultType="String" parameterType="String">
+		<![CDATA[
+	        SELECT TO_CHAR(CA_CLOSE, 'yyyy-MM-dd') as caCloseStr
+	        FROM (
+			        SELECT MAX(CA_CLOSE) AS CA_CLOSE
+					FROM CAUTION
+					WHERE ME_EMAIL = #{meEmail}
+				)
+		]]>
+	</select>
+	
 	<select id="cntCaution" resultType="int" parameterType="String">
 		SELECT COUNT(*)
 		FROM CAUTION

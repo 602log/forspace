@@ -87,6 +87,67 @@ public class BookingController {
 		return list;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@GetMapping("/bookingTable")
+	public void bookingTable(Authentication auth, Model model, @Param("pagingDTO") PagingDTO pagingDTO, 
+			@RequestParam(value="nowPage", required=false) String nowPage,
+			@RequestParam(value="cntPerPage", required=false) String cntPerPage) {
+		
+		log.info("bookingTable...................................");
+		
+		String meEmail = auth.getName();
+		
+		int total = bookingService.mybookingCnt(meEmail);
+		log.info("total: "+total);
+		if(nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+		}else if(nowPage == null) {
+			nowPage = "1";
+		}else if(cntPerPage == null) {
+			cntPerPage = "5";
+		}
+		
+		pagingDTO = new PagingDTO(total, Integer.valueOf(nowPage), Integer.valueOf(cntPerPage));
+		List<BookingDTO> list = bookingService.findAllmyBooking(meEmail, pagingDTO);
+		
+		Date now = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		String nowStr = simpleDateFormat.format(now);
+		nowStr.trim();
+		
+		for(int i=0; i<list.size(); i++) {
+			
+			String dateStr = simpleDateFormat.format(list.get(i).getBoDate());
+			dateStr.trim();
+			list.get(i).setBoDateStr(dateStr);
+
+			if(nowStr.equals(dateStr)) {//예약이 오늘인 경우
+				//현재 시간 구하기
+				LocalTime nowTime = LocalTime.now();
+				int hour = nowTime.getHour();
+				log.info("hour:"+hour);
+				
+				//예약 시간 구하기
+				String[] boTimeSplit = list.get(i).getBoTime().split(":");
+				int firstBoTime = Integer.parseInt(boTimeSplit[0]);
+				
+				if(hour > firstBoTime || hour == firstBoTime) { //예약 시간이 지난 경우
+					list.get(i).setRefused("기한만료");
+				}else if(hour < firstBoTime) {//예약시간이 아직 지나지 않은 경우
+					list.get(i).setRefused("취소");
+				}
+			
+			}else if(nowStr != dateStr) {//예약이 오늘이 아닌 경우
+				list.get(i).setRefused("기한만료");
+			}
+		}//end of for
+				
+		log.info(list);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", pagingDTO);
+	}
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/bookingAdminList")
 	public void bookingAdminList(Authentication auth, Model model, @Param("pagingDTO") PagingDTO pagingDTO, 
