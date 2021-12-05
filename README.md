@@ -48,14 +48,14 @@ Tools
 * ADMIN & USER : 연습실 리스트
 ![image](https://user-images.githubusercontent.com/80696631/144720263-e76ac300-619f-4052-b105-522b360911ad.png)
 * ADMIN & USER : 연습실 상세
-![image](https://user-images.githubusercontent.com/80696631/144720400-b379f457-14e5-427c-a7fc-bc0c26f31f9b.png)
+![image](https://user-images.githubusercontent.com/80696631/144735182-78d81a49-4027-41d2-b380-7cde7813b5d4.png)
 
 
 ### 예약
 * ADMIN
-![image](https://user-images.githubusercontent.com/80696631/144720320-7860db4e-e79c-419d-8ccf-b9759a1c0b51.png)
+![image](https://user-images.githubusercontent.com/80696631/144735153-133a092e-24fc-46f2-9568-ab4ddd72b0ac.png)
 * USER
-![image](https://user-images.githubusercontent.com/80696631/144720335-80315027-8756-410e-815a-1e5a664f8bf6.png)
+![image](https://user-images.githubusercontent.com/80696631/144735218-e0615ea8-0e6b-41d6-be1f-8a03c9419efd.png)
 
 ### 이용제한
 * ADMIN
