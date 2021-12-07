@@ -10,10 +10,13 @@ forspace는 연습실 예약을 위해 직접 방문해서 수기로 입력하�
 
 Front-End
 * HTML, CSS3, JavaScript, Bootstrap5, jQuery, Ajax
+
 Back-End
 * Java (JDK 1.8), Apache Tomcat 9.0, Project Lombok, Maven, MyBatis, HikariCP
+
 Database
 * Oracle Database
+
 Tools
 * Spring 5, Spring Security, STS
 
